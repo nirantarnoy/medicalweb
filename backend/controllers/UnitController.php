@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use backend\models\MedicalCat;
-use backend\models\MedicalcatSearch;
+use backend\models\Unit;
+use backend\models\UnitSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MedicalcatController implements the CRUD actions for MedicalCat model.
+ * UnitController implements the CRUD actions for Unit model.
  */
-class MedicalcatController extends Controller
+class UnitController extends Controller
 {
     public $enableCsrfValidation = false;
     /**
@@ -33,7 +33,7 @@ class MedicalcatController extends Controller
     }
 
     /**
-     * Lists all MedicalCat models.
+     * Lists all Unit models.
      *
      * @return string
      */
@@ -41,7 +41,7 @@ class MedicalcatController extends Controller
     {
         $pageSize = \Yii::$app->request->post("perpage");
 
-        $searchModel = new MedicalcatSearch();
+        $searchModel = new UnitSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         $dataProvider->pagination->pageSize = $pageSize;
@@ -54,7 +54,7 @@ class MedicalcatController extends Controller
     }
 
     /**
-     * Displays a single MedicalCat model.
+     * Displays a single Unit model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -67,13 +67,13 @@ class MedicalcatController extends Controller
     }
 
     /**
-     * Creates a new MedicalCat model.
+     * Creates a new Unit model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new MedicalCat();
+        $model = new Unit();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -89,7 +89,7 @@ class MedicalcatController extends Controller
     }
 
     /**
-     * Updates an existing MedicalCat model.
+     * Updates an existing Unit model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -109,7 +109,7 @@ class MedicalcatController extends Controller
     }
 
     /**
-     * Deletes an existing MedicalCat model.
+     * Deletes an existing Unit model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -123,15 +123,15 @@ class MedicalcatController extends Controller
     }
 
     /**
-     * Finds the MedicalCat model based on its primary key value.
+     * Finds the Unit model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return MedicalCat the loaded model
+     * @return Unit the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MedicalCat::findOne(['id' => $id])) !== null) {
+        if (($model = Unit::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

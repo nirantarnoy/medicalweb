@@ -1,20 +1,21 @@
 <?php
 
-use backend\models\MedicalCat;
+use backend\models\Medical;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\bootstrap4\LinkPager;
+
 /** @var yii\web\View $this */
-/** @var backend\models\MedicalcatSearch $searchModel */
+/** @var backend\models\MedicalSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'หมวดหมู่เวชภัณฑ์';
+$this->title = 'เวชภัณฑ์';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="medical-cat-index">
+<div class="medical-index">
 
 
     <div class="row">
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </p>
         </div>
         <div class="col-lg-2" style="text-align: right">
-            <form id="form-perpage" class="form-inline" action="<?= Url::to(['medicalcat/index'], true) ?>"
+            <form id="form-perpage" class="form-inline" action="<?= Url::to(['medical/index'], true) ?>"
                   method="post">
                 <div class="form-group">
                     <label>แสดง </label>
@@ -62,18 +63,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'code',
             'name',
             'description',
-//            'status',
             [
-                'attribute' => 'status',
-                'format' => 'raw',
-                'value' => function ($data) {
-                    if ($data->status == 1) {
-                        return '<div class="badge badge-success" >ใช้งาน</div>';
-                    } else {
-                        return '<div class="badge badge-secondary" >ไม่ใช้งาน</div>';
-                    }
+                'attribute' => 'medical_cat_id',
+                'value' => function ($model) {
+                    return \backend\models\MedicalCat::findName($model->medical_cat_id);
                 }
             ],
+            //'pack_size',
+            //'unit_id',
+            //'price',
+            //'min_stock',
+            //'max_stock',
+            //'photo',
+            //'status',
             //'created_at',
             //'created_by',
             //'updated_at',

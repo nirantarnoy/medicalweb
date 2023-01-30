@@ -4,23 +4,24 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\MedicalCat;
+use backend\models\Medical;
 
 /**
- * MedicalcatSearch represents the model behind the search form of `backend\models\MedicalCat`.
+ * MedicalSearch represents the model behind the search form of `backend\models\Medical`.
  */
-class MedicalcatSearch extends MedicalCat
+class MedicalSearch extends Medical
 {
+
     /**
      * {@inheritdoc}
      */
     public $globalSearch;
-
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['code', 'name', 'description'], 'safe'],
+            [['id', 'medical_cat_id', 'pack_size', 'unit_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['code', 'name', 'description', 'photo'], 'safe'],
+            [['price', 'min_stock', 'max_stock'], 'number'],
             [['globalSearch'], 'string'],
         ];
     }
@@ -43,7 +44,7 @@ class MedicalcatSearch extends MedicalCat
      */
     public function search($params)
     {
-        $query = MedicalCat::find();
+        $query = Medical::find();
 
         // add conditions that should always apply here
 
@@ -62,6 +63,12 @@ class MedicalcatSearch extends MedicalCat
         // grid filtering conditions
 //        $query->andFilterWhere([
 //            'id' => $this->id,
+//            'medical_cat_id' => $this->medical_cat_id,
+//            'pack_size' => $this->pack_size,
+//            'unit_id' => $this->unit_id,
+//            'price' => $this->price,
+//            'min_stock' => $this->min_stock,
+//            'max_stock' => $this->max_stock,
 //            'status' => $this->status,
 //            'created_at' => $this->created_at,
 //            'created_by' => $this->created_by,
@@ -71,7 +78,8 @@ class MedicalcatSearch extends MedicalCat
 
         $query->orFilterWhere(['like', 'code', $this->globalSearch])
             ->orFilterWhere(['like', 'name', $this->globalSearch])
-            ->orFilterWhere(['like', 'description', $this->globalSearch]);
+            ->orFilterWhere(['like', 'description', $this->globalSearch])
+            ->orFilterWhere(['like', 'photo', $this->globalSearch]);
 
         return $dataProvider;
     }

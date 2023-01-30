@@ -4,18 +4,18 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var backend\models\MedicalCat $model */
+/** @var backend\models\Unit $model */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'หมวดหมู่เวชภัณฑ์', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'หน่วยนับ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="medical-cat-view">
+<div class="unit-view">
 
 
     <p>
-        <?= Html::a('แก้ไช', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('ลบ', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

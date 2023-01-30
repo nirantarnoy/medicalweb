@@ -4,12 +4,12 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\MedicalCat;
+use backend\models\Unit;
 
 /**
- * MedicalcatSearch represents the model behind the search form of `backend\models\MedicalCat`.
+ * UnitSearch represents the model behind the search form of `backend\models\Unit`.
  */
-class MedicalcatSearch extends MedicalCat
+class UnitSearch extends Unit
 {
     /**
      * {@inheritdoc}
@@ -43,7 +43,7 @@ class MedicalcatSearch extends MedicalCat
      */
     public function search($params)
     {
-        $query = MedicalCat::find();
+        $query = Unit::find();
 
         // add conditions that should always apply here
 

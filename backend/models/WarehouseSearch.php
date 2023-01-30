@@ -4,12 +4,12 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\MedicalCat;
+use backend\models\Warehouse;
 
 /**
- * MedicalcatSearch represents the model behind the search form of `backend\models\MedicalCat`.
+ * WarehouseSearch represents the model behind the search form of `backend\models\Warehouse`.
  */
-class MedicalcatSearch extends MedicalCat
+class WarehouseSearch extends Warehouse
 {
     /**
      * {@inheritdoc}
@@ -20,7 +20,7 @@ class MedicalcatSearch extends MedicalCat
     {
         return [
             [['id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['code', 'name', 'description'], 'safe'],
+            [['name', 'description'], 'safe'],
             [['globalSearch'], 'string'],
         ];
     }
@@ -43,7 +43,7 @@ class MedicalcatSearch extends MedicalCat
      */
     public function search($params)
     {
-        $query = MedicalCat::find();
+        $query = Warehouse::find();
 
         // add conditions that should always apply here
 
@@ -69,8 +69,7 @@ class MedicalcatSearch extends MedicalCat
 //            'updated_by' => $this->updated_by,
 //        ]);
 
-        $query->orFilterWhere(['like', 'code', $this->globalSearch])
-            ->orFilterWhere(['like', 'name', $this->globalSearch])
+        $query->orFilterWhere(['like', 'name', $this->globalSearch])
             ->orFilterWhere(['like', 'description', $this->globalSearch]);
 
         return $dataProvider;

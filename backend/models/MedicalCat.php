@@ -45,14 +45,20 @@ class MedicalCat extends \common\models\MedicalCat
     {
         return [
             'id' => 'ID',
-            'code' => 'Code',
-            'name' => 'Name',
-            'description' => 'Description',
-            'status' => 'Status',
+            'code' => 'รหัส',
+            'name' => 'ชื่อ',
+            'description' => 'รายละเอียด',
+            'status' => 'สถานะ',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function findName($id)
+    {
+        $model = MedicalCat::find()->where(['id' => $id])->one();
+        return $model != null ? $model->name : '';
     }
 }

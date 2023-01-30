@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\MedicalCat;
+use backend\models\Unit;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -8,13 +8,13 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\bootstrap4\LinkPager;
 /** @var yii\web\View $this */
-/** @var backend\models\MedicalcatSearch $searchModel */
+/** @var backend\models\UnitSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'หมวดหมู่เวชภัณฑ์';
+$this->title = 'หน่วยนับ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="medical-cat-index">
+<div class="unit-index">
 
 
     <div class="row">
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </p>
         </div>
         <div class="col-lg-2" style="text-align: right">
-            <form id="form-perpage" class="form-inline" action="<?= Url::to(['medicalcat/index'], true) ?>"
+            <form id="form-perpage" class="form-inline" action="<?= Url::to(['unit/index'], true) ?>"
                   method="post">
                 <div class="form-group">
                     <label>แสดง </label>
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <?php Pjax::begin(); ?>
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
