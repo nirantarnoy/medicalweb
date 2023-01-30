@@ -17,7 +17,20 @@
         "php": ">=7.4.0",
         "yiisoft/yii2": "~2.0.45",
         "yiisoft/yii2-bootstrap5": "~2.0.2",
-        "yiisoft/yii2-symfonymailer": "~2.0.3"
+        "yiisoft/yii2-symfonymailer": "~2.0.3",
+        "kartik-v/yii2-widget-select2": "dev-master",
+        "kartik-v/yii2-mpdf": "*",
+        "kartik-v/yii2-checkbox-x": "dev-master",
+        "toxor88/yii2-widget-switchery": "*",
+        "hail812/yii2-adminlte3": "*",
+        "softark/yii2-dual-listbox": "dev-master",
+        "kartik-v/yii2-grid": "dev-master",
+        "kartik-v/yii2-date-range": "dev-master",
+        "kartik-v/yii2-icons": "@dev",
+        "kartik-v/yii2-widget-datepicker": "dev-master",
+        "kartik-v/yii2-widget-timepicker": "dev-master",
+        "miloschuman/yii2-highcharts-widget": "^8.0",
+        "chillerlan/php-qrcode": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

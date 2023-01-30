@@ -1,53 +1,399 @@
 <?php
 
-/** @var yii\web\View $this */
+use yii\helpers\Url;
+use miloschuman\highcharts\Highcharts;
 
-$this->title = 'My Yii Application';
+$this->title = 'ภาพรวมระบบ';
+$dash_date = null;
+$f_date = null;
+$t_date = null;
+if ($f_date != null && $t_date != null) {
+    $dash_date = date('d/m/Y', strtotime($f_date)) . ' - ' . date('d/m/Y', strtotime($t_date));
+}
+
+
 ?>
+<br/>
+<!--<input type="text" class="form-control qr-read" value="" onchange="showqr($(this))">-->
+<!--<p class="show-qr-code"></p>-->
 <div class="site-index">
-
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
     <div class="body-content">
 
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3><?= number_format(0) ?></h3>
+                        <p>จำนวนรถทั้งหมด</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="<?= Url::to(['product/index'], true) ?>" class="small-box-footer">รายละเอียด <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3><?= number_format(0) ?></h3>
+                        <!--                        <sup style="font-size: 20px">%</sup>-->
+                        <p>จำนวนใบงานทั้งหมด</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="<?= Url::to(['deliveryroute/index'], true) ?>" class="small-box-footer">รายละเอียด <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3><?= number_format(0) ?></h3>
+                        <p>จำนวนไม่รับงาน</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="<?= Url::to(['car/index'], true) ?>" class="small-box-footer">รายละเอียด <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-fuchsia">
+                    <div class="inner">
+                        <h3><?= number_format(0) ?></h3>
+                        <p>จำนวนงานเสร็จ</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="<?= Url::to(['orders/index'], true) ?>" class="small-box-footer">รายละเอียด <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
         </div>
 
     </div>
+    <form id="form-dashboard" action="<?= Url::to(['site/index'], true) ?>" method="post">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="label">เลือกดูตามช่วงวันที่</div>
+                <?php
+                echo \kartik\daterange\DateRangePicker::widget([
+                    'name' => 'dashboard_date',
+                    'value' => $dash_date,
+                    'pluginOptions' => [
+                        'format' => 'DD/MM/YYYY',
+                        'locale' => [
+                            'format' => 'DD/MM/YYYY'
+                        ],
+                    ],
+                    'presetDropdown' => true,
+                    'options' => [
+                        'class' => 'form-control',
+                        'onchange' => '$("#form-dashboard").submit();'
+                    ]
+                ]);
+                ?>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <!--                    <div class="card">-->
+                    <!--                        <div class="card-header border-0">-->
+                    <!--                            <div class="d-flex justify-content-between">-->
+                    <!--                                <h3 class="card-title">กราฟแสดงรายรับ-รายจ่าย</h3>-->
+                    <!--                                <a href="javascript:void(0);">รายละเอียด</a>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="card-body">-->
+                    <!--                            <div class="d-flex">-->
+                    <!--                                <p class="d-flex flex-column">-->
+                    <!--                                    <span class="text-bold text-lg">82,000</span>-->
+                    <!--                                    <span>มูลค่า</span>-->
+                    <!--                                </p>-->
+                    <!--                                <p class="ml-auto d-flex flex-column text-right">-->
+                    <!--                    <span class="text-success">-->
+                    <!--                      <i class="fas fa-arrow-up"></i> 12.5%-->
+                    <!--                    </span>-->
+                    <!--                                    <span class="text-muted">Since last week</span>-->
+                    <!--                                </p>-->
+                    <!--                            </div>-->
+                    <!--                            <!-- /.d-flex -->
+                    <!---->
+                    <!--                            <div class="position-relative mb-4">-->
+                    <!--                                <canvas id="visitors-chart" height="200"></canvas>-->
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                            <div class="d-flex flex-row justify-content-end">-->
+                    <!--                  <span class="mr-2">-->
+                    <!--                    <i class="fas fa-square text-primary"></i> เดือนนี้-->
+                    <!--                  </span>-->
+                    <!---->
+                    <!--                                <span>-->
+                    <!--                    <i class="fas fa-square text-gray"></i> เดือนที่แล้ว-->
+                    <!--                  </span>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <!-- /.card -->
+                    <!--                    <div class="card">-->
+                    <!--                        <div class="card-header border-0">-->
+                    <!--                            <div class="d-flex justify-content-between">-->
+                    <!--                                <h3 class="card-title">ยอดขายแยกประเภทขาย</h3>-->
+                    <!--                                <a href="javascript:void(0);">รายละเอียด</a>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="card-body">-->
+                    <!--                            <div class="d-flex">-->
+                    <!--                                <p class="d-flex flex-column">-->
+                    <!--                                    <span class="text-bold text-lg">18,230.00</span>-->
+                    <!--                                    <span>มูลค่า</span>-->
+                    <!--                                </p>-->
+                    <!--                            </div>-->
+                    <!-- /.d-flex -->
+                    <!---->
+                    <!--                            <div class="position-relative mb-12">-->
+                    <!--                                --><?php
+                    //                                echo Highcharts::widget([
+                    //                                    'setupOptions' => [
+                    //                                        'lang' => [
+                    //                                            'numericSymbols' => null,
+                    //                                            'thousandsSep' => ','
+                    //                                        ]
+                    //                                    ],
+                    //                                    'options' => [
+                    //                                        'title' => ['text' => ''],
+                    //                                        'subtitle' => ['text' => ''],
+                    //                                        'tooltip' => [
+                    //                                            'pointFormat' => "<b style='color: red;font-weight: bold'>{point.y:,.0f}</b> บาท"
+                    //                                        ],
+                    //                                        'xAxis' => [
+                    //                                            'categories' => $category
+                    //                                        ],
+                    //                                        'yAxis' => [
+                    //                                            'title' => ['text' => 'ยอดเงิน']
+                    //                                        ],
+                    //                                        'series' => $data_by_type
+                    //                                    ]
+                    //                                ]);
+                    //                                ?>
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+                    <!--                     -------->
+
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <h3 class="card-title">รายการใบงานล่าสุด</h3>
+                            <div class="card-tools">
+                                <a href="#" class="btn btn-tool btn-sm">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a href="#" class="btn btn-tool btn-sm">
+                                    <i class="fas fa-bars"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-striped table-valign-middle">
+                                <thead>
+                                <tr>
+                                    <th>เลขที่</th>
+                                    <th>วันที่</th>
+                                    <th>ลูกค้า</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col-md-6 -->
+                <div class="col-lg-6">
+                    <!--                    <div class="card">-->
+                    <!--                        <div class="card-header border-0">-->
+                    <!--                            <div class="d-flex justify-content-between">-->
+                    <!--                                <h3 class="card-title">ยอดขายแยกตามประเภทสินค้า</h3>-->
+                    <!--                                <a href="javascript:void(0);">รายละเอียด</a>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="card-body">-->
+                    <!--                            <div class="d-flex">-->
+                    <!--                                <p class="d-flex flex-column">-->
+                    <!--                                    <span class="text-bold text-lg">18,230.00</span>-->
+                    <!--                                    <span>มูลค่า</span>-->
+                    <!--                                </p>-->
+                    <!--                                <p class="ml-auto d-flex flex-column text-right">-->
+                    <!--                    <span class="text-success">-->
+                    <!--                      <i class="fas fa-arrow-up"></i> 33.1%-->
+                    <!--                    </span>-->
+                    <!--                                    <span class="text-muted">Since last month</span>-->
+                    <!--                                </p>-->
+                    <!--                            </div>-->
+                    <!-- /.d-flex -->
+                    <!---->
+                    <!--                            <div class="position-relative mb-4">-->
+                    <!--                                --><?php
+                    //                                //  print_r($data_by_prod_type);
+                    //                                echo Highcharts::widget([
+                    //                                    'setupOptions' => [
+                    //                                        'lang' => [
+                    //                                            'numericSymbols' => null,
+                    //                                            'thousandsSep' => ','
+                    //                                        ]
+                    //                                    ],
+                    //                                    'options' => [
+                    //                                        'chart' => [
+                    //                                            'type' => 'pie',
+                    //                                        ],
+                    //                                        'tooltip' => [
+                    //                                            'pointFormat' => "<b style='color: red;font-weight: bold'>{point.y:,.0f}</b> บาท"
+                    //                                        ],
+                    //                                        'allowPointSelect' => true,
+                    //                                        'title' => ['text' => ''],
+                    //                                        'subtitle' => ['text' => ''],
+                    //                                        'showInLegend' => true,
+                    //                                        'xAxis' => [
+                    //                                            'categories' => ''
+                    //                                        ],
+                    //                                        'yAxis' => [
+                    //                                            'title' => ['text' => 'ยอดเงิน']
+                    //                                        ],
+                    //                                        'series' => [
+                    //                                            $data_by_prod_type[0]
+                    //                                        ]
+                    //                                    ]
+                    //                                ]);
+                    //                                ?>
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <!-- /.card -->
+
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <h3 class="card-title">ราคาน้ำมัน ปตท. วันนี้</h3>
+                            <div class="card-tools">
+                                <a href="#" class="btn btn-sm btn-tool">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm btn-tool">
+                                    <i class="fas fa-bars"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form id="form-update-price" action="<?= Url::to(["fuel/activeprice"], true) ?>"  method="post">
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <button class="btn btn-info">อัพเดทราคาน้ำมัน</button>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                            <!-- /.d-flex -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-md-6 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
 </div>
+<br/>
+<!--<div class="row">-->
+<!--    <div class="col-lg-12">-->
+<!--        <form action="--><? //=Url::to(['site/getcominfo'],true)?><!--">-->
+<!--            <button class="btn btn-success">Get Mac</button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<button onclick="takeshot()">-->
+<!--    Take Screenshot-->
+<!--</button>-->
+<!--<div id="div1">-->
+<!--    niran tarlek-->
+<!--    <table class="table">-->
+<!--        <tr>-->
+<!--            <td>dfdfd</td>-->
+<!--            <td>fdfd</td>-->
+<!--            <td>fdfdfd</td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</div>-->
+<?php
+$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/jquery.html2canvas.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+
+$url_to_save_screenshort = \yii\helpers\Url::to(['site/createscreenshort'], true);
+$js = <<<JS
+$(function(){
+    //aleret();
+   
+});
+function takeshot() {
+    const input = document.getElementById('div1');
+    const area = input.getBoundingClientRect()
+      html2canvas(input,{
+          useCORS: true,
+          scrollX: 0,
+          scrollY: 0,
+          width: area.width,
+          height: area.height
+      }).then((canvas) => {
+            console.log("done ... ");
+            var img = canvas.toDataURL("image/png");//here set the image extension and now image data is in var img that will send by our ajax call to our api or server site page
+              $.ajax({
+                    type: 'POST',
+                    url: "$url_to_save_screenshort",//path to send this image data to the server site api or file where we will get this data and convert it into a file by base64
+                    data:{
+                      "img":img
+                    },
+                    success:function(data){
+                        
+                    alert(data);
+                    //$("#dis").html(data);
+                    }
+              });
+        });
+        
+     }
+     
+     function showqr(e){
+       var res = e.val().split(',');
+       $(".show-qr-code").html(res[0]);
+     }
+JS;
+
+$this->registerJs($js, static::POS_END);
+?>
