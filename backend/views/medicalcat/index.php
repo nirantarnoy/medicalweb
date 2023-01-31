@@ -7,6 +7,7 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\bootstrap4\LinkPager;
+
 /** @var yii\web\View $this */
 /** @var backend\models\MedicalcatSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -56,7 +57,10 @@ $this->params['breadcrumbs'][] = $this->title;
         //'tableOptions' => ['class' => 'table table-hover'],
         'emptyText' => '<div style="color: red;text-align: center;"> <b>ไม่พบรายการไดๆ</b> <span> เพิ่มรายการโดยการคลิกที่ปุ่ม </span><span class="text-success">"สร้างใหม่"</span></div>',
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'headerOptions' => ['style' => 'text-align:center;', 'class' => 'activity-view-link',],
+                'contentOptions' => ['style' => 'text-align: center'],],
 
 //            'id',
             'code',

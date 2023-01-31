@@ -3,7 +3,7 @@
     <a href="index.php?r=site/index" class="brand-link">
 <!--        <img src="--><?php //echo Yii::$app->request->baseUrl; ?><!--/uploads/logo/narono_logo.png" alt="Narono" class="brand-image">-->
 <!--        <span class="brand-text font-weight-light">VORAPAT</span>-->
-        <span class="brand-text font-weight-light">MedicalWeb</span>
+        <span class="brand-text font-weight-light">Medical Web</span>
     </a>
 
     <!-- Sidebar -->
@@ -60,7 +60,7 @@
                     <ul class="nav nav-treeview">
                         <?php //if (\Yii::$app->user->can('warehouse/index')): ?>
                             <li class="nav-item">
-                                <a href="index.php?r=fueltype/index" class="nav-link fueltype">
+                                <a href="index.php?r=medicalcat/index" class="nav-link medicalcat">
                                     <i class="far fa-circlez nav-icon"></i>
                                     <p>หมวดหมู่</p>
                                 </a>
@@ -68,7 +68,7 @@
                         <?php //endif; ?>
                         <?php //if (\Yii::$app->user->can('location/index')): ?>
                         <li class="nav-item">
-                            <a href="index.php?r=fuel" class="nav-link fuel">
+                            <a href="index.php?r=medical" class="nav-link medical">
                                 <i class="far fa-circlez nav-icon"></i>
                                 <p>
                                     เวชภัณฑ์
@@ -79,7 +79,7 @@
                         <?php //endif; ?>
                         <?php //if (\Yii::$app->user->can('location/index')): ?>
                         <li class="nav-item">
-                            <a href="index.php?r=fueldailyprice" class="nav-link fueldailyprice">
+                            <a href="index.php?r=unit" class="nav-link unit">
                                 <i class="far fa-oil-can nav-icon"></i>
                                 <p>
                                     หน่วยนับ
@@ -88,9 +88,23 @@
                             </a>
                         </li>
                         <?php //endif; ?>
+
+
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview has-sub">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-cubes"></i>
+                        <p>
+                            คลัง/จำนวนคงเหลือ
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
                         <?php //if (\Yii::$app->user->can('location/index')): ?>
                         <li class="nav-item">
-                            <a href="index.php?r=fueldailyprice" class="nav-link fueldailyprice">
+                            <a href="index.php?r=warehouse" class="nav-link warehouse">
                                 <i class="far fa-oil-can nav-icon"></i>
                                 <p>
                                     คลังที่จัดเก็บ
@@ -101,27 +115,6 @@
                         <?php //endif; ?>
 
 
-
-                    </ul>
-                </li>
-
-                <li class="nav-item has-treeview has-sub">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            คงเหลือ
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <?php //if (\Yii::$app->user->can('customergroup/index')): ?>
-                            <li class="nav-item">
-                                <a href="index.php?r=customergroup/index" class="nav-link customergroup">
-                                    <i class="far fa-circlez nav-icon"></i>
-                                    <p>กลุ่มลูกค้า</p>
-                                </a>
-                            </li>
-                        <?php //endif; ?>
                         <?php //if (\Yii::$app->user->can('customertype/index')): ?>
 <!--                            <li class="nav-item">-->
 <!--                                <a href="index.php?r=customertype/index" class="nav-link customertype">-->
@@ -132,10 +125,10 @@
                         <?php //endif; ?>
                         <?php //if (\Yii::$app->user->can('customers/index')): ?>
                             <li class="nav-item">
-                                <a href="index.php?r=customer" class="nav-link customer">
+                                <a href="index.php?r=stocksum" class="nav-link stocksum">
                                     <i class="far fa-circlez nav-icon"></i>
                                     <p>
-                                        ลูกค้า
+                                        สินค้าคงคลัง
                                         <!--                                <span class="right badge badge-danger">New</span>-->
                                     </p>
                                 </a>
@@ -144,34 +137,35 @@
 
                     </ul>
                 </li>
+
                 <li class="nav-item has-treeview has-sub">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users-cog"></i>
+                        <i class="nav-icon fas fa-list-alt"></i>
                         <p>
-                            พนักงาน
-                            <i class="fas fa-angle-left right"></i>
+                            ทำรายการรับ/จ่าย
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <?php //if (\Yii::$app->user->can('position/index')): ?>
+                        <?php if (\Yii::$app->user->can('salecomreport/index')): ?>
                             <li class="nav-item">
-                                <a href="index.php?r=position/index" class="nav-link position">
+                                <a href="index.php?r=salecomreport" class="nav-link salecomreport">
                                     <i class="far fa-circlez nav-icon"></i>
-                                    <p>ตำแหน่ง</p>
+                                    <p>รับเวชภัณฑ์</p>
                                 </a>
                             </li>
-                        <?php //endif; ?>
-                        <?php //if (\Yii::$app->user->can('employee/index')): ?>
+                        <?php endif;?>
+                        <?php if (\Yii::$app->user->can('salecomreport/index')): ?>
                             <li class="nav-item">
-                                <a href="index.php?r=employee/index" class="nav-link employee">
+                                <a href="index.php?r=salecomreport" class="nav-link salecomreport">
                                     <i class="far fa-circlez nav-icon"></i>
-                                    <p>พนักงาน</p>
+                                    <p>จ่ายเวชภัณฑ์</p>
                                 </a>
                             </li>
-                        <?php //endif; ?>
+                        <?php endif;?>
+
                     </ul>
                 </li>
-
                 <li class="nav-item has-treeview has-sub">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-chart-pie"></i>
@@ -182,12 +176,20 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <?php if (\Yii::$app->user->can('salecomreport/index')): ?>
-                        <li class="nav-item">
-                            <a href="index.php?r=salecomreport" class="nav-link salecomreport">
-                                <i class="far fa-circlez nav-icon"></i>
-                                <p>รายงานค่าคอมฯ</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="index.php?r=salecomreport" class="nav-link salecomreport">
+                                    <i class="far fa-circlez nav-icon"></i>
+                                    <p>รายงานรับ</p>
+                                </a>
+                            </li>
+                        <?php endif;?>
+                        <?php if (\Yii::$app->user->can('salecomreport/index')): ?>
+                            <li class="nav-item">
+                                <a href="index.php?r=salecomreport" class="nav-link salecomreport">
+                                    <i class="far fa-circlez nav-icon"></i>
+                                    <p>รายงานจ่าย</p>
+                                </a>
+                            </li>
                         <?php endif;?>
 
                     </ul>
