@@ -1,31 +1,30 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
- * This is the model class for table "stock_sum".
+ * This is the model class for table "purchrec_line".
  *
  * @property int $id
- * @property int|null $product_id
- * @property int|null $warehouse_id
+ * @property int|null $purchrec_id
+ * @property int|null $item_id
  * @property string|null $lot_no
- * @property string|null $expired_date
+ * @property string|null $exp_date
  * @property float|null $qty
- * @property int|null $trans_ref_id
+ * @property int|null $unit_id
  * @property int|null $status
  * @property int|null $created_at
- * @property int|null $updated_at
  */
-class StockSum extends \yii\db\ActiveRecord
+class PurchrecLine extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'stock_sum';
+        return 'purchrec_line';
     }
 
     /**
@@ -34,8 +33,8 @@ class StockSum extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'warehouse_id', 'trans_ref_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['expired_date'], 'safe'],
+            [['purchrec_id', 'item_id', 'unit_id', 'status', 'created_at'], 'integer'],
+            [['exp_date'], 'safe'],
             [['qty'], 'number'],
             [['lot_no'], 'string', 'max' => 255],
         ];
@@ -48,15 +47,14 @@ class StockSum extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'product_id' => 'Product ID',
-            'warehouse_id' => 'Warehouse ID',
+            'purchrec_id' => 'Purchrec ID',
+            'item_id' => 'Item ID',
             'lot_no' => 'Lot No',
-            'expired_date' => 'Expired Date',
+            'exp_date' => 'Exp Date',
             'qty' => 'Qty',
-            'trans_ref_id' => 'Trans Ref ID',
+            'unit_id' => 'Unit ID',
             'status' => 'Status',
             'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
         ];
     }
 }

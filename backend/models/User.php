@@ -11,6 +11,7 @@ date_default_timezone_set('Asia/Bangkok');
 
 class User extends \common\models\User
 {
+    public $pwd,$group_id,$roles;
     public function rules()
     {
         return
@@ -18,7 +19,7 @@ class User extends \common\models\User
                 [['username','group_id'],'required'],
                 [['username', 'pwd'], 'string'],
                 [['group_id','employee_ref_id','status'],'integer'],
-                [['roles'], 'safe'],
+                [['roles','pwd','group_id'], 'safe'],
             ];
     }
 

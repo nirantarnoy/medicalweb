@@ -147,22 +147,22 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <?php if (\Yii::$app->user->can('salecomreport/index')): ?>
+                        <?php //if (\Yii::$app->user->can('salecomreport/index')): ?>
                             <li class="nav-item">
-                                <a href="index.php?r=salecomreport" class="nav-link salecomreport">
+                                <a href="index.php?r=itemrecieve" class="nav-link itemrecieve">
                                     <i class="far fa-circlez nav-icon"></i>
                                     <p>รับเวชภัณฑ์</p>
                                 </a>
                             </li>
-                        <?php endif;?>
-                        <?php if (\Yii::$app->user->can('salecomreport/index')): ?>
+                        <?php //endif;?>
+                        <?php //if (\Yii::$app->user->can('salecomreport/index')): ?>
                             <li class="nav-item">
-                                <a href="index.php?r=salecomreport" class="nav-link salecomreport">
+                                <a href="index.php?r=itemissue" class="nav-link itemissue">
                                     <i class="far fa-circlez nav-icon"></i>
                                     <p>จ่ายเวชภัณฑ์</p>
                                 </a>
                             </li>
-                        <?php endif;?>
+                        <?php //endif;?>
 
                     </ul>
                 </li>
