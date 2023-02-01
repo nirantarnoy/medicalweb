@@ -14,11 +14,14 @@ class ItemissueSearch extends Itemissue
     /**
      * {@inheritdoc}
      */
+    public $globalSearch;
+
     public function rules()
     {
         return [
             [['id', 'emp_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['journal_no', 'trans_date', 'description'], 'safe'],
+            [['globalSearch'], 'string'],
         ];
     }
 
@@ -57,19 +60,19 @@ class ItemissueSearch extends Itemissue
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'trans_date' => $this->trans_date,
-            'emp_id' => $this->emp_id,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-        ]);
+//        $query->andFilterWhere([
+//            'id' => $this->id,
+//            'trans_date' => $this->trans_date,
+//            'emp_id' => $this->emp_id,
+//            'status' => $this->status,
+//            'created_at' => $this->created_at,
+//            'created_by' => $this->created_by,
+//            'updated_at' => $this->updated_at,
+//            'updated_by' => $this->updated_by,
+//        ]);
 
-        $query->andFilterWhere(['like', 'journal_no', $this->journal_no])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->orFilterWhere(['like', 'journal_no', $this->globalSearch])
+            ->orFilterWhere(['like', 'description', $this->globalSearch]);
 
         return $dataProvider;
     }
