@@ -92,11 +92,12 @@ $model_data = \backend\models\Stocksum::find()->all();
     <table style="width: 100%" id="table-data">
         <tr>
             <td style="text-align: center;padding: 0px;border: 1px solid grey">ลำดับ</td>
-            <td style="text-align: center;padding: 0px;border: 1px solid grey">รหัสยา</td>
-            <td style="text-align: center;padding: 0px;border: 1px solid grey">ชื่อยา</td>
+            <td style="text-align: left;padding-left: 3px;border: 1px solid grey">รหัสยา</td>
+            <td style="text-align: left;padding-left: 3px;border: 1px solid grey">ชื่อยา</td>
             <td style="text-align: center;padding: 0px;border: 1px solid grey">LotNo.</td>
             <td style="text-align: center;padding: 0px;border: 1px solid grey">วันหมดอายุ</td>
-            <td style="text-align: center;padding: 0px;border: 1px solid grey">จำนวนเงิน</td>
+            <td style="text-align: right;padding-right: 3px;border: 1px solid grey">จำนวนขั้นต่ำ</td>
+            <td style="text-align: right;padding-right: 3px;border: 1px solid grey">จำนวนคงเหลือ</td>
             <td style="text-align: center;padding: 0px;border: 1px solid grey">หมายเหตุ</td>
 
         </tr>
@@ -117,6 +118,9 @@ $model_data = \backend\models\Stocksum::find()->all();
                 </td>
                 <td style="text-align: center;">
                     <?=$value->expired_date?>
+                </td>
+                <td style="text-align: right;">
+                    <?=number_format(100)?>
                 </td>
                 <td style="text-align: right;">
                     <?=number_format($value->qty)?>
