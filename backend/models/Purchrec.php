@@ -3,6 +3,7 @@
 namespace app\models;
 
 use backend\models\Customer;
+use backend\models\Orders;
 use Yii;
 
 /**
@@ -35,7 +36,7 @@ class Purchrec extends \yii\db\ActiveRecord
         return [
             [['trans_date'], 'safe'],
             [['status', 'created_by', 'created_at', 'updated_at', 'updated_by'], 'integer'],
-            [['journal_no','note'], 'string', 'max' => 255],
+            [['journal_no', 'note'], 'string', 'max' => 255],
         ];
     }
 
@@ -55,6 +56,28 @@ class Purchrec extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public static function getLastNo()
+    {
+        $model = Purchrec::find()->MAX('journal_no');
+
+        $pre = "RE";
+        if ($model != null) {
+            $prefix = $pre . '-' . substr(date("Y"), 2, 2);
+            $cnum = substr((string)$model, 3, 6);
+            $len = strlen($cnum);
+            $clen = strlen($cnum + 1);
+            $loop = $len - $clen;
+            for ($i = 1; $i <= $loop; $i++) {
+                $prefix .= "0";
+            }
+            $prefix .= $cnum + 1;
+            return $prefix;
+        } else {
+            $prefix = $pre . '-' . substr(date("Y"), 2, 2);
+            return $prefix . '000001';
+        }
     }
 
 }
