@@ -175,14 +175,14 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <?php if (\Yii::$app->user->can('salecomreport/index')): ?>
+                        <?php //if (\Yii::$app->user->can('salecomreport/index')): ?>
                             <li class="nav-item">
-                                <a href="index.php?r=salecomreport" class="nav-link salecomreport">
+                                <a href="index.php?r=reports/lowstock" class="nav-link lowstock">
                                     <i class="far fa-circlez nav-icon"></i>
-                                    <p>รายงานรับ</p>
+                                    <p>สินค้าต่ำกว่า stock</p>
                                 </a>
                             </li>
-                        <?php endif;?>
+                        <?php //endif;?>
                         <?php if (\Yii::$app->user->can('salecomreport/index')): ?>
                             <li class="nav-item">
                                 <a href="index.php?r=salecomreport" class="nav-link salecomreport">
