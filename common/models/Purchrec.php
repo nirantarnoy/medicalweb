@@ -34,7 +34,7 @@ class Purchrec extends \yii\db\ActiveRecord
         return [
             [['trans_date'], 'safe'],
             [['status', 'created_by', 'created_at', 'updated_at', 'updated_by'], 'integer'],
-            [['journal_no'], 'string', 'max' => 255],
+            [['journal_no','note'], 'string', 'max' => 255],
         ];
     }
 
@@ -45,9 +45,10 @@ class Purchrec extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'journal_no' => 'Journal No',
-            'trans_date' => 'Trans Date',
-            'status' => 'Status',
+            'journal_no' => 'เลขที่',
+            'trans_date' => 'วันที่รับเข้า',
+            'status' => 'สถานะ',
+            'note' => 'หมายเหตุ',
             'created_by' => 'Created By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

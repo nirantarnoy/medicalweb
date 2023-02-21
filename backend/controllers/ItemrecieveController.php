@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
 class ItemrecieveController extends Controller
 {
     public $enableCsrfValidation = false;
+
     /**
      * @inheritDoc
      */
@@ -76,8 +77,51 @@ class ItemrecieveController extends Controller
         $model = new Itemrecieve();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $item_id = \Yii::$app->request->post('line_item_id');
+                $line_qty = \Yii::$app->request->post('line_qty');
+                $line_unit_id = \Yii::$app->request->post('line_unit_id');
+                $line_lotno = \Yii::$app->request->post('line_lot');
+                $line_expired = \Yii::$app->request->post('line_expired');
+
+                $tdate = date('Y-m-d');
+                $xdate = explode('-',$model->trans_date);
+                if(count($xdate)>1){
+                    $tdate = $xdate[2].'/'.$xdate[1].'/'.$xdate[0];
+                }
+
+                $model->journal_no = $model::getLastNo();
+                $model->trans_date = date('Y-m-d', strtotime($tdate));
+                $model->status = 1;
+                if ($model->save(false)) {
+                    if ($item_id != null) {
+                        for ($i = 0; $i <= count($item_id) - 1; $i++) {
+                            $model_line = new \common\models\PurchrecLine();
+                            $model_line->purchrec_id = $model->id;
+                            $model_line->item_id = $item_id[$i];
+                            $model_line->qty = $line_qty[$i];
+                            $model_line->unit_id = $line_unit_id[$i];
+                            $model_line->lot_no = $line_lotno[$i];
+                            $model_line->exp_date = date('Y-m-d');
+                            if ($model_line->save(false)) {
+                                $model_trans = new \backend\models\Stocktrans();
+                                $model_trans->journal_no = '';
+                                $model_trans->trans_date = date('Y-m-d H:i:s');
+                                $model_trans->activity_type_id = 1;
+                                $model_trans->trans_module_type_id = 1; // 1 receive
+                                $model_trans->item_id = $item_id[$i];
+                                $model_trans->qty = $line_qty[$i];
+                                $model_trans->lot_no = $line_lotno[$i];
+                                $model_trans->exp_date = date('Y-m-d');
+                                if ($model_trans->save(false)) {
+                                    $this->updatestock($item_id[$i], $line_qty[$i], $line_unit_id[$i], $line_lotno[$i], $line_expired[$i], $model_trans->id);
+                                }
+                            }
+                        }
+                    }
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+
             }
         } else {
             $model->loadDefaultValues();
@@ -86,6 +130,26 @@ class ItemrecieveController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function updatestock($item_id, $qty, $unit_id, $lot_no, $expired, $trans_ref_id)
+    {
+        if ($item_id && $qty) {
+            $model = \backend\models\Stocksum::find()->where(['product_id' => $item_id, 'lot_no' => $lot_no])->one();
+            if ($model) {
+                $model->qty = ($model->qty + $qty);
+                $model->save(false);
+            } else {
+                $model_new = new \backend\models\Stocksum();
+                $model_new->product_id = $item_id;
+                $model_new->qty = $qty;
+                $model_new->warehouse_id = 1;
+                $model_new->lot_no = $lot_no;
+                $model_new->expired_date = date('Y-m-d');
+                $model_new->trans_ref_id = $trans_ref_id;
+                $model_new->save(false);
+            }
+        }
     }
 
     /**
@@ -99,12 +163,15 @@ class ItemrecieveController extends Controller
     {
         $model = $this->findModel($id);
 
+        $model_line = \common\models\PurchrecLine::find()->where(['purchrec_id'=>$id])->all();
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'model_line' => $model_line,
         ]);
     }
 

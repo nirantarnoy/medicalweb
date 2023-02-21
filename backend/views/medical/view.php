@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'code',
             'name',
             'description',
-            'medical_cat_id',
             [
                 'attribute' => 'medical_cat_id',
                 'value' => function ($model) {

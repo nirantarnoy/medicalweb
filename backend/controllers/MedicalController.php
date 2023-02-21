@@ -2,11 +2,14 @@
 
 namespace backend\controllers;
 
+use backend\models\Company;
 use backend\models\Medical;
 use backend\models\MedicalSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use Yii;
 
 /**
  * MedicalController implements the CRUD actions for Medical model.
@@ -76,8 +79,17 @@ class MedicalController extends Controller
         $model = new Medical();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $photo = UploadedFile::getInstance($model, 'photo');
+                if (!empty($photo)) {
+                    $photo_name = time() . "." . $photo->getExtension();
+                    $photo->saveAs(Yii::getAlias('@backend') . '/web/uploads/photo/' . $photo_name);
+                    $model->photo = $photo_name;
+                }
+                if($model->save(false)){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+
             }
         } else {
             $model->loadDefaultValues();
@@ -99,8 +111,17 @@ class MedicalController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load($this->request->post())) {
+            $photo = UploadedFile::getInstance($model, 'photo');
+            if (!empty($photo)) {
+                $photo_name = time() . "." . $photo->getExtension();
+                $photo->saveAs(\Yii::getAlias('@backend') . '/web/uploads/photo/' . $photo_name);
+                $model->photo = $photo_name;
+            }
+            if($model->save(false)){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         }
 
         return $this->render('update', [
@@ -136,5 +157,67 @@ class MedicalController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionDeletephoto()
+    {
+        $id = \Yii::$app->request->post('delete_id');
+        if ($id) {
+            $photo = $this->getPhotoName($id);
+            if ($photo != '') {
+                if (unlink('../web/uploads/photo/' . $photo)) {
+                    Medical::updateAll(['photo' => ''], ['id' => $id]);
+                }
+            }
+
+        }
+        return $this->redirect(['medical/update', 'id' => $id]);
+    }
+
+    public function getPhotoName($id)
+    {
+        $photo_name = '';
+        if ($id) {
+            $model = Medical::find()->where(['id' => $id])->one();
+            if ($model) {
+                $photo_name = $model->photo;
+            }
+        }
+        return $photo_name;
+    }
+
+    public function actionGetItem()
+    {
+        $txt = \Yii::$app->request->post('txt');
+
+        $html = '';
+        $model = null;
+        if ($txt == '' || $txt == null) {
+            $model = \backend\models\Medical::find()->all();
+        } else {
+            $model = \backend\models\Medical::find()->where(['OR', ['LIKE', 'code', $txt], ['LIKE', 'name', $txt]])->all();
+        }
+
+        if ($model) {
+            foreach ($model as $value) {
+                $unit_name = \backend\models\Unit::findUnitName($value->unit_id);
+                $html .= '<tr>';
+                $html .= '<td style="text-align: center">
+                        <div class="btn btn-outline-success btn-sm" onclick="addselecteditem($(this))" data-var="' . $value->id . '">เลือก</div>
+                        <input type="hidden" class="line-find-code" value="' . $value->code . '">
+                        <input type="hidden" class="line-find-name" value="' . $value->name . '">
+                        <input type="hidden" class="line-unit-id" value="' . $value->unit_id . '">
+                        <input type="hidden" class="line-unit-name" value="' . $unit_name . '">
+                        <input type="hidden" class="line-find-price" value="0">
+                        <input type="hidden" class="line-onhand" value="0">
+                       </td>';
+                $html .= '<td>' . $value->code . '</td>';
+                $html .= '<td>' . $value->name . '</td>';
+                $html .= '<td>' . number_format(0) . '</td>';
+                $html .= '<td>' . number_format(0) . '</td>';
+                $html .= '</tr>';
+            }
+        }
+        echo $html;
     }
 }

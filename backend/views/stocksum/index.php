@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'product_id',
                 'value' => function ($data) {
-                    return \backend\models\Product::findName($data->product_id);
+                    return \backend\models\Medical::findName($data->product_id);
                 }
             ],
             [

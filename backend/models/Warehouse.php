@@ -53,4 +53,10 @@ class Warehouse extends \common\models\Warehouse
             'updated_by' => 'Updated By',
         ];
     }
+
+    public function findName($id)
+    {
+        $model = Warehouse::find()->where(['id' => $id])->one();
+        return $model != null ? $model->name : '';
+    }
 }

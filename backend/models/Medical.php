@@ -70,4 +70,15 @@ class Medical extends \common\models\Medical
             'updated_by' => 'Updated By',
         ];
     }
+
+    public function findCode($id)
+    {
+        $model = Medical::find()->where(['id' => $id])->one();
+        return $model != null ? $model->code : '';
+    }
+    public function findName($id)
+    {
+        $model = Medical::find()->where(['id' => $id])->one();
+        return $model != null ? $model->name : '';
+    }
 }
