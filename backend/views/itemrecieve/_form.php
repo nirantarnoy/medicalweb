@@ -47,28 +47,36 @@ use yii\widgets\ActiveForm;
                     <tbody>
                     <?php if ($model_line): ?>
                         <?php foreach ($model_line as $value): ?>
-                            <tr data-var="<?=$value->id?>">
+                            <tr data-var="<?= $value->id ?>">
                                 <td></td>
                                 <td>
-                                    <input type="hidden" class="line-item-id" name="line_item_id[]" value="<?=$value->item_id?>">
-                                    <input type="hidden" class="line-unit-id" name="line_unit_id[]" value="<?=$value->unit_id?>">
+                                    <input type="hidden" class="line-item-id" name="line_item_id[]"
+                                           value="<?= $value->item_id ?>">
+                                    <input type="hidden" class="line-unit-id" name="line_unit_id[]"
+                                           value="<?= $value->unit_id ?>">
                                     <input type="text" class="form-control line-code" name="line_code[]"
-                                           ondblclick="showfind($(this))" value="<?=\backend\models\Medical::findCode($value->item_id)?>">
+                                           ondblclick="showfind($(this))"
+                                           value="<?= \backend\models\Medical::findCode($value->item_id) ?>">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control line-name" name="line_name[]" readonly value="<?=\backend\models\Medical::findName($value->item_id)?>">
+                                    <input type="text" class="form-control line-name" name="line_name[]" readonly
+                                           value="<?= \backend\models\Medical::findName($value->item_id) ?>">
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control line-qty" name="line_qty[]" min="1" value="<?=$value->qty?>">
+                                    <input type="number" class="form-control line-qty" name="line_qty[]" min="1"
+                                           value="<?= $value->qty ?>" autocomplete="off">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control line-unit" name="line_unit[]" value="<?=\backend\models\Unit::findUnitName($value->unit_id)?>">
+                                    <input type="text" class="form-control line-unit" name="line_unit[]"
+                                           value="<?= \backend\models\Unit::findUnitName($value->unit_id) ?>">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control line-lot" name="line_lot[]" value="<?=$value->lot_no?>">
+                                    <input type="text" class="form-control line-lot" name="line_lot[]"
+                                           value="<?= $value->lot_no ?>" autocomplete="off">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control line-expired" name="line_expired[]" value="<?=$value->exp_date?>">
+                                    <input type="text" class="form-control line-expired" name="line_expired[]"
+                                           value="<?= $value->exp_date ?>" autocomplete="off">
                                 </td>
                                 <td>
                                     <div class="btn btn-danger btn-sm" onclick="removeline($(this))"><i
@@ -90,16 +98,16 @@ use yii\widgets\ActiveForm;
                                 <input type="text" class="form-control line-name" name="line_name[]" readonly>
                             </td>
                             <td>
-                                <input type="number" class="form-control line-qty" name="line_qty[]" min="1">
+                                <input type="number" class="form-control line-qty" name="line_qty[]" min="1" autocomplete="off">
                             </td>
                             <td>
                                 <input type="text" class="form-control line-unit" name="line_unit[]">
                             </td>
                             <td>
-                                <input type="text" class="form-control line-lot" name="line_lot[]">
+                                <input type="text" class="form-control line-lot" name="line_lot[]" autocomplete="off">
                             </td>
                             <td>
-                                <input type="text" class="form-control line-expired" name="line_expired[]">
+                                <input type="text" class="form-control line-expired" name="line_expired[]" autocomplete="off">
                             </td>
                             <td>
                                 <div class="btn btn-danger btn-sm" onclick="removeline($(this))"><i
@@ -238,6 +246,14 @@ $(function(){
         var txt = $(".search-item").val();
         showfindwithsearch(txt);
     });
+    
+    var TinyDatePicker = DateRangePicker.TinyDatePicker;
+      TinyDatePicker('.line-expired', {
+        mode: 'dp-below',
+      })
+      .on('statechange', function(ev) {
+          
+      })   
 });
 
 function showfind(e){

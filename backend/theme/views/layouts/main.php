@@ -3,11 +3,14 @@
 use yii\helpers\Html;
 
 use backend\assets\AppAsset;
+use yii\helpers\Url;
 use yii\web\Session;
 
 $session = \Yii::$app->session;
 
 AppAsset::register($this);
+
+$AssetModule = sprintf("%s/modules", Url::base());
 
 \hail812\adminlte3\assets\FontAwesomeAsset::register($this);
 \hail812\adminlte3\assets\AdminLteAsset::register($this);
@@ -48,6 +51,13 @@ $is_pos_user = 0;
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
     <link rel="stylesheet" href="css/sweetalert.css">
+
+
+
+    <link rel="stylesheet" type="text/css" href="<?= "{$AssetModule}/tiny-date-picker/tiny-date-picker.css" ?>">
+    <link rel="stylesheet" type="text/css" href="<?= "{$AssetModule}/tiny-date-picker/date-range-picker.css" ?>">
+    <link rel="stylesheet" type="text/css" href="<?= "{$AssetModule}/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" ?>">
+
     <?php $this->head() ?>
     <style>
         @font-face {
@@ -143,6 +153,10 @@ $is_pos_user = 0;
 <script src="dist/js/demo.js"></script>
 <script src="dist/js/pages/dashboard3.js"></script>
 <script src="js/module_index_delete.js"></script>
+
+<script src="<?= "{$AssetModule}/tiny-date-picker/dist/date-range-picker.js" ?>"></script>
+<script src="<?= "{$AssetModule}/moment/moment.js" ?>"></script>
+<script src="<?= "{$AssetModule}/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js" ?>"></script>
 
 <script>
     var cururl = $("#current-url").val();

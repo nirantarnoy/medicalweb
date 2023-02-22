@@ -11,6 +11,7 @@ use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
+$AssetModule = sprintf("%s/modules", Url::base());
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -21,6 +22,10 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+
+    <link rel="stylesheet" type="text/css" href="<?= "{$AssetModule}/tiny-date-picker/tiny-date-picker.css" ?>">
+    <link rel="stylesheet" type="text/css" href="<?= "{$AssetModule}/tiny-date-picker/date-range-picker.css" ?>">
+    <link rel="stylesheet" type="text/css" href="<?= "{$AssetModule}/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" ?>">
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
@@ -74,6 +79,10 @@ AppAsset::register($this);
         <p class="float-end"><?= Yii::powered() ?></p>
     </div>
 </footer>
+
+<script src="<?= "{$AssetModule}/tiny-date-picker/dist/date-range-picker.js" ?>"></script>
+<script src="<?= "{$AssetModule}/moment/moment.js" ?>"></script>
+<script src="<?= "{$AssetModule}/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js" ?>"></script>
 
 <?php $this->endBody() ?>
 </body>
