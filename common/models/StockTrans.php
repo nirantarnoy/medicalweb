@@ -50,17 +50,17 @@ class StockTrans extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'journal_no' => 'Journal No',
-            'trans_date' => 'Trans Date',
-            'trans_module_type_id' => 'Trans Module Type ID',
-            'activity_type_id' => 'Activity Type ID',
-            'item_id' => 'Item ID',
+            'journal_no' => 'เลขที่',
+            'trans_date' => 'วันที่ทำรายการ',
+            'trans_module_type_id' => 'กิจกรรม',
+            'activity_type_id' => 'ประเภทสต๊อก',
+            'item_id' => 'รหัสเวชภัณฑ์',
             'lot_no' => 'Lot No',
-            'exp_date' => 'Exp Date',
-            'qty' => 'Qty',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'created_by' => 'Created By',
+            'exp_date' => 'หมดอายุ',
+            'qty' => 'จำนวน',
+            'status' => 'สถานะ',
+            'created_at' => 'สร้างเมื่อ',
+            'created_by' => 'สร้างโดย',
         ];
     }
 }

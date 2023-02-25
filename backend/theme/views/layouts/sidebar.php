@@ -156,12 +156,20 @@
                             </li>
                         <?php //endif;?>
                         <?php //if (\Yii::$app->user->can('salecomreport/index')): ?>
-                            <li class="nav-item">
-                                <a href="index.php?r=itemissue" class="nav-link itemissue">
-                                    <i class="far fa-circlez nav-icon"></i>
-                                    <p>จ่ายเวชภัณฑ์</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="index.php?r=itemissue" class="nav-link itemissue">
+                                <i class="far fa-circlez nav-icon"></i>
+                                <p>จ่ายเวชภัณฑ์</p>
+                            </a>
+                        </li>
+                        <?php //endif;?>
+                        <?php //if (\Yii::$app->user->can('salecomreport/index')): ?>
+                        <li class="nav-item">
+                            <a href="index.php?r=stocktrans" class="nav-link stocktrans">
+                                <i class="far fa-circlez nav-icon"></i>
+                                <p>ประวัติรับเข้า-จ่ายออก</p>
+                            </a>
+                        </li>
                         <?php //endif;?>
 
                     </ul>

@@ -108,14 +108,14 @@ class ItemissueController extends Controller
                                 $model_trans = new \backend\models\Stocktrans();
                                 $model_trans->journal_no = '';
                                 $model_trans->trans_date = date('Y-m-d H:i:s');
-                                $model_trans->activity_type_id = 1;
+                                $model_trans->activity_type_id = 2;
                                 $model_trans->trans_module_type_id = 2; // 1 receive
                                 $model_trans->item_id = $item_id[$i];
                                 $model_trans->qty = $line_qty[$i];
                                 $model_trans->lot_no = $line_lotno[$i];
                                 $model_trans->exp_date = date('Y-m-d');
                                 if ($model_trans->save(false)) {
-//                                    $this->updatestock($item_id[$i], $line_qty[$i], $line_unit_id[$i], $line_lotno[$i], $line_expired[$i], $model_trans->id);
+                                    $this->updatestock($item_id[$i], $line_qty[$i], $line_lotno[$i], $model_trans->id);
                                 }
                             }
                         }
@@ -132,6 +132,17 @@ class ItemissueController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function updatestock($item_id, $qty, $lot_no, $trans_ref_id)
+    {
+        if ($item_id && $qty) {
+            $model = \backend\models\Stocksum::find()->where(['product_id' => $item_id, 'lot_no' => $lot_no])->one();
+            if ($model) {
+                $model->qty = ($model->qty - $qty);
+                $model->save(false);
+            }
+        }
     }
 
     /**

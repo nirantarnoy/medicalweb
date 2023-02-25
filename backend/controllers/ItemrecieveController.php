@@ -90,19 +90,27 @@ class ItemrecieveController extends Controller
                     $tdate = $xdate[2].'/'.$xdate[1].'/'.$xdate[0];
                 }
 
+
+
                 $model->journal_no = $model::getLastNo();
                 $model->trans_date = date('Y-m-d', strtotime($tdate));
                 $model->status = 1;
                 if ($model->save(false)) {
                     if ($item_id != null) {
                         for ($i = 0; $i <= count($item_id) - 1; $i++) {
+                            $line_exp_date = date('Y-m-d');
+                            $xprdate = explode('-',$line_expired[$i]);
+                            if(count($xprdate)>1){
+                                $line_exp_date = $xprdate[2].'/'.$xprdate[1].'/'.$xprdate[0];
+                            }
+
                             $model_line = new \common\models\PurchrecLine();
                             $model_line->purchrec_id = $model->id;
                             $model_line->item_id = $item_id[$i];
                             $model_line->qty = $line_qty[$i];
                             $model_line->unit_id = $line_unit_id[$i];
                             $model_line->lot_no = $line_lotno[$i];
-                            $model_line->exp_date = date('Y-m-d');
+                            $model_line->exp_date = date('Y-m-d',strtotime($line_exp_date));
                             if ($model_line->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
                                 $model_trans->journal_no = '';
@@ -112,7 +120,7 @@ class ItemrecieveController extends Controller
                                 $model_trans->item_id = $item_id[$i];
                                 $model_trans->qty = $line_qty[$i];
                                 $model_trans->lot_no = $line_lotno[$i];
-                                $model_trans->exp_date = date('Y-m-d');
+                                $model_trans->exp_date = date('Y-m-d',strtotime($line_exp_date));
                                 if ($model_trans->save(false)) {
                                     $this->updatestock($item_id[$i], $line_qty[$i], $line_unit_id[$i], $line_lotno[$i], $line_expired[$i], $model_trans->id);
                                 }

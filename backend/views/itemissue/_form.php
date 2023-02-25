@@ -45,9 +45,9 @@ use yii\widgets\ActiveForm;
                     <th>#</th>
                     <th>รหัสเวชภัณฑ์</th>
                     <th>ชื่อ</th>
+                    <th>LotNo.</th>
                     <th>จำนวน</th>
                     <th>หน่วยนับ</th>
-                    <th>LotNo.</th>
                     <th>ExpiredDate</th>
                     <th></th>
                 </tr>
@@ -70,6 +70,10 @@ use yii\widgets\ActiveForm;
                                        value="<?= \backend\models\Medical::findName($value->item_id) ?>">
                             </td>
                             <td>
+                                <!--                            <input type="text" class="form-control line-lot" name="line_lot[]">-->
+                                <select name="line_lot[]" class="form-control line-lot" id=""></select>
+                            </td>
+                            <td>
                                 <input type="number" class="form-control line-qty" name="line_qty[]" min="1"
                                        value="<?= $value->qty ?>">
                             </td>
@@ -77,13 +81,10 @@ use yii\widgets\ActiveForm;
 <!--                                <input type="text" class="form-control line-unit" name="line_unit[]"-->
 <!--                                       value="--><?//= \backend\models\Unit::findUnitName($value->unit_id) ?><!--">-->
                             </td>
-                            <td>
-                                <input type="text" class="form-control line-lot" name="line_lot[]"
-                                       value="<?= $value->lot_no ?>">
-                            </td>
+
                             <td>
                                 <input type="text" class="form-control line-expired" name="line_expired[]"
-                                       value="<?= $value->exp_date ?>">
+                                       value="<?= $value->exp_date ?>" readonly>
                             </td>
                             <td>
                                 <div class="btn btn-danger btn-sm" onclick="removeline($(this))"><i
@@ -105,16 +106,18 @@ use yii\widgets\ActiveForm;
                             <input type="text" class="form-control line-name" name="line_name[]" readonly>
                         </td>
                         <td>
+                            <!--                            <input type="text" class="form-control line-lot" name="line_lot[]">-->
+                            <select name="line_lot[]" class="form-control line-lot" id=""></select>
+                        </td>
+                        <td>
                             <input type="number" class="form-control line-qty" name="line_qty[]" min="1">
                         </td>
                         <td>
-                            <input type="text" class="form-control line-unit" name="line_unit[]">
+                            <input type="text" class="form-control line-unit" name="line_unit[]" readonly>
                         </td>
+
                         <td>
-                            <input type="text" class="form-control line-lot" name="line_lot[]">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control line-expired" name="line_expired[]">
+                            <input type="text" class="form-control line-expired" name="line_expired[]" readonly>
                         </td>
                         <td>
                             <div class="btn btn-danger btn-sm" onclick="removeline($(this))"><i
@@ -239,6 +242,7 @@ use yii\widgets\ActiveForm;
 <?php
 $url_to_Dropoffdata = \yii\helpers\Url::to(['dropoffplace/getdropoffdata'], true);
 $url_to_find_item = \yii\helpers\Url::to(['medical/get-item'], true);
+$url_to_get_line_lot = \yii\helpers\Url::to(['medical/get-line-lot'], true);
 $js = <<<JS
  var removelist = [];
   var selecteditem = [];
@@ -346,6 +350,8 @@ function showfindwithsearch(txt){
                 var line_unit_id = selecteditem[i]['unit_id'];
                 var line_unit_name = selecteditem[i]['unit_name'];
                 
+                var line_lot_item_list = '';
+                
                  if(check_dup(line_prod_id) == 1){
                         alert("รายการสินค้า " +line_prod_code+ " มีในรายการแล้ว");
                         return false;
@@ -385,6 +391,26 @@ function showfindwithsearch(txt){
 //                            event.preventDefault();
 //                        }
 //                    });
+
+
+                    $.ajax({
+                        'type': 'post',
+                        'dataType': 'json',
+                        'async': false,
+                        'url': '$url_to_get_line_lot,
+                        'data': {'product_id': line_prod_id},
+                        // alert(data)
+                        'success': function(data){
+                            if(data != null){
+                              line_lot_item_list = data;
+                            }
+                        },
+                        'error': function(data){
+                             alert(data);//return;
+                        }
+                    });
+//
+                   clone.find('.line-lot').html(line_lot_item_list);
 
                     tr.after(clone);
                     //cal_num();
