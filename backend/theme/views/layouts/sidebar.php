@@ -184,12 +184,20 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <?php //if (\Yii::$app->user->can('salecomreport/index')): ?>
-                            <li class="nav-item">
-                                <a href="index.php?r=reports/lowstock" class="nav-link lowstock">
-                                    <i class="far fa-circlez nav-icon"></i>
-                                    <p>สินค้าต่ำกว่า stock</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="index.php?r=reports/lowstock" class="nav-link lowstock">
+                                <i class="far fa-circlez nav-icon"></i>
+                                <p>สินค้าต่ำกว่า stock</p>
+                            </a>
+                        </li>
+                        <?php //endif;?>
+                        <?php //if (\Yii::$app->user->can('salecomreport/index')): ?>
+                        <li class="nav-item">
+                            <a href="index.php?r=stocktrans/transheet" class="nav-link transheet">
+                                <i class="far fa-circlez nav-icon"></i>
+                                <p>สรุปรับ-จ่าย</p>
+                            </a>
+                        </li>
                         <?php //endif;?>
                         <?php if (\Yii::$app->user->can('salecomreport/index')): ?>
                             <li class="nav-item">

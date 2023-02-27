@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
  */
 class StocktransController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritDoc
      */
@@ -133,6 +134,11 @@ class StocktransController extends Controller
     }
 
     public function actionTransheet(){
-        return $this->render('_transheet');
+        $product_id = \Yii::$app->request->post('select_product');
+
+        $model = \backend\models\Medical::find()->where(['id'=>$product_id])->one();
+
+
+        return $this->render('_transheet',['model'=>$model]);
     }
 }
