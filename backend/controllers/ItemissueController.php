@@ -81,8 +81,11 @@ class ItemissueController extends Controller
                 $item_id = \Yii::$app->request->post('line_item_id');
                 $line_qty = \Yii::$app->request->post('line_qty');
                 $line_unit_id = \Yii::$app->request->post('line_unit_id');
-                $line_lotno = \Yii::$app->request->post('line_lot');
+                $line_lot_id = \Yii::$app->request->post('line_lot');
                 $line_expired = \Yii::$app->request->post('line_expired');
+
+
+
 
                 $tdate = date('Y-m-d');
                 $xdate = explode('-', $model->trans_date);
@@ -97,12 +100,13 @@ class ItemissueController extends Controller
                 if ($model->save(false)) {
                     if ($item_id != null) {
                         for ($i = 0; $i <= count($item_id) - 1; $i++) {
+                            $line_lot_no = $this->findlotnofromid($line_lot_id[$i]);
                             $model_line = new \common\models\JournalIssueLine();
                             $model_line->issue_id = $model->id;
                             $model_line->item_id = $item_id[$i];
                             $model_line->qty = $line_qty[$i];
 //                            $model_line->unit_id = $line_unit_id[$i];
-                            $model_line->lot_no = $line_lotno[$i];
+                            $model_line->lot_no = $line_lot_no;
                             $model_line->exp_date = date('Y-m-d');
                             if ($model_line->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
@@ -112,10 +116,10 @@ class ItemissueController extends Controller
                                 $model_trans->trans_module_type_id = 2; // 1 receive
                                 $model_trans->item_id = $item_id[$i];
                                 $model_trans->qty = $line_qty[$i];
-                                $model_trans->lot_no = $line_lotno[$i];
+                                $model_trans->lot_no = $line_lot_no;
                                 $model_trans->exp_date = date('Y-m-d');
                                 if ($model_trans->save(false)) {
-                                    $this->updatestock($item_id[$i], $line_qty[$i], $line_lotno[$i], $model_trans->id);
+                                    $this->updatestock($item_id[$i], $line_qty[$i], $line_lot_no, $model_trans->id);
                                 }
                             }
                         }
@@ -143,6 +147,17 @@ class ItemissueController extends Controller
                 $model->save(false);
             }
         }
+    }
+
+    public function findlotnofromid($lot_line_id){
+        $name = '';
+        if($lot_line_id){
+            $model=\backend\models\Stocksum::find()->select('lot_no')->where(['id'=>$lot_line_id])->one();
+            if($model){
+                $name = $model->lot_no;
+            }
+        }
+        return $name;
     }
 
     /**
