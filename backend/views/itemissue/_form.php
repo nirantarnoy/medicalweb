@@ -72,6 +72,7 @@ use yii\widgets\ActiveForm;
                             <td>
                                 <!--                            <input type="text" class="form-control line-lot" name="line_lot[]">-->
                                 <select name="line_lot[]" class="form-control line-lot" id=""></select>
+                                <input type="hidden" class="line-lot-qty" value="">
                             </td>
                             <td>
                                 <input type="number" class="form-control line-qty" name="line_qty[]" min="1"
@@ -107,7 +108,8 @@ use yii\widgets\ActiveForm;
                         </td>
                         <td>
                             <!--                            <input type="text" class="form-control line-lot" name="line_lot[]">-->
-                            <select name="line_lot[]" class="form-control line-lot" id=""></select>
+                            <select name="line_lot[]" class="form-control line-lot" id="" onchange="getlotqty($(this))"></select>
+                            <input type="hidden" class="line-lot-qty" value="">
                         </td>
                         <td>
                             <input type="number" class="form-control line-qty" name="line_qty[]" min="1">
@@ -243,6 +245,7 @@ use yii\widgets\ActiveForm;
 $url_to_Dropoffdata = \yii\helpers\Url::to(['dropoffplace/getdropoffdata'], true);
 $url_to_find_item = \yii\helpers\Url::to(['medical/get-item'], true);
 $url_to_get_line_lot = \yii\helpers\Url::to(['medical/get-line-lot'], true);
+$url_to_get_lot_qty = \yii\helpers\Url::to(['medical/get-lot-qty'], true);
 $js = <<<JS
  var removelist = [];
   var selecteditem = [];
@@ -367,7 +370,24 @@ function showfindwithsearch(txt){
                     tr.closest("tr").find(".line-unit").val(line_unit_name);
                     tr.closest("tr").find(".line-unit-id").val(line_unit_id);
                    
-
+                    
+                   $.ajax({
+                      'type': 'post',
+                      'dataType': 'html',
+                      'async': false,
+                      'url': '$url_to_get_line_lot',
+                      'data': {'product_id': line_prod_id},
+                      'success': function(data){
+                            if(data != null){
+                                  line_lot_item_list = data;
+                            }
+                      },
+                      'error': function(err){
+                                 //alert(data);//return;
+                      }
+                    });
+                    
+                   tr.closest("tr").find('.line-lot').html(line_lot_item_list);
                     //cal_num();
                     console.log(line_prod_code);
                 } else {
@@ -392,27 +412,26 @@ function showfindwithsearch(txt){
 //                        }
 //                    });
 
-
                     $.ajax({
-                        'type': 'post',
-                        'dataType': 'json',
-                        'async': false,
-                        'url': '$url_to_get_line_lot,
-                        'data': {'product_id': line_prod_id},
-                        // alert(data)
-                        'success': function(data){
+                      'type': 'post',
+                      'dataType': 'html',
+                      'async': false,
+                      'url': '$url_to_get_line_lot',
+                      'data': {'product_id': line_prod_id},
+                      'success': function(data){
                             if(data != null){
-                              line_lot_item_list = data;
+                                  line_lot_item_list = data;
                             }
-                        },
-                        'error': function(data){
-                             alert(data);//return;
-                        }
+                      },
+                      'error': function(err){
+                                 //alert(data);//return;
+                      }
                     });
-//
+
                    clone.find('.line-lot').html(line_lot_item_list);
 
                     tr.after(clone);
+                    
                     //cal_num();
                 }
             }
@@ -473,10 +492,9 @@ function showfindwithsearch(txt){
       });
       return _has;
     }
+  
     
-    
-    
-function addline(e){
+  function addline(e){
     var tr = $("#table-list tbody tr:last");
                 if(tr.find(".line-code").val() == ""){
                     tr.find(".line-code").focus();
@@ -499,8 +517,8 @@ function addline(e){
                     
                     tr.after(clone);
      
-}
-function removeline(e) {
+ }
+ function removeline(e) {
         if (confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) {
             if (e.parent().parent().attr("data-var") != '') {
                 removelist.push(e.parent().parent().attr("data-var"));
@@ -522,9 +540,9 @@ function removeline(e) {
             // cal_linenum();
             // cal_all();
         }
-    }
+  }
     
-    function getDropoffinfo(e){
+  function getDropoffinfo(e){
     // alert(e.val());
     if(e.val() != ''){
         $.ajax({
@@ -547,7 +565,34 @@ function removeline(e) {
             }
         });
     }
-}
+ }
+ 
+ function getlotqty(e){
+        if(e.val() != ''){
+            alert(e.val());
+        $.ajax({
+            'type': 'post',
+            'dataType': 'html',
+            'url': '$url_to_get_lot_qty',
+            'data': {'lot_id': e.val()},
+            // alert(data)
+            'success': function(data){
+                if(data != null){
+                 //   alert(data);
+                    e.closest('tr').find('.line-lot-qty').val(data);
+                    e.closest('tr').find('.line-qty').val(data);
+                    e.closest('tr').find('.line-qty').attr("max", data);
+                    
+                }
+            },
+            'error': function(data){
+                 alert(data);//return;
+            }
+        });
+    }
+ }
+ 
+ 
 
 
 JS;

@@ -220,4 +220,32 @@ class MedicalController extends Controller
         }
         echo $html;
     }
+
+    public function actionGetLineLot(){
+        $html = '';
+        $product_id = \Yii::$app->request->post('product_id');
+        if($product_id){
+            $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->groupBy(['product_id'])->orderBy("lot_no")->all();
+            if($model){
+                $html.='<option id="-1">--เลือก Lot No--</option>';
+                foreach ($model as $value){
+                    $html.='<option value="'.$value->id.'">'.$value->lot_no.'</option>';
+                }
+            }
+        }
+
+        echo $html;
+    }
+
+    public function actionGetLotQty(){
+        $line_qty = 0;
+        $lot_line_id = \Yii::$app->request->post('lot_id');
+        if($lot_line_id){
+            $model = \backend\models\Stocksum::find()->where(['id'=>$lot_line_id])->one();
+            if($model){
+                $line_qty = $model->qty;
+            }
+        }
+        return $line_qty;
+    }
 }
