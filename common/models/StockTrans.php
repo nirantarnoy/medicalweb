@@ -39,7 +39,7 @@ class StockTrans extends \yii\db\ActiveRecord
             [['trans_date', 'exp_date'], 'safe'],
             [['trans_module_type_id', 'activity_type_id', 'item_id', 'status', 'created_at', 'created_by'], 'integer'],
             [['qty'], 'number'],
-            [['journal_no', 'lot_no'], 'string', 'max' => 255],
+            [['journal_no', 'lot_no','issue_ref_no'], 'string', 'max' => 255],
         ];
     }
 
@@ -59,6 +59,7 @@ class StockTrans extends \yii\db\ActiveRecord
             'exp_date' => 'หมดอายุ',
             'qty' => 'จำนวน',
             'status' => 'สถานะ',
+            'issue_ref_no' => 'Issue ref no',
             'created_at' => 'สร้างเมื่อ',
             'created_by' => 'สร้างโดย',
         ];
