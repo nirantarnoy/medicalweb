@@ -36,7 +36,7 @@ class PurchrecLine extends \yii\db\ActiveRecord
             [['purchrec_id', 'item_id', 'unit_id', 'status', 'created_at'], 'integer'],
             [['exp_date'], 'safe'],
             [['qty'], 'number'],
-            [['lot_no'], 'string', 'max' => 255],
+            [['lot_no','issue_ref_no'], 'string', 'max' => 255],
         ];
     }
 
@@ -49,6 +49,7 @@ class PurchrecLine extends \yii\db\ActiveRecord
             'id' => 'ID',
             'purchrec_id' => 'Purchrec ID',
             'item_id' => 'Item ID',
+            'issue_ref_no' => 'Issue ref No',
             'lot_no' => 'Lot No',
             'exp_date' => 'Exp Date',
             'qty' => 'Qty',
