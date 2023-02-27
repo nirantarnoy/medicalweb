@@ -240,6 +240,42 @@ class ItemissueController extends Controller
         ]);
     }
 
+
+    public function actionNotifymessagestockalert()
+    {
+        //$message = "This is test send request from camel paperless";
+        $line_api = 'https://notify-api.line.me/api/notify';
+
+        $line_token = 'xSrX0gLB4Rii37Lww8lYAMFNrbDU2AT2KqtDFN72xD2';
+
+
+        $message = '' . "\n";
+        $message .= 'แจ้งเตือนเวชภัณฑ์ต่ำกว่า minimum stock:'  . "\n";
+        $message .= "วันที่: " . date('d-m-Y'). "\n";
+        $message .= "เวลา: " . date('H:i:s'). "\n";
+        $message .= 'เวชภัณฑ์รหัส: ' . '00001'. "\n";
+        $message .= "ชื่อ: " . 'ทดสอบ' . "\n";
+        $message .= "จำนวนขั้นต่ำ: " . number_format(10, 0) . "\n";
+        $message .= "จำนวนคงเหลือ: " . number_format(9, 0) . "\n";
+
+
+        $queryData = array('message' => $message);
+        $queryData = http_build_query($queryData, '', '&');
+        $headerOptions = array(
+            'http' => array(
+                'method' => 'POST',
+                'header' => "Content-Type: application/x-www-form-urlencoded\r\n"
+                    . "Authorization: Bearer " . $line_token . "\r\n"
+                    . "Content-Length: " . strlen($queryData) . "\r\n",
+                'content' => $queryData
+            )
+        );
+        $context = stream_context_create($headerOptions);
+        $result = file_get_contents($line_api, FALSE, $context);
+        $res = json_decode($result);
+        return $res;
+    }
+
     /**
      * Deletes an existing Itemissue model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

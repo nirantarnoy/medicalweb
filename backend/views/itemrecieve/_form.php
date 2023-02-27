@@ -76,7 +76,7 @@ use yii\widgets\ActiveForm;
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line-expired" name="line_expired[]"
-                                           value="<?= $value->exp_date ?>" autocomplete="off">
+                                           value="<?= date('d-m-Y',strtotime($value->exp_date)) ?>" autocomplete="off">
                                 </td>
                                 <td>
                                     <div class="btn btn-danger btn-sm" onclick="removeline($(this))"><i
@@ -247,13 +247,15 @@ $(function(){
         showfindwithsearch(txt);
     });
     
-    var TinyDatePicker = DateRangePicker.TinyDatePicker;
-      TinyDatePicker('.line-expired', {
-        mode: 'dp-below',
-      })
-      .on('statechange', function(ev) {
-          
-      })   
+    // var TinyDatePicker = DateRangePicker.TinyDatePicker;
+    //   TinyDatePicker('.line-expired', {
+    //     mode: 'dp-below',
+    //   })
+    //   .on('statechange', function(ev) {
+    //      
+    //   })   
+    
+    $('.line-expired').datepicker({'format': 'dd-mm-yyyy'});
 });
 
 function showfind(e){
