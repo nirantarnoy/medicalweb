@@ -106,7 +106,7 @@ class ItemissueController extends Controller
                             $model_line->exp_date = date('Y-m-d');
                             if ($model_line->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
-                                $model_trans->journal_no = '';
+                                $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
                                 $model_trans->trans_date = date('Y-m-d H:i:s');
                                 $model_trans->activity_type_id = 2;
                                 $model_trans->trans_module_type_id = 2; // 1 receive
@@ -188,7 +188,7 @@ class ItemissueController extends Controller
                             $model_line_chk->status = 1;
                             if ($model_line_chk->save(false)){
                                 $model_trans = new \backend\models\Stocktrans();
-                                $model_trans->journal_no = '';
+                                $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
                                 $model_trans->trans_date = date('Y-m-d H:i:s');
                                 $model_trans->activity_type_id = 1;
                                 $model_trans->trans_module_type_id = 2; // 1 receive
@@ -210,7 +210,7 @@ class ItemissueController extends Controller
                             $model_line->exp_date = date('Y-m-d');
                             if ($model_line->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
-                                $model_trans->journal_no = '';
+                                $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
                                 $model_trans->trans_date = date('Y-m-d H:i:s');
                                 $model_trans->activity_type_id = 1;
                                 $model_trans->trans_module_type_id = 2; // 1 receive
