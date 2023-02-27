@@ -73,6 +73,7 @@ use yii\widgets\ActiveForm;
                                 <!--                            <input type="text" class="form-control line-lot" name="line_lot[]">-->
                                 <select name="line_lot[]" class="form-control line-lot" id=""></select>
                                 <input type="hidden" class="line-lot-qty" value="">
+<!--                                <input type="hidden" class="line-lot-no" value="">-->
                             </td>
                             <td>
                                 <input type="number" class="form-control line-qty" name="line_qty[]" min="1"
