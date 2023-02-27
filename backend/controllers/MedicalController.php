@@ -229,7 +229,7 @@ class MedicalController extends Controller
             if($model){
                 $html.='<option id="-1">--เลือก Lot No--</option>';
                 foreach ($model as $value){
-                    $html.='<option value="'.$value->id.'">'.$value->lot_no.'</option>';
+                    $html.='<option value="'.$value->id.'">'.$value->lot_no .' '.'['.date('d/m/Y',strtotime($value->expired_date)).']'.'</option>';
                 }
             }
         }

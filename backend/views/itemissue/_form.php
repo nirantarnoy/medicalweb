@@ -569,7 +569,7 @@ function showfindwithsearch(txt){
  
  function getlotqty(e){
         if(e.val() != ''){
-            alert(e.val());
+         //   alert(e.val());
         $.ajax({
             'type': 'post',
             'dataType': 'html',
