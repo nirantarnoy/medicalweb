@@ -124,6 +124,10 @@
                 ?>
                 <?php if ($trans_date != null): ?>
                     <?php for ($i = 0; $i <= count($trans_date) - 1; $i++): ?>
+                    <?php
+                        $rc_data = [];
+                        $rc_data = getRCitem($trans_date[$i]['trans_date'],1,1); //1 = RC module 2 = IS module
+                        ?>
                         <tr>
                             <td style="border: 1px solid black;text-align: center;padding:10px;"><?= date('d/m/Y',strtotime($trans_date[$i]['trans_date'])) ?></td>
                             <td style="border: 1px solid black;text-align: center">IS-23-00001</td>
@@ -161,12 +165,23 @@ function getTransdate()
 {
     $data = [];
 
-    $model = \backend\models\Stocktrans::find()->select('date(trans_date) as trans_date')->groupBy(['date(trans_date)'])->orderBy('trans_date')->all();
+    $model = \backend\models\Stocktrans::find()->select('date(trans_date) as trans_date')->where(['item_id'=>1])->groupBy(['date(trans_date)'])->orderBy('trans_date')->all();
     if ($model) {
         foreach ($model as $value) {
             array_push($data, ['trans_date' => $value->trans_date]);
         }
     }
+    return $data;
+}
+
+function getRCitem($trans_date,$item_id,$module_type)
+{
+    $data = [];
+    if($trans_date != null && $item_id != null && $module_type != null){
+        $model = \backend\models\Stocktrans::find()->where(['trans_date'=>$trans_date,'item_id'=>$item_id,'trans_module_type_id'=>$module_type])->all();
+        
+    }
+
     return $data;
 }
 
