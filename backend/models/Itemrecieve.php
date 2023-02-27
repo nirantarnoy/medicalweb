@@ -95,8 +95,8 @@ class Itemrecieve extends \common\models\Purchrec
             $prefix .= $cnum + 1;
             return $prefix;
         } else {
-            //   $prefix = $pre . '-' . substr(date("Y"), 2, 2); // omnoi
-            $prefix = $pre;
+               $prefix = $pre . '-' . substr(date("Y"), 2, 2); // omnoi
+//            $prefix = $pre;
             return $prefix . '00001';
         }
         // }

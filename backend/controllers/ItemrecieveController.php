@@ -113,7 +113,7 @@ class ItemrecieveController extends Controller
                             $model_line->exp_date = date('Y-m-d',strtotime($line_exp_date));
                             if ($model_line->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
-                                $model_trans->journal_no = '';
+                                $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
                                 $model_trans->trans_date = date('Y-m-d H:i:s');
                                 $model_trans->activity_type_id = 1;
                                 $model_trans->trans_module_type_id = 1; // 1 receive
@@ -151,9 +151,9 @@ class ItemrecieveController extends Controller
                 $model_new = new \backend\models\Stocksum();
                 $model_new->product_id = $item_id;
                 $model_new->qty = $qty;
-                $model_new->warehouse_id = 1;
+                $model_new->warehouse_id = 2;
                 $model_new->lot_no = $lot_no;
-                $model_new->expired_date = date('Y-m-d');
+                $model_new->expired_date = date('Y-m-d',strtotime($expired));
                 $model_new->trans_ref_id = $trans_ref_id;
                 $model_new->save(false);
             }
