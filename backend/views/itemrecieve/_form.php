@@ -39,6 +39,7 @@ use yii\widgets\ActiveForm;
                         <th>ชื่อ</th>
                         <th>จำนวน</th>
                         <th>หน่วยนับ</th>
+                        <th>เลขใบเบิก</th>
                         <th>LotNo.</th>
                         <th>ExpiredDate</th>
                         <th></th>
@@ -69,6 +70,10 @@ use yii\widgets\ActiveForm;
                                 <td>
                                     <input type="text" class="form-control line-unit" name="line_unit[]"
                                            value="<?= \backend\models\Unit::findUnitName($value->unit_id) ?>">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control line-issue-ref-no" name="line_issue_ref_no[]" readonly
+                                           value="<?= $value->issue_ref_no ?>">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line-lot" name="line_lot[]"
@@ -102,6 +107,10 @@ use yii\widgets\ActiveForm;
                             </td>
                             <td>
                                 <input type="text" class="form-control line-unit" name="line_unit[]">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control line-issue-ref-no" name="line_issue_ref_no[]"
+                                       value="">
                             </td>
                             <td>
                                 <input type="text" class="form-control line-lot" name="line_lot[]" autocomplete="off">

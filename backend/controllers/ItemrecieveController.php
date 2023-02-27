@@ -83,6 +83,7 @@ class ItemrecieveController extends Controller
                 $line_unit_id = \Yii::$app->request->post('line_unit_id');
                 $line_lotno = \Yii::$app->request->post('line_lot');
                 $line_expired = \Yii::$app->request->post('line_expired');
+                $line_issue_ref_no =  \Yii::$app->request->post('line_issue_ref_no');
 
                 $tdate = date('Y-m-d');
                 $xdate = explode('-',$model->trans_date);
@@ -121,6 +122,7 @@ class ItemrecieveController extends Controller
                                 $model_trans->qty = $line_qty[$i];
                                 $model_trans->lot_no = $line_lotno[$i];
                                 $model_trans->exp_date = date('Y-m-d',strtotime($line_exp_date));
+                                $model_trans->line_issue_ref_no = $line_issue_ref_no[$i];
                                 if ($model_trans->save(false)) {
                                     $this->updatestock($item_id[$i], $line_qty[$i], $line_unit_id[$i], $line_lotno[$i], $line_expired[$i], $model_trans->id);
                                 }
