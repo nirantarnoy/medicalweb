@@ -62,7 +62,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model_cat_count = \backend\models\MedicalCat::find()->count();
+        $model_medical_count = \backend\models\Medical::find()->count();
+        return $this->render('index',[
+            'model_cat_count' => $model_cat_count,
+            'model_medical_count' =>$model_medical_count,
+        ]);
     }
 
     /**

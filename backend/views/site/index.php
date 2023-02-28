@@ -24,7 +24,7 @@ if ($f_date != null && $t_date != null) {
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3><?= number_format(0) ?></h3>
+                        <h3><?= number_format($model_cat_count,0) ?></h3>
                         <p>จำนวนกลุ่มทั้งหมด</p>
                     </div>
                     <div class="icon">
@@ -39,7 +39,7 @@ if ($f_date != null && $t_date != null) {
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3><?= number_format(0) ?></h3>
+                        <h3><?= number_format($model_medical_count,0) ?></h3>
                         <!--                        <sup style="font-size: 20px">%</sup>-->
                         <p>จำนวนเวชภัณฑ์ทั้งหมด</p>
                     </div>
