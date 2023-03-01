@@ -94,11 +94,11 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td style="width: 30%">line1</td>
+                                <td style="width: 30%">เลขคุณลักษณะ</td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td style="width: 30%">line1</td>
+                                <td style="width: 30%">หน่วยนับ</td>
                                 <td>
                                     <b><?= $model != null ? \backend\models\Unit::findUnitName($model->unit_id) : '' ?></b>
                                 </td>
