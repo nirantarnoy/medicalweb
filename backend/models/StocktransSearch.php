@@ -44,7 +44,7 @@ class StocktransSearch extends Stocktrans
      */
     public function search($params)
     {
-        $query = Stocktrans::find();
+        $query = Stocktrans::find()->innerJoin('medical', 'stock_trans.item_id = medical.id');
 
         // add conditions that should always apply here
 
@@ -85,7 +85,8 @@ class StocktransSearch extends Stocktrans
 
             $query->andFilterWhere(['like', 'journal_no', $this->globalSearch])
                 ->orFilterWhere(['like', 'lot_no', $this->globalSearch])
-                ->orFilterWhere(['like', 'item_id', $this->globalSearch]);
+                ->orFilterWhere(['like', 'item_id', $this->globalSearch])
+                ->orFilterWhere(['like', 'medical.name', $this->globalSearch]);
 
         }
 

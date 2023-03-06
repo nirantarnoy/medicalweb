@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
         <div class="row">
             <div class="col-lg-4">
-                <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'code')->textInput(['maxlength' => true,'readonly'=>'readonly']) ?>
             </div>
             <div class="col-lg-4">
                 <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>

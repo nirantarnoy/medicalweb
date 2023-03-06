@@ -72,9 +72,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \backend\models\MedicalCat::findName($model->medical_cat_id);
                 }
             ],
-            //'pack_size',
+            'pack_size',
             //'unit_id',
-            //'price',
+            'price',
             //'min_stock',
             //'max_stock',
             //'photo',

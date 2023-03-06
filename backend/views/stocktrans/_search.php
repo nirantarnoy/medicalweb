@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
         <div class="col-lg-3">
-            <?= $form->field($model, 'globalSearch')->textInput(['placeholder'=>'ค้นหาโดย เลขที่ หรือ lot no'])->label('ค้นหา') ?>
+            <?= $form->field($model, 'globalSearch')->textInput(['placeholder'=>'ค้นหาโดย ชื่อยา เลขที่ หรือ lot no'])->label('ค้นหา') ?>
         </div>
         <div class="col-lg-3">
             <?= $form->field($model, 'trans_date')->widget(\kartik\date\DatePicker::className(),[

@@ -43,6 +43,8 @@ class Medical extends \common\models\Medical
             [['medical_cat_id', 'pack_size', 'unit_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['price', 'min_stock', 'max_stock'], 'number'],
             [['code', 'name', 'description', 'photo'], 'string', 'max' => 255],
+            [['code'], 'unique'],
+            [['medical_cat_id','pack_size','price', 'min_stock', 'max_stock'],'required'],
         ];
     }
 
@@ -76,9 +78,53 @@ class Medical extends \common\models\Medical
         $model = Medical::find()->where(['id' => $id])->one();
         return $model != null ? $model->code : '';
     }
+
     public function findName($id)
     {
         $model = Medical::find()->where(['id' => $id])->one();
         return $model != null ? $model->name : '';
     }
+
+    public function getMinstock($id)
+    {
+        $model = Medical::find()->where(['id' => $id])->one();
+        return $model != null ? $model->min_stock : 0;
+    }
+
+    public static function getLastNo($group_id)
+    {
+        //   $model = Orders::find()->MAX('order_no');
+        $model = \common\models\Medical::find()->where(['medical_cat_id' => $group_id])->MAX('code');
+
+        $pre = \backend\models\MedicalCat::findCode($group_id);
+        if($pre != ''){
+            if ($model != null) {
+                $arr_data = explode('-',$model);
+                $right_data = '';
+                if(count($arr_data) > 1){
+                    $right_data = $arr_data[1];
+                }
+                if ($right_data != ''){
+                    $prefix = $pre.'-';
+                    $cnum = strlen($right_data);
+                    $len = $cnum;
+                    $clen = strlen($right_data + 1);
+                    $loop = $len - $clen;
+                    for ($i = 1; $i <= $loop; $i++) {
+                        $prefix .= "0";
+                    }
+                    $prefix .= $right_data + 1;
+                    return $prefix;
+                }
+
+            } else {
+                //   $prefix = $pre . '-' . substr(date("Y"), 2, 2); // omnoi
+//            $prefix = $pre;
+                $prefix = $pre;
+                return $prefix . '-0001';
+            }
+        }
+
+    }
+
 }

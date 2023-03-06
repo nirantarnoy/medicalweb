@@ -120,7 +120,7 @@ $model_data = \backend\models\Stocksum::find()->all();
                     <?=$value->expired_date?>
                 </td>
                 <td style="text-align: right;">
-                    <?=number_format(100)?>
+                    <?=\backend\models\Medical::getMinstock($value->product_id)?>
                 </td>
                 <td style="text-align: right;">
                     <?=number_format($value->qty)?>

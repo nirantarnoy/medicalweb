@@ -35,6 +35,7 @@ class MedicalCat extends \common\models\MedicalCat
         return [
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['code', 'name', 'description'], 'string', 'max' => 255],
+            [['code'], 'unique'],
         ];
     }
 
@@ -60,5 +61,10 @@ class MedicalCat extends \common\models\MedicalCat
     {
         $model = MedicalCat::find()->where(['id' => $id])->one();
         return $model != null ? $model->name : '';
+    }
+    public function findCode($id)
+    {
+        $model = MedicalCat::find()->where(['id' => $id])->one();
+        return $model != null ? $model->code : '';
     }
 }
