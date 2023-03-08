@@ -14,7 +14,7 @@ echo "Scan QRCode";
     <div class="col-lg-12">
         <form id="form-qr-res" action="index.php?r=itemissue/createissueqr" method="post" enctype="multipart/form-data">
             <input type="hidden" class="qrcode-res" name="qrcode_txt" value="xxx">
-            <input type="submit" value="ok">
+
         </form>
 
     </div>
