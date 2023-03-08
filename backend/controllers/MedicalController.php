@@ -233,6 +233,8 @@ class MedicalController extends Controller
                 foreach ($model as $value){
                     $html.='<option value="'.$value->id.'">'.$value->lot_no .' '.'['.date('d/m/Y',strtotime($value->expired_date)).']'.'</option>';
                 }
+            }else{
+                $html.='<option id="-1">--ไม่พบข้อมูล--</option>';
             }
         }
 
