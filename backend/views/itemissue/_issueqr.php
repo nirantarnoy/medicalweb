@@ -10,6 +10,11 @@ echo "Scan QRCode";
         <div style="width: 500px" id="reader"></div>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12">
+        <input type="text" id="qrcode-res" form="form-control" readonly value="">
+    </div>
+</div>
 
 
 
@@ -19,6 +24,7 @@ function onScanSuccess(decodedText, decodedResult) {
     // Handle on success condition with the decoded text or result.
     console.log(`Scan result: decodedText`, decodedResult);
     alert(decodedText);
+    $("#qrcode-res").val(decodedText);
 }
 
 var html5QrcodeScanner = new Html5QrcodeScanner(
