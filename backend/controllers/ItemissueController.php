@@ -333,8 +333,9 @@ class ItemissueController extends Controller
     }
     public function actionCreateissueqr(){
         $product_code = \Yii::$app->request->post('qrcode_txt');
-      //  echo 'product code is '. $product_code;
-        return $this->render('_createissueqr',['product_code'=>$product_code]);
+        echo 'product code is '. \Yii::$app->request->post();
+
+        //return $this->render('_createissueqr',['product_code'=>$product_code]);
     }
 
 }
