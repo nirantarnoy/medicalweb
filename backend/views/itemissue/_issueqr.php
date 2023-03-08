@@ -13,7 +13,7 @@ echo "Scan QRCode";
 <div class="row">
     <div class="col-lg-12">
         <form id="form-qr-res" action="<?=\yii\helpers\Url::to(['itemissue/createissueqr'],true)?>" method="post">
-            <input type="text" id="qrcode-res" name="qrcode_txt" form="form-control" value="xxx">
+            <input type="text" class="qrcode-res" name="qrcode_txt" form="form-control" value="xxx">
         </form>
 
     </div>
@@ -35,8 +35,8 @@ function onScanSuccess(decodedText, decodedResult) {
     // Handle on success condition with the decoded text or result.
     console.log(`Scan result: decodedText`, decodedResult);
      alert(decodedText);
-    $("#qrcode-res").val(decodedText);
-    if($("#qrcode-res").val() != ''){
+    $(".qrcode-res").val(decodedText);
+    if($(".qrcode-res").val() != ''){
          $("form#form-qr-res").submit();
     }
 }
