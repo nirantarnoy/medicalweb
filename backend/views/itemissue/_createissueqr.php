@@ -15,56 +15,89 @@ if ($product_code != '') {
     }
 }
 ?>
-<div class="row">
-    <div class="col-lg-3">
-        <a href="index.php?r=itemissue/issueqr" target="_self" class="btn btn-primary"><i class="fa fa-camera"></i> สแกน
-            QR Code</a>
+    <div class="row">
+        <div class="col-lg-3">
+            <a href="index.php?r=itemissue/issueqr" target="_self" class="btn btn-primary"><i class="fa fa-camera"></i>
+                สแกน
+                QR Code</a>
+        </div>
     </div>
-</div>
-<br/>
-<div class="row">
-    <div class="col-lg-3">
-        <label for="">รหัสยา</label>
-        <input type="hidden" name="product_id" value="<?= $product_id ?>">
-        <input type="text" class="form-control" value="<?= $product_code; ?>" readonly>
+    <br/>
+<form id="save-issue" method="post" action="#">
+    <div class="row">
+        <div class="col-lg-3">
+            <label for="">รหัสยา</label>
+            <input type="hidden" name="product_id" class="product-id" value="<?= $product_id ?>">
+            <input type="text" class="form-control" value="<?= $product_code; ?>" readonly>
+        </div>
+        <div class="col-lg-3">
+            <label for="">ชื่อ</label>
+            <input type="text" class="form-control" value="<?= $product_name; ?>" readonly>
+        </div>
+        <div class="col-lg-3">
+            <label for="">ประภทยา</label>
+            <input type="text" class="form-control" value="<?= $product_code; ?>" readonly>
+        </div>
+        <div class="col-lg-3">
+            <label for="">Pack Size</label>
+            <input type="text" class="form-control" value="<?= $pack_size; ?>" readonly>
+        </div>
     </div>
-    <div class="col-lg-3">
-        <label for="">ชื่อ</label>
-        <input type="text" class="form-control" value="<?= $product_name; ?>" readonly>
+    <br/>
+    <div class="row">
+        <div class="col-lg-3">
+            <label for="">จำนวนคงเหลือ</label>
+            <input type="text" class="form-control" value="<?= $product_code; ?>" readonly>
+        </div>
+        <div class="col-lg-3">
+            <label for="">เลือก LotNo</label>
+            <select class="form-control" id="select-lot-no" name="select_lot_no" required>
+                <option value="-1">--เลือก LotNo--</option>
+            </select>
+        </div>
+        <div class="col-lg-3">
+            <label for="">จำนวน</label>
+            <input type="number" class="form-control" value="0" min="1">
+        </div>
+        <div class="col-lg-3">
+            <label for="">หน่วยนับ</label>
+            <input type="text" class="form-control" value="<?= $unit_name; ?>" readonly>
+        </div>
     </div>
-    <div class="col-lg-3">
-        <label for="">ประภทยา</label>
-        <input type="text" class="form-control" value="<?= $product_code; ?>" readonly>
+    <br/>
+    <div class="row">
+        <div class="col-lg-3">
+            <input type="submit" class="btn btn-success" value="บันทึกเบิกยา">
+        </div>
     </div>
-    <div class="col-lg-3">
-        <label for="">Pack Size</label>
-        <input type="text" class="form-control" value="<?= $pack_size; ?>" readonly>
-    </div>
-</div>
-<br/>
-<div class="row">
-    <div class="col-lg-3">
-        <label for="">จำนวนคงเหลือ</label>
-        <input type="text" class="form-control" value="<?= $product_code; ?>" readonly>
-    </div>
-    <div class="col-lg-3">
-        <label for="">เลือก LotNo</label>
-        <select class="form-control" id="select-lot-no" name="select_lot_no">
-            <option value="-1">--เลือก LotNo--</option>
-        </select>
-    </div>
-    <div class="col-lg-3">
-        <label for="">จำนวน</label>
-        <input type="text" class="form-control" value="0" readonly>
-    </div>
-    <div class="col-lg-3">
-        <label for="">หน่วยนับ</label>
-        <input type="text" class="form-control" value="<?= $unit_name; ?>" readonly>
-    </div>
-</div>
-<br/>
-<div class="row">
-    <div class="col-lg-3">
-        <input type="submit" class="btn btn-success" value="บันทึกเบิกยา">
-    </div>
-</div>
+</form>
+
+
+<?php
+$url_to_get_line_lot = \yii\helpers\Url::to(['medical/get-line-lot'], true);
+$js = <<<JS
+$(function(){
+    var product_id = $(".product-id").val();
+    if(product_id != ''){
+        
+        $.ajax({
+                      'type': 'post',
+                      'dataType': 'html',
+                      'async': false,
+                      'url': '$url_to_get_line_lot',
+                      'data': {'product_id': product_id},
+                      'success': function(data){
+                            if(data != null){
+                                $("#select-lot-no").html(data);
+                            }
+                      },
+                      'error': function(err){
+                                 //alert(data);//return;
+                      }
+                    });
+    }
+    
+});
+JS;
+$this->registerJs($js, static::POS_END);
+?>
