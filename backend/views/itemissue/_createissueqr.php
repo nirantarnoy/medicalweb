@@ -9,6 +9,7 @@ $pack_size = 0;
 if ($product_code != '') {
     $model = \backend\models\Medical::find()->where(['code' => trim($product_code)])->one();
     if ($model) {
+        $product_id = $model->id;
         $product_name = $model->name;
         $pack_size = $model->pack_size;
         $unit_name = \backend\models\Unit::findUnitName($model->unit_id);
