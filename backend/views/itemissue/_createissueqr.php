@@ -70,7 +70,7 @@ if ($product_code != '') {
     <br/>
     <div class="row">
         <div class="col-lg-3">
-            <input type="submit" class="btn btn-success" value="บันทึกเบิกยา">
+            <input type="submit" class="btn btn-success btn-save" value="บันทึกเบิกยา">
         </div>
     </div>
 </form>
@@ -128,9 +128,12 @@ function checklotqty(e){
     var lot_qty = $(".lot-qty").val();
     if(issue_qty > lot_qty){
         $(".alert-qty").show();
+        $("")
         e.val(lot_qty);
+        $(".btn-save").prop("disabled","disabled");
         return false;
     }else{
+        $(".btn-save").prop("disabled","");
          $(".alert-qty").hide();
     }
 }
