@@ -12,18 +12,29 @@ echo "Scan QRCode";
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <input type="text" id="qrcode-res" form="form-control" readonly value="">
+        <form id="form-qr-res" action="<?=\yii\helpers\Url::to(['itemissue/createissueqr'],true)?>" method="post">
+            <input type="hidden" id="qrcode-res" name="qrcode_txt" form="form-control" readonly value="" onchange="showProduct($(this))">
+        </form>
+
     </div>
 </div>
 
 
 
+
+
 <?php
 $js=<<<JS
+function showProduct(e){
+    var id = e.val();
+    if(id !=''){
+        $("form#form-qr-res").submit();
+    }
+}
 function onScanSuccess(decodedText, decodedResult) {
     // Handle on success condition with the decoded text or result.
     console.log(`Scan result: decodedText`, decodedResult);
-    alert(decodedText);
+   // alert(decodedText);
     $("#qrcode-res").val(decodedText);
 }
 
