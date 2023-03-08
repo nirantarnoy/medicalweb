@@ -12,7 +12,7 @@ echo "Scan QRCode";
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <form id="form-qr-res" method="post" action="<?=\yii\helpers\Url::to(['itemissue/createissueqr'],true)?>">
+        <form id="form-qr-res" method="post" action="index.php?r=itemissue/createissueqr">
             <input type="text" class="qrcode-res" name="qrcode_txt" form="form-control" value="xxx">
             <input type="submit" value="ok">
         </form>
@@ -43,9 +43,9 @@ function onScanSuccess(decodedText, decodedResult) {
     }
 }
 
-var html5QrcodeScanner = new Html5QrcodeScanner(
-	"reader", { fps: 10, qrbox: 250 });
-html5QrcodeScanner.render(onScanSuccess);
+// var html5QrcodeScanner = new Html5QrcodeScanner(
+// 	"reader", { fps: 10, qrbox: 250 });
+// html5QrcodeScanner.render(onScanSuccess);
 JS;
 
 $this->registerJs($js,static::POS_END);
