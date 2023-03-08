@@ -159,7 +159,13 @@
                         <li class="nav-item">
                             <a href="index.php?r=itemissue" class="nav-link itemissue">
                                 <i class="far fa-circlez nav-icon"></i>
-                                <p>จ่ายเวชภัณฑ์</p>
+                                <p>เบิกเวชภัณฑ์</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="index.php?r=itemissue/issueqr" class="nav-link itemissue/issueqr">
+                                <i class="far fa-circlez nav-icon"></i>
+                                <p>เบิก QR</p>
                             </a>
                         </li>
                         <?php //endif;?>
