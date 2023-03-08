@@ -52,7 +52,7 @@ if ($product_code != '') {
         </div>
         <div class="col-lg-3">
             <label for="">เลือก LotNo</label>
-            <input type="text" class="lot-qty" name="lot_qty" value="">
+            <input type="hidden" class="lot-qty" name="lot_qty" value="">
             <select class="form-control" id="select-lot-no" name="select_lot_no" onchange="getlotqty($(this))" required>
                 <option value="-1">--เลือก LotNo--</option>
             </select>
@@ -60,7 +60,7 @@ if ($product_code != '') {
         <div class="col-lg-3">
             <label for="">จำนวน</label>
             <input type="number" id="lot-issue-qty" class="form-control" value="0" min="1" onchange="checklotqty($(this))">
-            <div class="alert-qty alert alert-danger" style="display: none">จำนวนเบิกมากกว่าจำนวนคงเหลือ</div>
+            <div class="alert-qty alert alert-danger" style="display: none;top: 5px;">จำนวนเบิกมากกว่าจำนวนคงเหลือ</div>
         </div>
         <div class="col-lg-3">
             <label for="">หน่วยนับ</label>
@@ -114,7 +114,7 @@ function getlotqty(e){
                       'success': function(data){
                             if(data != ''){
                                 $(".lot-qty").val(data);
-                                $(".lot-issue-qty").val(data);
+                                $("#lot-issue-qty").val(data);
                             }
                       },
                       'error': function(err){
