@@ -7,7 +7,7 @@ echo "Scan QRCode";
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <div style="width: 500px" id="reader"></div>
+        <div style="100%" id="reader"></div>
     </div>
 </div>
 <div class="row">
