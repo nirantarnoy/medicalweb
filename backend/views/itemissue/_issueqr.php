@@ -13,8 +13,7 @@ echo "Scan QRCode";
 <div class="row">
     <div class="col-lg-12">
         <form id="form-qr-res" action="index.php?r=itemissue/createissueqr" method="post" enctype="multipart/form-data">
-            <input type="hidden" class="qrcode-res" name="qrcode_txt" form="form-control" value="xxx">
-            <input type="hidden" class="xxx" name="xxx" value="">
+            <input type="hidden" class="qrcode-res" name="qrcode_txt" value="xxx">
             <input type="submit" value="ok">
         </form>
 
@@ -31,8 +30,8 @@ function onScanSuccess(decodedText, decodedResult) {
     // Handle on success condition with the decoded text or result.
     console.log(`Scan result: decodedText`, decodedResult);
     // alert(decodedText);
-    $(".xxx").val(decodedText);
-    if($(".xxx").val() != ''){
+    $(".qrcode-res").val(decodedText);
+    if($(".qrcode-res").val() != ''){
          $("#form-qr-res").submit();
     }
 }
