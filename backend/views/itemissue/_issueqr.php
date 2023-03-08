@@ -14,6 +14,7 @@ echo "Scan QRCode";
     <div class="col-lg-12">
         <form id="form-qr-res" method="post" action="<?=\yii\helpers\Url::to(['itemissue/createissueqr'],true)?>">
             <input type="text" class="qrcode-res" name="qrcode_txt" form="form-control" value="xxx">
+            <input type="submit" value="ok">
         </form>
 
     </div>
