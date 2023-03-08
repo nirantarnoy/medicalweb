@@ -79,7 +79,7 @@ $js = <<<JS
 $(function(){
     var product_id = $(".product-id").val();
     if(product_id != ''){
-        
+        alert(product_id);
         $.ajax({
                       'type': 'post',
                       'dataType': 'html',
@@ -87,7 +87,7 @@ $(function(){
                       'url': '$url_to_get_line_lot',
                       'data': {'product_id': product_id},
                       'success': function(data){
-                            if(data != null){
+                            if(data != ''){
                                 $("#select-lot-no").html(data);
                             }
                       },
