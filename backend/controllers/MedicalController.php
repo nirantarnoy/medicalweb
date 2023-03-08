@@ -252,4 +252,15 @@ class MedicalController extends Controller
         }
         return $line_qty;
     }
+    public function actionGetSumQty(){
+        $sum_qty = 0;
+        $product_id = \Yii::$app->request->post('product_id');
+        if($product_id){
+            $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->sum('qty');
+            if($model){
+                $sum_qty = $model;
+            }
+        }
+        return $sum_qty;
+    }
 }

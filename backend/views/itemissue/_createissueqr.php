@@ -13,7 +13,20 @@ if ($product_code != '') {
         $product_name = $model->name;
         $pack_size = $model->pack_size;
         $unit_name = \backend\models\Unit::findUnitName($model->unit_id);
+        $product_cat = \backend\models\MedicalCat::findName($model->medical_cat_id);
+        $stock_qty = getSumQty($model->id);
     }
+}
+
+function getSumQty($product_id){
+    $sum_qty = 0;
+    if($product_id){
+        $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->sum('qty');
+        if($model){
+            $sum_qty = $model;
+        }
+    }
+    return $sum_qty;
 }
 ?>
     <div class="row">
@@ -37,7 +50,7 @@ if ($product_code != '') {
         </div>
         <div class="col-lg-3">
             <label for="">ประภทยา</label>
-            <input type="text" class="form-control" value="<?= $product_code; ?>" readonly>
+            <input type="text" class="form-control" value="<?= $product_cat; ?>" readonly>
         </div>
         <div class="col-lg-3">
             <label for="">Pack Size</label>
@@ -48,7 +61,7 @@ if ($product_code != '') {
     <div class="row">
         <div class="col-lg-3">
             <label for="">จำนวนคงเหลือ</label>
-            <input type="text" class="form-control" value="<?= $product_code; ?>" readonly>
+            <input type="text" class="form-control" value="<?= number_format($stock_qty,0); ?>" readonly>
         </div>
         <div class="col-lg-3">
             <label for="">เลือก LotNo</label>
