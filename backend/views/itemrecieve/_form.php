@@ -212,6 +212,9 @@ use yii\widgets\ActiveForm;
                             <th>
                                 จำนวนคงเหลือ
                             </th>
+                            <th>
+                                LotNo.
+                            </th>
                         </tr>
                         </thead>
                         <tbody>

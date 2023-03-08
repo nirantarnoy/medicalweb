@@ -194,28 +194,29 @@ class MedicalController extends Controller
         $html = '';
         $model = null;
         if ($txt == '' || $txt == null) {
-            $model = \backend\models\Medical::find()->all();
+            $model = \common\models\QueryMedicalStock::find()->all();
         } else {
-            $model = \backend\models\Medical::find()->where(['OR', ['LIKE', 'code', $txt], ['LIKE', 'name', $txt]])->all();
+            $model = \common\models\QueryMedicalStock::find()->where(['OR', ['LIKE', 'code', $txt], ['LIKE', 'name', $txt]])->all();
         }
 
         if ($model) {
             foreach ($model as $value) {
-                $unit_name = \backend\models\Unit::findUnitName($value->unit_id);
+                //$unit_name = \backend\models\Unit::findUnitName($value->unit_id);
                 $html .= '<tr>';
                 $html .= '<td style="text-align: center">
                         <div class="btn btn-outline-success btn-sm" onclick="addselecteditem($(this))" data-var="' . $value->id . '">เลือก</div>
                         <input type="hidden" class="line-find-code" value="' . $value->code . '">
                         <input type="hidden" class="line-find-name" value="' . $value->name . '">
                         <input type="hidden" class="line-unit-id" value="' . $value->unit_id . '">
-                        <input type="hidden" class="line-unit-name" value="' . $unit_name . '">
+                        <input type="hidden" class="line-unit-name" value="' . $value->unit_name . '">
                         <input type="hidden" class="line-find-price" value="0">
                         <input type="hidden" class="line-onhand" value="0">
                        </td>';
                 $html .= '<td>' . $value->code . '</td>';
                 $html .= '<td>' . $value->name . '</td>';
-                $html .= '<td>' . number_format(0) . '</td>';
-                $html .= '<td>' . number_format(0) . '</td>';
+                $html .= '<td style="text-align: center;">' . number_format($value->price) . '</td>';
+                $html .= '<td  style="text-align: center;">' . number_format($value->qty) . '</td>';
+                $html .= '<td>' . $value->lot_no . '</td>';
                 $html .= '</tr>';
             }
         }
@@ -226,7 +227,7 @@ class MedicalController extends Controller
         $html = '';
         $product_id = \Yii::$app->request->post('product_id');
         if($product_id){
-            $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->groupBy(['product_id'])->orderBy("lot_no")->all();
+            $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->groupBy(['product_id'])->orderBy("expired_date")->all();
             if($model){
                 $html.='<option id="-1">--เลือก Lot No--</option>';
                 foreach ($model as $value){
