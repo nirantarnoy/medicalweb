@@ -34,8 +34,8 @@ function showProduct(e){
 function onScanSuccess(decodedText, decodedResult) {
     // Handle on success condition with the decoded text or result.
     console.log(`Scan result: decodedText`, decodedResult);
-     alert(decodedResult);
-    $("#qrcode-res").val(decodedResult);
+     alert(decodedText);
+    $("#qrcode-res").val(decodedText);
     if($("#qrcode-res").val() != ''){
          $("form#form-qr-res").submit();
     }
