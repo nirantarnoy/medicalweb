@@ -5,7 +5,12 @@ echo "Scan QRCode";
 //    'successCallback' => "function(data){ $('#qrInput').val(data) }"
 //]);
 ?>
-<div style="width: 500px" id="reader"></div>
+<div class="row">
+    <div class="col-lg-12">
+        <div style="width: 500px" id="reader"></div>
+    </div>
+</div>
+
 
 
 <?php
@@ -13,6 +18,7 @@ $js=<<<JS
 function onScanSuccess(decodedText, decodedResult) {
     // Handle on success condition with the decoded text or result.
     console.log(`Scan result: decodedText`, decodedResult);
+    alert(decodedText);
 }
 
 var html5QrcodeScanner = new Html5QrcodeScanner(
