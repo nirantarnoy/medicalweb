@@ -153,6 +153,7 @@ $is_pos_user = 0;
 <script src="dist/js/demo.js"></script>
 <script src="dist/js/pages/dashboard3.js"></script>
 <script src="js/module_index_delete.js"></script>
+<!--<script src="html5-qrcode.min.js"></script>-->
 
 <script src="<?= "{$AssetModule}/tiny-date-picker/dist/date-range-picker.js" ?>"></script>
 <script src="<?= "{$AssetModule}/moment/moment.js" ?>"></script>
