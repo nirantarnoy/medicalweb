@@ -52,7 +52,8 @@ if ($product_code != '') {
         </div>
         <div class="col-lg-3">
             <label for="">เลือก LotNo</label>
-            <select class="form-control" id="select-lot-no" name="select_lot_no" required>
+            <input type="text" class="lot-qty" name="lot_qty" value="">
+            <select class="form-control" id="select-lot-no" name="select_lot_no" onchange="getlotqty($(this))" required>
                 <option value="-1">--เลือก LotNo--</option>
             </select>
         </div>
@@ -76,11 +77,12 @@ if ($product_code != '') {
 
 <?php
 $url_to_get_line_lot = \yii\helpers\Url::to(['medical/get-line-lot'], true);
+$url_to_get_line_lot_qty = \yii\helpers\Url::to(['medical/get-lot-qty'], true);
 $js = <<<JS
 $(function(){
     var product_id = $(".product-id").val();
     if(product_id != ''){
-        alert(product_id);
+      //  alert(product_id);
         $.ajax({
                       'type': 'post',
                       'dataType': 'html',
@@ -99,6 +101,26 @@ $(function(){
     }
     
 });
+function getlotqty(e){
+    var lot_id = e.val();
+    if(lot_id > 0){
+         $.ajax({
+                      'type': 'post',
+                      'dataType': 'html',
+                      'async': false,
+                      'url': '$url_to_get_line_lot_qty',
+                      'data': {'lot_id': lot_id},
+                      'success': function(data){
+                            if(data != ''){
+                                $(".lot-qty").val(data);
+                            }
+                      },
+                      'error': function(err){
+                                 //alert(data);//return;
+                      }
+                    });
+    }
+}
 JS;
 $this->registerJs($js, static::POS_END);
 ?>
