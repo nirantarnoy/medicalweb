@@ -16,7 +16,7 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <form id="form-qr-res" action="index.php?r=itemissue/createissueqr" method="post" enctype="multipart/form-data">
+        <form id="form-qr-res" action="index.php?r=itemrecieve/createrecieveqr" method="post" enctype="multipart/form-data">
             <input type="hidden" class="qrcode-res" name="qrcode_txt" value="xxx">
 
         </form>
