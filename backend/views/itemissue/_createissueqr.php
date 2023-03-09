@@ -37,7 +37,7 @@ function getSumQty($product_id){
         </div>
     </div>
     <br/>
-<form id="save-issue" method="post" action="#">
+<form id="save-issue" method="post" action="<?=\yii\helpers\Url::to(['itemissue/createfromqr'],true)?>">
     <div class="row">
         <div class="col-lg-3">
             <label for="">รหัสยา</label>
@@ -72,7 +72,7 @@ function getSumQty($product_id){
         </div>
         <div class="col-lg-3">
             <label for="">จำนวน</label>
-            <input type="number" id="lot-issue-qty" class="form-control" value="0" min="1" onchange="checklotqty($(this))">
+            <input type="number" id="lot-issue-qty" name="issue_qty" class="form-control" value="0" min="1" onchange="checklotqty($(this))">
             <div class="alert-qty alert alert-danger" style="display: none;top: 5px;">จำนวนเบิกมากกว่าจำนวนคงเหลือ</div>
         </div>
         <div class="col-lg-3">
