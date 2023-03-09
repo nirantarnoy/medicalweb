@@ -156,7 +156,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="index.php?r=itemrecive/receiveqr" class="nav-link itemrecive/receiveqr">
+                            <a href="index.php?r=itemrecieve/receiveqr" class="nav-link itemrecieve/receiveqr">
                                 <i class="far fa-circlez nav-icon"></i>
                                 <p>รับ QR</p>
                             </a>
