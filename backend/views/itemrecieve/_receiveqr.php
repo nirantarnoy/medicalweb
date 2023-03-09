@@ -18,7 +18,6 @@
     <div class="col-lg-12">
         <form id="form-qr-res" action="index.php?r=itemrecieve/createrecieveqr" method="post" enctype="multipart/form-data">
             <input type="hidden" class="qrcode-res" name="qrcode_txt" value="xxx">
-
         </form>
 
     </div>
@@ -29,7 +28,7 @@ $js=<<<JS
 function onScanSuccess(decodedText, decodedResult) {
     // Handle on success condition with the decoded text or result.
     console.log(`Scan result: decodedText`, decodedResult);
-    // alert(decodedText);
+     alert(decodedText);
     $(".qrcode-res").val(decodedText);
     if($(".qrcode-res").val() != ''){
          $("#form-qr-res").submit();
