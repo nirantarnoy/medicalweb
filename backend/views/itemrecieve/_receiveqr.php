@@ -6,9 +6,10 @@
 ?>
 <div class="row">
     <div class="col-lg-4"></div>
-    <div class="col-lg-4" style="text-align: center;"><h5>Scan QRCode</h5></div>
+    <div class="col-lg-4" style="text-align: center;"><h5>Scan QRCode รับยา</h5></div>
     <div class="col-lg-4"></div>
 </div>
+<br />
 <div class="row">
     <div class="col-lg-12">
         <div style="100%" id="reader"></div>

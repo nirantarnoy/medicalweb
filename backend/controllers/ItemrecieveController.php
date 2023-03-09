@@ -273,7 +273,7 @@ class ItemrecieveController extends Controller
                     }
 
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['itemrecieve/receivecomplete']);
         }
     }
 
