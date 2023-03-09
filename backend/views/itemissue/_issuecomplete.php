@@ -4,9 +4,9 @@
     <div class="col-lg-4">
 
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-4" style="text-align: center;">
         <p><h5>บันทึกรายการแล้ว</h5></p>
-      <i class="fa fa-check-circle"></i>
+        <img src="uploads/images/approved.png" alt="" style="width: 50%">
     </div>
     <div class="col-lg-4">
 
@@ -17,8 +17,8 @@
     <div class="col-lg-4">
 
     </div>
-    <div class="col-lg-4">
-        <a href="index.php?r=itemissue/issueqr" target="_self" class="btn btn-primary"><i class="fa fa-camera"></i>
+    <div class="col-lg-4" style="text-align: center;">
+        <a href="index.php?r=itemissue/issueqr" target="_self" class="btn btn-primary" style="width: 100%"><i class="fa fa-camera"></i>
             สแกน
             QR Code</a>
     </div>
@@ -31,8 +31,8 @@
     <div class="col-lg-4">
 
     </div>
-    <div class="col-lg-4">
-        <a href="index.php?r=itemissue/index" target="_self" class="btn btn-success"><i class="fa fa-home"></i>กลับหน้าหลัก</a>
+    <div class="col-lg-4" style="text-align: center;">
+        <a href="index.php?r=itemissue/index" target="_self" class="btn btn-success" style="width: 100%"><i class="fa fa-home"></i> กลับหน้าหลัก</a>
     </div>
     <div class="col-lg-4">
 
