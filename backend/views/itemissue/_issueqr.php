@@ -1,10 +1,14 @@
 <?php
-echo "Scan QRCode";
 //echo odaialali\qrcodereader\QrReader::widget([
 //    'id' => 'qrInput',
 //    'successCallback' => "function(data){ $('#qrInput').val(data) }"
 //]);
 ?>
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4" style="text-align: center;"><h5>Scan QRCode</h5></div>
+    <div class="col-lg-4"></div>
+</div>
 <div class="row">
     <div class="col-lg-12">
         <div style="100%" id="reader"></div>
