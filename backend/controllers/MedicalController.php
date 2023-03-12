@@ -209,6 +209,7 @@ class MedicalController extends Controller
                         <input type="hidden" class="line-find-name" value="' . $value->name . '">
                         <input type="hidden" class="line-unit-id" value="' . $value->unit_id . '">
                         <input type="hidden" class="line-unit-name" value="' . $value->unit_name . '">
+                        <input type="hidden" class="line-lot-no" value="' . $value->lot_no . '">
                         <input type="hidden" class="line-find-price" value="0">
                         <input type="hidden" class="line-onhand" value="0">
                        </td>';
@@ -227,7 +228,7 @@ class MedicalController extends Controller
         $html = '';
         $product_id = \Yii::$app->request->post('product_id');
         if($product_id){
-            $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->groupBy(['product_id'])->orderBy("expired_date")->all();
+            $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->orderBy("expired_date")->all();
             if($model){
                 $html.='<option id="-1">--เลือก Lot No--</option>';
                 foreach ($model as $value){

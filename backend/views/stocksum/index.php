@@ -22,6 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,
+        // 'showFooter' => true,
+        'showPageSummary' => true,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn',
                 'headerOptions' => ['style' => 'text-align: center'],
@@ -46,9 +48,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'qty',
                 'headerOptions' => ['style' => 'text-align: right'],
                 'contentOptions' => ['style' => 'text-align: right'],
+                'pageSummary' => true,
+                'hAlign' => GridView::ALIGN_RIGHT,
                 'value' => function ($data) {
-                    return number_format($data->qty, 1);
-                }
+                     return Yii::$app->formatter->asDecimal($data->qty,0);
+                },
+
             ],
 //            [
 //                'attribute' => 'route_id',
@@ -65,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['style' => 'text-align: center'],
                 'contentOptions' => ['style' => 'text-align: center'],
                 'value' => function ($data) {
-                    return date('d/m/Y H:i:s', $data->updated_at==null?$data->created_at: $data->updated_at);
+                    return date('d/m/Y H:i:s', $data->updated_at == null ? $data->created_at : $data->updated_at);
                 }
             ],
             //'created_at',
