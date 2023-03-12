@@ -154,7 +154,7 @@ class ItemrecieveController extends Controller
                 $model_new = new \backend\models\Stocksum();
                 $model_new->product_id = $item_id;
                 $model_new->qty = $qty;
-                $model_new->warehouse_id = 2;
+                $model_new->warehouse_id = 1;
                 $model_new->lot_no = $lot_no;
                 $model_new->expired_date = date('Y-m-d',strtotime($expired));
                 $model_new->trans_ref_id = $trans_ref_id;
