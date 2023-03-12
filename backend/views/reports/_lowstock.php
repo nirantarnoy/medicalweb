@@ -105,6 +105,10 @@ $model_data = \backend\models\Stocksum::find()->all();
         <?php $i=0;?>
         <?php foreach ($model_data as $value):?>
                 <?php $i+=1;?>
+            <?php
+                $line_min_qty = \backend\models\Medical::getMinstock($value->product_id);
+                if($value->qty >= $line_min_qty)continue;
+                ?>
             <tr>
                 <td style="text-align: center;"><?=$i?></td>
                 <td>
@@ -120,7 +124,7 @@ $model_data = \backend\models\Stocksum::find()->all();
                     <?=$value->expired_date?>
                 </td>
                 <td style="text-align: right;">
-                    <?=\backend\models\Medical::getMinstock($value->product_id)?>
+                    <?=$line_min_qty?>
                 </td>
                 <td style="text-align: right;">
                     <?=number_format($value->qty)?>
