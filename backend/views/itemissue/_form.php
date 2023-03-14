@@ -72,10 +72,10 @@ use yii\widgets\ActiveForm;
                             <td>
                                 <!--                            <input type="text" class="form-control line-lot" name="line_lot[]">-->
                                 <select name="line_lot[]" class="form-control line-lot" id="">
-                                    <option value="" selected><?=$value->lot_no?></option>
+                                    <option value="" selected><?= $value->lot_no ?></option>
                                 </select>
                                 <input type="hidden" class="line-lot-qty" value="">
-<!--                                <input type="hidden" class="line-lot-no" value="">-->
+                                <!--                                <input type="hidden" class="line-lot-no" value="">-->
                             </td>
                             <td>
                                 <input type="number" class="form-control line-qty" name="line_qty[]" min="1"
@@ -83,12 +83,12 @@ use yii\widgets\ActiveForm;
                             </td>
                             <td>
                                 <input type="text" class="form-control line-unit" name="line_unit[]"
-                                       value="<?= \backend\models\Medical::findUnitName($value->item_id) ?>">
+                                       value="<?= \backend\models\Medical::findUnitName($value->item_id) ?>" readonly>
                             </td>
 
                             <td>
                                 <input type="text" class="form-control line-expired" name="line_expired[]"
-                                       value="<?= $value->exp_date ?>" readonly>
+                                       value="<?= date('d-m-Y', strtotime($value->exp_date)) ?>" readonly>
                             </td>
                             <td>
                                 <div class="btn btn-danger btn-sm" onclick="removeline($(this))"><i
@@ -111,7 +111,8 @@ use yii\widgets\ActiveForm;
                         </td>
                         <td>
                             <!--                            <input type="text" class="form-control line-lot" name="line_lot[]">-->
-                            <select name="line_lot[]" class="form-control line-lot" id="" onchange="getlotqty($(this))"></select>
+                            <select name="line_lot[]" class="form-control line-lot" id=""
+                                    onchange="getlotqty($(this))"></select>
                             <input type="hidden" class="line-lot-qty" value="">
                         </td>
                         <td>
@@ -252,6 +253,7 @@ $url_to_Dropoffdata = \yii\helpers\Url::to(['dropoffplace/getdropoffdata'], true
 $url_to_find_item = \yii\helpers\Url::to(['medical/get-item'], true);
 $url_to_get_line_lot = \yii\helpers\Url::to(['medical/get-line-lot'], true);
 $url_to_get_lot_qty = \yii\helpers\Url::to(['medical/get-lot-qty'], true);
+$url_to_get_lot_expdate = \yii\helpers\Url::to(['medical/get-lot-expdate'], true);
 $js = <<<JS
  var removelist = [];
   var selecteditem = [];
@@ -471,6 +473,7 @@ function showfindwithsearch(txt){
                 removelist.push(e.parent().parent().attr("data-var"));
                 $(".remove-list").val(removelist);
             }
+            //  alert("last row");
             // alert(removelist);
 
             if ($("#table-list tbody tr").length == 1) {
@@ -478,7 +481,10 @@ function showfindwithsearch(txt){
                     $(this).find(":text").val("");
                    // $(this).find(".line-prod-photo").attr('src', '');
                     $(this).find(".line-price").val(0);
-                    $(this).find(".line-lot").val(-1).change();
+                    $(this).find(".line-qty").val(0);
+                    
+                    $(this).find(".line-lot").html('<option id="-1">--เลือก Lot No--</option>')
+                  
                    // cal_num();
                 });
             } else {
@@ -525,29 +531,29 @@ function showfindwithsearch(txt){
                     tr.after(clone);
      
  }
- function removeline(e) {
-        if (confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) {
-            if (e.parent().parent().attr("data-var") != '') {
-                removelist.push(e.parent().parent().attr("data-var"));
-                $(".remove-list").val(removelist);
-            }
-            // alert(removelist);
-            // alert(e.parent().parent().attr("data-var"));
-
-            if ($("#table-list tbody tr").length == 1) {
-                $("#table-list tbody tr").each(function () {
-                    $(this).find(":text").val("");
-                   // $(this).find(".line-prod-photo").attr('src', '');
-                    $(this).find(".line-price").val(0);
-                    // cal_num();
-                });
-            } else {
-                e.parent().parent().remove();
-            }
-            // cal_linenum();
-            // cal_all();
-        }
-  }
+// function removeline(e) {
+//        if (confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) {
+//            if (e.parent().parent().attr("data-var") != '') {
+//                removelist.push(e.parent().parent().attr("data-var"));
+//                $(".remove-list").val(removelist);
+//            }
+//            // alert(removelist);
+//            // alert(e.parent().parent().attr("data-var"));
+//
+//            if ($("#table-list tbody tr").length == 1) {
+//                $("#table-list tbody tr").each(function () {
+//                    $(this).find(":text").val("");
+//                   // $(this).find(".line-prod-photo").attr('src', '');
+//                    $(this).find(".line-price").val(0);
+//                    // cal_num();
+//                });
+//            } else {
+//                e.parent().parent().remove();
+//            }
+//            // cal_linenum();
+//            // cal_all();
+//        }
+//  }
     
   function getDropoffinfo(e){
     // alert(e.val());
@@ -590,6 +596,29 @@ function showfindwithsearch(txt){
                     e.closest('tr').find('.line-qty').val(data);
                     e.closest('tr').find('.line-qty').attr("max", data);
                     
+                    getlotexpdate(e);
+                }
+            },
+            'error': function(data){
+                 alert(data);//return;
+            }
+        });
+    }
+ }
+ 
+ function getlotexpdate(e){
+        if(e.val() != ''){
+         //   alert(e.val());
+        $.ajax({
+            'type': 'post',
+            'dataType': 'html',
+            'url': '$url_to_get_lot_expdate',
+            'data': {'lot_id': e.val()},
+            // alert(data)
+            'success': function(data){
+                if(data != null){
+                 //   alert(data);
+                    e.closest('tr').find('.line-expired').val(data);
                 }
             },
             'error': function(data){
