@@ -84,6 +84,15 @@ class Medical extends \common\models\Medical
         $model = Medical::find()->where(['id' => $id])->one();
         return $model != null ? $model->name : '';
     }
+    public function findUnitName($id)
+    {
+        $unit_name = '';
+        $model = Medical::find()->select('unit_id')->where(['id' => $id])->one();
+        if($model){
+            $unit_name = \backend\models\Unit::findUnitName($model->unit_id);
+        }
+        return $unit_name;
+    }
 
     public function getMinstock($id)
     {

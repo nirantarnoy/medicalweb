@@ -71,7 +71,9 @@ use yii\widgets\ActiveForm;
                             </td>
                             <td>
                                 <!--                            <input type="text" class="form-control line-lot" name="line_lot[]">-->
-                                <select name="line_lot[]" class="form-control line-lot" id=""></select>
+                                <select name="line_lot[]" class="form-control line-lot" id="">
+                                    <option value="" selected><?=$value->lot_no?></option>
+                                </select>
                                 <input type="hidden" class="line-lot-qty" value="">
 <!--                                <input type="hidden" class="line-lot-no" value="">-->
                             </td>
@@ -80,8 +82,8 @@ use yii\widgets\ActiveForm;
                                        value="<?= $value->qty ?>">
                             </td>
                             <td>
-<!--                                <input type="text" class="form-control line-unit" name="line_unit[]"-->
-<!--                                       value="--><?//= \backend\models\Unit::findUnitName($value->unit_id) ?><!--">-->
+                                <input type="text" class="form-control line-unit" name="line_unit[]"
+                                       value="<?= \backend\models\Medical::findUnitName($value->item_id) ?>">
                             </td>
 
                             <td>
