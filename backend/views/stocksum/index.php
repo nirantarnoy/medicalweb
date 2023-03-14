@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'pageSummary' => true,
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'value' => function ($data) {
-                     return Yii::$app->formatter->asDecimal($data->qty,0);
+                    return Yii::$app->formatter->asDecimal($data->qty, 0);
                 },
 
             ],
@@ -64,7 +64,9 @@ $this->params['breadcrumbs'][] = $this->title;
 //                }
 //            ],
             'lot_no',
-            'expired_date',
+            ['attribute' => 'expired_date', 'value' => function ($data) {
+                return date('d-m-Y', strtotime($data->expired_date));
+            }],
             [
                 'attribute' => 'updated_at',
                 'headerOptions' => ['style' => 'text-align: center'],

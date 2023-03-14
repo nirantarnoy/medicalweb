@@ -194,9 +194,9 @@ class MedicalController extends Controller
         $html = '';
         $model = null;
         if ($txt == '' || $txt == null) {
-            $model = \common\models\QueryMedicalStock::find()->all();
+            $model = \common\models\QueryMedicalStock::find()->where(['>','qty',0])->all();
         } else {
-            $model = \common\models\QueryMedicalStock::find()->where(['OR', ['LIKE', 'code', $txt], ['LIKE', 'name', $txt]])->all();
+            $model = \common\models\QueryMedicalStock::find()->where(['OR', ['LIKE', 'code', $txt], ['LIKE', 'name', $txt]])->andFilterwhere(['>','qty',0])->all();
         }
 
         if ($model) {

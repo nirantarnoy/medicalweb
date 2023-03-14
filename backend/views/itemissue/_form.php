@@ -476,6 +476,7 @@ function showfindwithsearch(txt){
                     $(this).find(":text").val("");
                    // $(this).find(".line-prod-photo").attr('src', '');
                     $(this).find(".line-price").val(0);
+                    $(this).find(".line-lot").val(-1).change();
                    // cal_num();
                 });
             } else {

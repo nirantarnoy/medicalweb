@@ -65,7 +65,7 @@ use yii\widgets\ActiveForm;
                                 </td>
                                 <td>
                                     <input type="number" class="form-control line-qty" name="line_qty[]" min="1"
-                                           value="<?= $value->qty ?>" autocomplete="off">
+                                           value="<?= $value->qty ?>" autocomplete="off" required>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line-unit" name="line_unit[]"
@@ -73,7 +73,7 @@ use yii\widgets\ActiveForm;
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line-issue-ref-no" name="line_issue_ref_no[]" readonly
-                                           value="<?= $value->issue_ref_no ?>">
+                                           value="<?= $value->issue_ref_no ?>" required>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line-lot" name="line_lot[]"
@@ -103,14 +103,14 @@ use yii\widgets\ActiveForm;
                                 <input type="text" class="form-control line-name" name="line_name[]" readonly>
                             </td>
                             <td>
-                                <input type="number" class="form-control line-qty" name="line_qty[]" min="1" autocomplete="off">
+                                <input type="number" class="form-control line-qty" name="line_qty[]" min="1" autocomplete="off" required>
                             </td>
                             <td>
                                 <input type="text" class="form-control line-unit" name="line_unit[]">
                             </td>
                             <td>
                                 <input type="text" class="form-control line-issue-ref-no" name="line_issue_ref_no[]"
-                                       value="">
+                                       value="" required>
                             </td>
                             <td>
                                 <input type="text" class="form-control line-lot" name="line_lot[]" autocomplete="off">

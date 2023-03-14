@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \backend\models\MedicalCat::findName($model->medical_cat_id);
                 }
             ],
-            'pack_size',
+            'pack_size_desc',
 //            'unit_id',
             [
                 'attribute' => 'unit_id',

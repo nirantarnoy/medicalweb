@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <?= $form->field($model, 'pack_size')->textInput() ?>
+                <?= $form->field($model, 'pack_size_desc')->textInput() ?>
             </div>
             <div class="col-lg-4">
                 <?= $form->field($model, 'unit_id')->Widget(\kartik\select2\Select2::className(), [

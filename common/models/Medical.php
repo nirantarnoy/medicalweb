@@ -42,7 +42,7 @@ class Medical extends \yii\db\ActiveRecord
         return [
             [['medical_cat_id', 'pack_size', 'unit_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['price', 'min_stock', 'max_stock'], 'number'],
-            [['code', 'name', 'description', 'photo'], 'string', 'max' => 255],
+            [['code', 'name', 'description', 'photo','pack_size_desc'], 'string', 'max' => 255],
         ];
     }
 
@@ -58,6 +58,7 @@ class Medical extends \yii\db\ActiveRecord
             'description' => 'Description',
             'medical_cat_id' => 'Medical Cat ID',
             'pack_size' => 'Pack Size',
+            'pack_size_desc' => 'Pack Size',
             'unit_id' => 'Unit ID',
             'price' => 'Price',
             'min_stock' => 'Min Stock',

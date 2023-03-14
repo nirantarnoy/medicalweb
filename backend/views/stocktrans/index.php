@@ -45,20 +45,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     return date('d-m-Y H:i:s', strtotime($data->trans_date));
                 }
             ],
-            [
-                'attribute' => 'trans_module_type_id',
-                'headerOptions' => ['style' => 'text-align: center'],
-                'contentOptions' => ['style' => 'text-align: center'],
-                'format' => 'html',
-                'value' => function ($data) {
-                    if ($data->trans_module_type_id == 1) {
-                        return '<div class="text-success">'.\backend\helpers\ModuleType::getTypeById($data->trans_module_type_id).'</div>';
-                    }else  if ($data->trans_module_type_id == 2) {
-                        return '<div class="text-danger">'.\backend\helpers\ModuleType::getTypeById($data->trans_module_type_id).'</div>';
-                    }
-
-                }
-            ],
+            'issue_ref_no',
+//            [
+//                'attribute' => 'trans_module_type_id',
+//                'headerOptions' => ['style' => 'text-align: center'],
+//                'contentOptions' => ['style' => 'text-align: center'],
+//                'format' => 'html',
+//                'value' => function ($data) {
+//                    if ($data->trans_module_type_id == 1) {
+//                        return '<div class="text-success">'.\backend\helpers\ModuleType::getTypeById($data->trans_module_type_id).'</div>';
+//                    }else  if ($data->trans_module_type_id == 2) {
+//                        return '<div class="text-danger">'.\backend\helpers\ModuleType::getTypeById($data->trans_module_type_id).'</div>';
+//                    }
+//
+//                }
+//            ],
 
             [
                 'attribute' => 'item_id',
