@@ -24,6 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'filterModel' => $searchModel,
         // 'showFooter' => true,
         'showPageSummary' => true,
+        'responsive'=>true,
+        'responsiveWrap' => false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn',
                 'headerOptions' => ['style' => 'text-align: center'],
