@@ -259,9 +259,9 @@ function getTransdate($model)
     $data = [];
 
     if ($model) {
-        $model = \backend\models\Stocktrans::find()->select('date(trans_date) as trans_date')->where(['item_id' => $model->id])->groupBy(['date(trans_date)'])->orderBy('trans_date')->all();
-        if ($model) {
-            foreach ($model as $value) {
+        $model_data = \backend\models\Stocktrans::find()->select('date(trans_date) as trans_date')->where(['item_idx' => $model->id])->groupBy(['date(trans_date)'])->orderBy('trans_date')->all();
+        if ($model_data) {
+            foreach ($model_data as $value) {
                 array_push($data, ['trans_date' => $value->trans_date]);
             }
         }
