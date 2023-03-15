@@ -162,8 +162,8 @@
                     <?php for ($i = 0; $i <= count($trans_date) - 1; $i++): ?>
                         <?php
                         $rc_data = [];
-                        $rc_data = getRCitem($trans_date[$i]['trans_date'], 1, 1); //1 = RC module 2 = IS module
-                        $is_data = getISitem($trans_date[$i]['trans_date'], 1, 2); //1 = RC module 2 = IS module
+                        $rc_data = getRCitem($trans_date[$i]['trans_date'], $model->id, 1); //1 = RC module 2 = IS module
+                        $is_data = getISitem($trans_date[$i]['trans_date'], $model->id, 2); //1 = RC module 2 = IS module
 //                    echo count($is_data); return;
                         ?>
 
@@ -274,7 +274,7 @@ function getRCitem($trans_date, $item_id, $module_type)
 {
     $data = [];
     if ($trans_date != null && $item_id != null && $module_type != null) {
-        $model = \backend\models\Stocktrans::find()->where(['date(trans_datex)' => date('Y-m-d', strtotime($trans_date)), 'item_id' => $item_id, 'trans_module_type_id' => $module_type])->all();
+        $model = \backend\models\Stocktrans::find()->where(['date(trans_date)' => date('Y-m-d', strtotime($trans_date)), 'item_id' => $item_id, 'trans_module_type_id' => $module_type])->all();
         if ($model) {
             foreach ($model as $value) {
                 array_push($data, [
