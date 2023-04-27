@@ -1,5 +1,5 @@
 <?php
-$model_data = \backend\models\Stocksum::find()->groupBy('product_id')->all();
+$model_data = \backend\models\Stocksum::find()->all();
 ?>
 <html>
 <head>
@@ -94,37 +94,44 @@ $model_data = \backend\models\Stocksum::find()->groupBy('product_id')->all();
             <td style="text-align: center;padding: 0px;border: 1px solid grey">ลำดับ</td>
             <td style="text-align: left;padding-left: 3px;border: 1px solid grey">รหัสยา</td>
             <td style="text-align: left;padding-left: 3px;border: 1px solid grey">ชื่อยา</td>
+            <td style="text-align: center;padding: 0px;border: 1px solid grey">LotNo.</td>
+            <td style="text-align: center;padding: 0px;border: 1px solid grey">วันหมดอายุ</td>
             <td style="text-align: right;padding-right: 3px;border: 1px solid grey">จำนวนขั้นต่ำ</td>
             <td style="text-align: right;padding-right: 3px;border: 1px solid grey">จำนวนคงเหลือ</td>
             <td style="text-align: center;padding: 0px;border: 1px solid grey">หมายเหตุ</td>
 
         </tr>
         <?php if($model_data!=null):?>
-        <?php $i=0;?>
-        <?php foreach ($model_data as $value):?>
+            <?php $i=0;?>
+            <?php foreach ($model_data as $value):?>
                 <?php $i+=1;?>
-            <?php
+                <?php
                 $line_min_qty = \backend\models\Medical::getMinstock($value->product_id);
                 if($value->qty >= $line_min_qty)continue;
                 ?>
-            <tr>
-                <td style="text-align: center;"><?=$i?></td>
-                <td>
-                    <?=\backend\models\Medical::findCode($value->product_id)?>
-                </td>
-                <td>
-                    <?=\backend\models\Medical::findName($value->product_id)?>
-                </td>
-
-                <td style="text-align: right;">
-                    <?=$line_min_qty?>
-                </td>
-                <td style="text-align: right;">
-                    <?=number_format($value->qty)?>
-                </td>
-                <td></td>
-            </tr>
-        <?php endforeach;?>
+                <tr>
+                    <td style="text-align: center;"><?=$i?></td>
+                    <td>
+                        <?=\backend\models\Medical::findCode($value->product_id)?>
+                    </td>
+                    <td>
+                        <?=\backend\models\Medical::findName($value->product_id)?>
+                    </td>
+                    <td>
+                        <?=$value->lot_no?>
+                    </td>
+                    <td style="text-align: center;">
+                        <?=$value->expired_date?>
+                    </td>
+                    <td style="text-align: right;">
+                        <?=$line_min_qty?>
+                    </td>
+                    <td style="text-align: right;">
+                        <?=number_format($value->qty)?>
+                    </td>
+                    <td></td>
+                </tr>
+            <?php endforeach;?>
         <?php endif;?>
 
     </table>
