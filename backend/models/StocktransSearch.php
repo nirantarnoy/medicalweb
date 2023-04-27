@@ -79,16 +79,26 @@ class StocktransSearch extends Stocktrans
 //        }
         if ($this->activity_type_id > 0) {
             $query->andFilterWhere(['activity_type_id' => $this->activity_type_id]);
+            if ($this->globalSearch != '' || $this->globalSearch != null) {
+
+                $query->andFilterWhere(['like', 'journal_no', $this->globalSearch])
+                    ->orFilterWhere(['like', 'lot_no', $this->globalSearch])
+                    ->orFilterWhere(['like', 'item_id', $this->globalSearch])
+                    ->orFilterWhere(['like', 'medical.name', $this->globalSearch]);
+
+            }
+        }else{
+            if ($this->globalSearch != '' || $this->globalSearch != null) {
+
+                $query->andFilterWhere(['like', 'journal_no', $this->globalSearch])
+                    ->orFilterWhere(['like', 'lot_no', $this->globalSearch])
+                    ->orFilterWhere(['like', 'item_id', $this->globalSearch])
+                    ->orFilterWhere(['like', 'medical.name', $this->globalSearch]);
+
+            }
         }
 
-        if ($this->globalSearch != '' || $this->globalSearch != null) {
 
-            $query->orFilterWhere(['like', 'journal_no', $this->globalSearch])
-                ->orFilterWhere(['like', 'lot_no', $this->globalSearch])
-                ->orFilterWhere(['like', 'item_id', $this->globalSearch])
-                ->orFilterWhere(['like', 'medical.name', $this->globalSearch]);
-
-        }
 
         return $dataProvider;
     }
