@@ -185,11 +185,11 @@
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['issue_ref_no']) ? $rc_data[$x]['issue_ref_no'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['lot_no']) ? $rc_data[$x]['lot_no'] : '' ?></td>
-                                        <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['exp_date']) ? $rc_data[$x]['exp_date'] : '' ?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['exp_date']) ? date('d/m/Y',strtotime($rc_data[$x]['exp_date'] )) : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['lot_no']) ? $is_data[$x]['lot_no'] : '' ?></td>
-                                        <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? $is_data[$x]['exp_date'] : '' ?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] )) : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
                                         <td style="border: 1px solid black;text-align: center"></td>
@@ -219,11 +219,11 @@
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['issue_ref_no']) ? $rc_data[$x]['issue_ref_no'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['lot_no']) ? $rc_data[$x]['lot_no'] : '' ?></td>
-                                        <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['exp_date']) ? $rc_data[$x]['exp_date'] : '' ?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['exp_date']) ? date('d/m/Y',strtotime($rc_data[$x]['exp_date'] )): '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['lot_no']) ? $is_data[$x]['lot_no'] : '' ?></td>
-                                        <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? $is_data[$x]['exp_date'] : '' ?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] ))  : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
                                         <td style="border: 1px solid black;text-align: center"></td>
