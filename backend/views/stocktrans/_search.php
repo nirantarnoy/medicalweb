@@ -42,6 +42,7 @@ use yii\widgets\ActiveForm;
             ]) ?>
         </div>
         <div class="col-lg-3">
+            <div style="height: 20px;"></div>
             <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
