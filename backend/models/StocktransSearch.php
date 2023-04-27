@@ -61,9 +61,9 @@ class StocktransSearch extends Stocktrans
         }
 
         // grid filtering conditions
-       // $query->andFilterWhere([
-            //   'id' => $this->id,
-            //   'trans_date' => $this->trans_date,
+        $query->andFilterWhere([
+               'stock_trans.id' => $this->id,
+      //         'trans_date' => $this->trans_date,
 //            'trans_module_type_id' => $this->trans_module_type_id,
 ////            'activity_type_id' => $this->activity_type_id,
 //            'item_id' => $this->item_id,
@@ -72,7 +72,7 @@ class StocktransSearch extends Stocktrans
 //            'status' => $this->status,
 //            'created_at' => $this->created_at,
 //            'created_by' => $this->created_by,
-       // ]);
+        ]);
 
 //        if ($this->trans_module_type_id > 0) {
 //            $query->andFilterWhere(['trans_module_type_id' => $this->trans_module_type_id]);
@@ -81,14 +81,14 @@ class StocktransSearch extends Stocktrans
             $query->andFilterWhere(['activity_type_id' => $this->activity_type_id]);
         }
 
-//        if ($this->globalSearch != '' || $this->globalSearch != null) {
-//
-//            $query->andFilterWhere(['like', 'journal_no', $this->globalSearch])
-//                ->orFilterWhere(['like', 'lot_no', $this->globalSearch])
-//                ->orFilterWhere(['like', 'item_id', $this->globalSearch])
-//                ->orFilterWhere(['like', 'medical.name', $this->globalSearch]);
-//
-//        }
+        if ($this->globalSearch != '' || $this->globalSearch != null) {
+
+            $query->orFilterWhere(['like', 'journal_no', $this->globalSearch])
+                ->orFilterWhere(['like', 'lot_no', $this->globalSearch])
+                ->orFilterWhere(['like', 'item_id', $this->globalSearch])
+                ->orFilterWhere(['like', 'medical.name', $this->globalSearch]);
+
+        }
 
         return $dataProvider;
     }
