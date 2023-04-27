@@ -77,13 +77,13 @@ class StocktransSearch extends Stocktrans
 //        if ($this->trans_module_type_id > 0) {
 //            $query->andFilterWhere(['trans_module_type_id' => $this->trans_module_type_id]);
 //        }
-        if ($this->activity_type_id > 0 || $this->activity_type_id != null) {
+        if ($this->activity_type_id > 0) {
             $query->andFilterWhere(['activity_type_id' => $this->activity_type_id]);
         }
 
         if ($this->globalSearch != '' || $this->globalSearch != null) {
 
-            $query->andFilterWhere(['like', 'journal_no', $this->globalSearch])
+            $query->andFilterWhere(['like', 'journal_nox', $this->globalSearch])
                 ->orFilterWhere(['like', 'lot_no', $this->globalSearch])
                 ->orFilterWhere(['like', 'item_id', $this->globalSearch])
                 ->orFilterWhere(['like', 'medical.name', $this->globalSearch]);
