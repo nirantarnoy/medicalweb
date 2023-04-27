@@ -83,7 +83,7 @@ class StocktransSearch extends Stocktrans
 
         if ($this->globalSearch != '' || $this->globalSearch != null) {
 
-            $query->orFilterWhere(['like', 'journal_no', $this->globalSearch])
+            $query->andFilterWhere(['like', 'journal_no', $this->globalSearch])
                 ->orFilterWhere(['like', 'lot_no', $this->globalSearch])
                 ->orFilterWhere(['like', 'item_id', $this->globalSearch])
                 ->orFilterWhere(['like', 'medical.name', $this->globalSearch]);
