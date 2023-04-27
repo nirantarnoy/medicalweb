@@ -93,6 +93,17 @@ class StocktransSearch extends Stocktrans
             $query->andFilterWhere(['activity_type_id' => $this->activity_type_id]);
         }
 
+        if($this->trans_date != '' || $this->trans_date != null){
+            $tdate = '';
+            $xdate = explode('-', $this->trans_date);
+            if (count($xdate) > 1) {
+                $tdate = $xdate[2] . '/' . $xdate[1] . '/' . $xdate[0];
+            }
+            if($tdate !=''){
+                $query->andFilterWhere(['date(trans_date)' => date('Y-m-d',strtotime($tdate))]);
+            }
+        }
+
         return $dataProvider;
     }
 }
