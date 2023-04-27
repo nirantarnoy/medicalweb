@@ -74,10 +74,10 @@ class StocktransSearch extends Stocktrans
 //            'created_by' => $this->created_by,
        // ]);
 
-        if ($this->trans_module_type_id > 0) {
-            $query->andFilterWhere(['trans_module_type_id' => $this->trans_module_type_id]);
-        }
-        if ($this->activity_type_id > 0) {
+//        if ($this->trans_module_type_id > 0) {
+//            $query->andFilterWhere(['trans_module_type_id' => $this->trans_module_type_id]);
+//        }
+        if ($this->activity_type_id > 0 || $this->activity_type_id != null) {
             $query->andFilterWhere(['activity_type_id' => $this->activity_type_id]);
         }
 
