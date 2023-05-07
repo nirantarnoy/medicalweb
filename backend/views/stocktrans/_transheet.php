@@ -181,7 +181,7 @@
                                         $show_date = date('d/m/Y', strtotime($trans_date[$i]['trans_date']));
                                     }
 
-                                    $line_onhand = getOnhand();
+                                    $line_onhand = 0;//getOnhand();
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
@@ -194,7 +194,7 @@
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] )) : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
-                                        <td style="border: 1px solid black;text-align: center"></td>
+                                        <td style="border: 1px solid black;text-align: center"><?=number_format($line_onhand)?></td>
                                     </tr>
                                     <?php
                                     $prev_date = $trans_date[$i]['trans_date'];
@@ -216,6 +216,7 @@
                                     } else {
                                         $show_date = date('d/m/Y', strtotime($trans_date[$i]['trans_date']));
                                     }
+                                    $line_onhand = 0;//getOnhand();
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
@@ -228,7 +229,7 @@
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] ))  : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
-                                        <td style="border: 1px solid black;text-align: center"></td>
+                                        <td style="border: 1px solid black;text-align: center"><?=number_format($line_onhand)?></td>
                                     </tr>
                                 <?php endfor; ?>
                             <?php endif; ?>
