@@ -181,7 +181,9 @@
                                         $show_date = date('d/m/Y', strtotime($trans_date[$i]['trans_date']));
                                     }
 
-                                    $line_onhand = 0;//getOnhand();
+                                    $line_onhand = getOnhand($model->id);
+                                    $line_rc_qty = !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : 0;
+                                    $line_is_qty = !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : 0;
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
@@ -194,7 +196,7 @@
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] )) : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
-                                        <td style="border: 1px solid black;text-align: center"><?=number_format($line_onhand)?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?=number_format(($line_onhand + $line_rc_qty)-$line_is_qty)?></td>
                                     </tr>
                                     <?php
                                     $prev_date = $trans_date[$i]['trans_date'];
@@ -216,7 +218,10 @@
                                     } else {
                                         $show_date = date('d/m/Y', strtotime($trans_date[$i]['trans_date']));
                                     }
-                                    $line_onhand = 0;//getOnhand();
+                                    $line_onhand = getOnhand($model->id);
+                                    $line_rc_qty = !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : 0;
+                                    $line_is_qty = !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : 0;
+
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
@@ -229,7 +234,7 @@
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] ))  : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
-                                        <td style="border: 1px solid black;text-align: center"><?=number_format($line_onhand)?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?=number_format(($line_onhand + $line_rc_qty)-$line_is_qty)?></td>
                                     </tr>
                                 <?php endfor; ?>
                             <?php endif; ?>
