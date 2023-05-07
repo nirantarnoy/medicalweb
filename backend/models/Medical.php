@@ -40,11 +40,12 @@ class Medical extends \common\models\Medical
     public function rules()
     {
         return [
-            [['medical_cat_id', 'pack_size', 'unit_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['medical_cat_id',  'unit_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['price', 'min_stock', 'max_stock'], 'number'],
             [['code', 'name', 'description', 'photo','pack_size_desc'], 'string', 'max' => 255],
             [['code'], 'unique'],
             [['medical_cat_id','pack_size','price', 'min_stock', 'max_stock'],'required'],
+            [['pack_size',],'safe']
         ];
     }
 

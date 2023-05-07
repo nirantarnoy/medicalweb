@@ -180,6 +180,8 @@
                                     } else {
                                         $show_date = date('d/m/Y', strtotime($trans_date[$i]['trans_date']));
                                     }
+
+                                    $line_onhand = getOnhand();
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
@@ -234,7 +236,6 @@
 
                     <?php endfor; ?>
                 <?php endif; ?>
-
 
             </table>
         </div>
@@ -308,6 +309,15 @@ function getISitem($trans_date, $item_id, $module_type)
     }
 
     return $data;
+}
+
+function getOnhand($item_id){
+    $qty = 0;
+    if($item_id != ''){
+        $qty = \backend\models\Stocksum::find()->where(['product_id'=>$item_id])->sum('qty');
+
+    }
+    return $qty;
 }
 
 ?>

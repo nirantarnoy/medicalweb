@@ -87,7 +87,7 @@ class MedicalController extends Controller
                     $model->photo = $photo_name;
                 }
                 $model->code = \backend\models\Medical::getLastNo($model->medical_cat_id);
-                if($model->save()){
+                if($model->save(false)){
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
 
@@ -119,7 +119,7 @@ class MedicalController extends Controller
                 $photo->saveAs(\Yii::getAlias('@backend') . '/web/uploads/photo/' . $photo_name);
                 $model->photo = $photo_name;
             }
-            if($model->save()){
+            if($model->save(false)){
                 return $this->redirect(['view', 'id' => $model->id]);
             }
 
