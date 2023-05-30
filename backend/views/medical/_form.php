@@ -31,10 +31,13 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
+                <?= $form->field($model, 'pack_size')->textInput() ?>
+            </div>
+            <div class="col-lg-3">
                 <?= $form->field($model, 'pack_size_desc')->textInput() ?>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <?= $form->field($model, 'unit_id')->Widget(\kartik\select2\Select2::className(), [
                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Unit::find()->all(), 'id', function ($data) {
                         return $data->name;
@@ -44,7 +47,7 @@ use yii\widgets\ActiveForm;
                     ]
                 ]) ?>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <?= $form->field($model, 'price')->textInput() ?>
             </div>
         </div>

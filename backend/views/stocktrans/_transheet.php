@@ -95,7 +95,7 @@
                             </tr>
                             <tr>
                                 <td style="width: 30%">เลขคุณลักษณะ</td>
-                                <td></td>
+                                <td><b><?= $model->pack_size_desc  ?></b></td>
                             </tr>
                             <tr>
                                 <td style="width: 30%">หน่วยนับ</td>
