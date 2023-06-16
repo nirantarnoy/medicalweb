@@ -192,6 +192,13 @@
                                     $line_onhand = getOnhand($model->id);
                                     $line_rc_qty = !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : 0;
                                     $line_is_qty = !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : 0;
+
+                                    $line_onhand_cal_total = 0;
+                                    if($x == 0){
+                                        $line_onhand_cal_total = ($line_onhand-$line_is_qty);
+                                    }else{
+                                        $line_onhand_cal_total = (($line_onhand + $line_rc_qty)-$line_is_qty);
+                                    }
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
@@ -204,7 +211,7 @@
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] )) : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
-                                        <td style="border: 1px solid black;text-align: center"><?=number_format(($line_onhand + $line_rc_qty)-$line_is_qty)?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?=number_format($line_onhand_cal_total)?></td>
                                     </tr>
                                     <?php
                                     $prev_date = $trans_date[$i]['trans_date'];
@@ -230,6 +237,13 @@
                                     $line_rc_qty = !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : 0;
                                     $line_is_qty = !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : 0;
 
+                                    $line_onhand_cal_total = 0;
+                                    if($x == 0){
+                                        $line_onhand_cal_total = ($line_onhand-$line_is_qty);
+                                    }else{
+                                        $line_onhand_cal_total = (($line_onhand + $line_rc_qty)-$line_is_qty);
+                                    }
+
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
@@ -242,7 +256,7 @@
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] ))  : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
-                                        <td style="border: 1px solid black;text-align: center"><?=number_format(($line_onhand + $line_rc_qty)-$line_is_qty)?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?=number_format($line_onhand_cal_total)?></td>
                                     </tr>
                                 <?php endfor; ?>
                             <?php endif; ?>
