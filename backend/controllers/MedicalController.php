@@ -246,7 +246,7 @@ class MedicalController extends Controller
         $line_qty = 0;
         $lot_line_id = \Yii::$app->request->post('lot_id');
         if($lot_line_id){
-            $model = \backend\models\Stocksum::find()->where(['id'=>$lot_line_id])->one();
+            $model = \backend\models\Stocksum::find()->where(['id'=>$lot_line_id])->andFilterWhere(['>','qty', 0])->one();
             if($model){
                 $line_qty = $model->qty;
             }
