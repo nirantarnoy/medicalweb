@@ -46,7 +46,7 @@ class Warehouse extends \common\models\Warehouse
             'id' => 'ID',
             'name' => 'ชื่อ',
             'description' => 'รายละเอียด',
-            'status' => 'สภานะ',
+            'status' => 'สถานะ',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
