@@ -257,7 +257,7 @@ class MedicalController extends Controller
         $exp_date = '';
         $lot_line_id = \Yii::$app->request->post('lot_id');
         if($lot_line_id){
-            $model = \backend\models\Stocksum::find()->where(['id'=>$lot_line_id])->one();
+            $model = \backend\models\Stocksum::find()->where(['id'=>$lot_line_id])->andFilterwhere(['>','qty',0])->one();
             if($model){
                 $exp_date = date('d-m-Y',strtotime($model->expired_date));
             }

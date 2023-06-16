@@ -135,9 +135,12 @@ class StocktransController extends Controller
 
     public function actionTransheet(){
         $product_id = \Yii::$app->request->post('select_product');
-
-        $model = \backend\models\Medical::find()->where(['id'=>$product_id])->one();
-
+        $model = null;
+        if($product_id){
+            $model = \backend\models\Medical::find()->where(['id'=>$product_id])->one();
+        }else{
+            echo "not have product id";
+        }
 
         return $this->render('_transheet',['model'=>$model]);
     }

@@ -112,7 +112,9 @@ use yii\widgets\ActiveForm;
                         <td>
                             <!--                            <input type="text" class="form-control line-lot" name="line_lot[]">-->
                             <select name="line_lot[]" class="form-control line-lot" id=""
-                                    onchange="getlotqty($(this))"></select>
+                                    onchange="getlotqty($(this))"
+                                    required
+                            ></select>
                             <input type="hidden" class="line-lot-qty" value="">
                         </td>
                         <td>

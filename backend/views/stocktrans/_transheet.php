@@ -99,7 +99,7 @@
                             </tr>
                             <tr>
                                 <td style="width: 30%">เลขคุณลักษณะ</td>
-                                <td><b><?= $model->pack_size_desc  ?></b></td>
+                                <td><b><?= $model != null?$model->pack_size_desc: ''  ?></b></td>
                             </tr>
                             <tr>
                                 <td style="width: 30%">หน่วยนับ</td>
@@ -166,9 +166,10 @@
                     <?php for ($i = 0; $i <= count($trans_date) - 1; $i++): ?>
                         <?php
                         $rc_data = [];
+                        $is_data = [];
                         $rc_data = getRCitem($trans_date[$i]['trans_date'], $model->id, 1); //1 = RC module 2 = IS module
                         $is_data = getISitem($trans_date[$i]['trans_date'], $model->id, 2); //1 = RC module 2 = IS module
-//                    echo count($is_data); return;
+//                    echo count($rc_data); return;
                         ?>
 
                         <?php if (count($rc_data) >= count($is_data)): ?>
@@ -184,6 +185,9 @@
                                     } else {
                                         $show_date = date('d/m/Y', strtotime($trans_date[$i]['trans_date']));
                                     }
+
+                                    //test
+//                                    $line_onhand = getOnhand2($model->id,$rc_data);
 
                                     $line_onhand = getOnhand($model->id);
                                     $line_rc_qty = !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : 0;
@@ -320,6 +324,7 @@ function getISitem($trans_date, $item_id, $module_type)
 
     return $data;
 }
+
 
 function getOnhand($item_id){
     $qty = 0;

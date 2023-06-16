@@ -98,6 +98,13 @@ class ItemissueController extends Controller
                 if ($model->save(false)) {
                     if ($item_id != null) {
                         for ($i = 0; $i <= count($item_id) - 1; $i++) {
+
+                            $line_exp_date = date('Y-m-d');
+                            $xprdate = explode('-',$line_expired[$i]);
+                            if(count($xprdate)>1){
+                                $line_exp_date = $xprdate[2].'/'.$xprdate[1].'/'.$xprdate[0];
+                            }
+
                             $line_lot_no = $this->findlotnofromid($line_lot_id[$i]);
                             $model_line = new \common\models\JournalIssueLine();
                             $model_line->issue_id = $model->id;
@@ -115,7 +122,7 @@ class ItemissueController extends Controller
                                 $model_trans->item_id = $item_id[$i];
                                 $model_trans->qty = $line_qty[$i];
                                 $model_trans->lot_no = $line_lot_no;
-                                $model_trans->exp_date = date('Y-m-d');
+                                $model_trans->exp_date = date('Y-m-d',strtotime($line_exp_date));
                                 if ($model_trans->save(false)) {
                                     $this->updatestock($item_id[$i], $line_qty[$i], $line_lot_no, $model_trans->id);
                                 }
