@@ -228,7 +228,7 @@ class MedicalController extends Controller
         $html = '';
         $product_id = \Yii::$app->request->post('product_id');
         if($product_id){
-            $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->orderBy("expired_date")->all();
+            $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->andFilterWhere(['>','qty',0])->orderBy("expired_date")->all();
             if($model){
                 $html.='<option id="-1">--เลือก Lot No--</option>';
                 foreach ($model as $value){
