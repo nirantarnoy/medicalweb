@@ -223,6 +223,42 @@ class MedicalController extends Controller
         }
         echo $html;
     }
+    public function actionFindItem()
+    {
+        $txt = \Yii::$app->request->post('txt');
+
+        $html = '';
+        $model = null;
+        if ($txt == '' || $txt == null) {
+            $model = \common\models\QueryMedicalStock::find()->all();
+        } else {
+            $model = \common\models\QueryMedicalStock::find()->where(['OR', ['LIKE', 'code', $txt], ['LIKE', 'name', $txt]])->all();
+        }
+
+        if ($model) {
+            foreach ($model as $value) {
+                //$unit_name = \backend\models\Unit::findUnitName($value->unit_id);
+                $html .= '<tr>';
+                $html .= '<td style="text-align: center">
+                        <div class="btn btn-outline-success btn-sm" onclick="addselecteditem($(this))" data-var="' . $value->id . '">เลือก</div>
+                        <input type="hidden" class="line-find-code" value="' . $value->code . '">
+                        <input type="hidden" class="line-find-name" value="' . $value->name . '">
+                        <input type="hidden" class="line-unit-id" value="' . $value->unit_id . '">
+                        <input type="hidden" class="line-unit-name" value="' . $value->unit_name . '">
+                        <input type="hidden" class="line-lot-no" value="' . $value->lot_no . '">
+                        <input type="hidden" class="line-find-price" value="0">
+                        <input type="hidden" class="line-onhand" value="0">
+                       </td>';
+                $html .= '<td>' . $value->code . '</td>';
+                $html .= '<td>' . $value->name . '</td>';
+                $html .= '<td style="text-align: center;">' . number_format($value->price) . '</td>';
+                $html .= '<td  style="text-align: center;">' . number_format($value->qty) . '</td>';
+                $html .= '<td>' . $value->lot_no . '</td>';
+                $html .= '</tr>';
+            }
+        }
+        echo $html;
+    }
 
     public function actionGetLineLot(){
         $html = '';

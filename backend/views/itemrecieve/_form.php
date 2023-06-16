@@ -245,7 +245,7 @@ use yii\widgets\ActiveForm;
     </div>
 <?php
 $url_to_Dropoffdata = \yii\helpers\Url::to(['dropoffplace/getdropoffdata'], true);
-$url_to_find_item = \yii\helpers\Url::to(['medical/get-item'], true);
+$url_to_find_item = \yii\helpers\Url::to(['medical/find-item'], true);
 $js = <<<JS
  var removelist = [];
   var selecteditem = [];
