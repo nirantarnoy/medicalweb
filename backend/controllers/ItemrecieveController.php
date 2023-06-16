@@ -176,7 +176,29 @@ class ItemrecieveController extends Controller
 
         $model_line = \common\models\PurchrecLine::find()->where(['purchrec_id'=>$id])->all();
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $item_id = \Yii::$app->request->post('line_item_id');
+            $line_qty = \Yii::$app->request->post('line_qty');
+            $line_unit_id = \Yii::$app->request->post('line_unit_id');
+            $line_lotno = \Yii::$app->request->post('line_lot');
+            $line_expired = \Yii::$app->request->post('line_expired');
+            $line_issue_ref_no =  \Yii::$app->request->post('line_issue_ref_no');
+
+            $tdate = date('Y-m-d');
+            $xdate = explode('-',$model->trans_date);
+            if(count($xdate)>1){
+                $tdate = $xdate[2].'/'.$xdate[1].'/'.$xdate[0];
+            }
+
+            $model->journal_no = $model::getLastNo();
+            $model->trans_date = date('Y-m-d', strtotime($tdate));
+            $model->status = 1;
+
+            if( $model->save(false)){
+                if ($item_id != null) {
+
+                }
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
