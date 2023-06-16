@@ -40,11 +40,12 @@ class Medical extends \common\models\Medical
     public function rules()
     {
         return [
-            [['medical_cat_id', 'pack_size', 'unit_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['medical_cat_id',  'unit_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['price', 'min_stock', 'max_stock'], 'number'],
-            [['code', 'name', 'description', 'photo'], 'string', 'max' => 255],
+            [['code', 'name', 'description', 'photo','pack_size_desc'], 'string', 'max' => 255],
             [['code'], 'unique'],
             [['medical_cat_id','pack_size','price', 'min_stock', 'max_stock'],'required'],
+            [['pack_size',],'safe']
         ];
     }
 
@@ -59,7 +60,8 @@ class Medical extends \common\models\Medical
             'name' => 'ชื่อ',
             'description' => 'รายละเอียด',
             'medical_cat_id' => 'หมวดหมู่เวชภัณฑ์',
-            'pack_size' => 'Pack Size',
+            'pack_size' => 'ขนาดบรรจุ',
+            'pack_size_desc' => 'เลขคุณลักษณะ',
             'unit_id' => 'หน่วยนับ',
             'price' => 'ราคา',
             'min_stock' => 'Min Stock',
@@ -83,6 +85,15 @@ class Medical extends \common\models\Medical
     {
         $model = Medical::find()->where(['id' => $id])->one();
         return $model != null ? $model->name : '';
+    }
+    public function findUnitName($id)
+    {
+        $unit_name = '';
+        $model = Medical::find()->select('unit_id')->where(['id' => $id])->one();
+        if($model){
+            $unit_name = \backend\models\Unit::findUnitName($model->unit_id);
+        }
+        return $unit_name;
     }
 
     public function getMinstock($id)

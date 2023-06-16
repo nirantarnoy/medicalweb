@@ -40,9 +40,10 @@ class Medical extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['medical_cat_id', 'pack_size', 'unit_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['medical_cat_id',  'unit_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['price', 'min_stock', 'max_stock'], 'number'],
-            [['code', 'name', 'description', 'photo'], 'string', 'max' => 255],
+            [['code', 'name', 'description', 'photo','pack_size_desc'], 'string', 'max' => 255],
+            [['pack_size',],'safe']
         ];
     }
 
@@ -57,7 +58,8 @@ class Medical extends \yii\db\ActiveRecord
             'name' => 'Name',
             'description' => 'Description',
             'medical_cat_id' => 'Medical Cat ID',
-            'pack_size' => 'Pack Size',
+            'pack_size' => 'ขนาดบรรจุ',
+            'pack_size_desc' => 'เลขคุณลักษณะ',
             'unit_id' => 'Unit ID',
             'price' => 'Price',
             'min_stock' => 'Min Stock',

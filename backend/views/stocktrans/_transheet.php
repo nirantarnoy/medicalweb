@@ -99,7 +99,7 @@
                             </tr>
                             <tr>
                                 <td style="width: 30%">เลขคุณลักษณะ</td>
-                                <td></td>
+                                <td><b><?= $model->pack_size_desc  ?></b></td>
                             </tr>
                             <tr>
                                 <td style="width: 30%">หน่วยนับ</td>
@@ -166,8 +166,8 @@
                     <?php for ($i = 0; $i <= count($trans_date) - 1; $i++): ?>
                         <?php
                         $rc_data = [];
-                        $rc_data = getRCitem($trans_date[$i]['trans_date'], 1, 1); //1 = RC module 2 = IS module
-                        $is_data = getISitem($trans_date[$i]['trans_date'], 1, 2); //1 = RC module 2 = IS module
+                        $rc_data = getRCitem($trans_date[$i]['trans_date'], $model->id, 1); //1 = RC module 2 = IS module
+                        $is_data = getISitem($trans_date[$i]['trans_date'], $model->id, 2); //1 = RC module 2 = IS module
 //                    echo count($is_data); return;
                         ?>
 
@@ -184,19 +184,23 @@
                                     } else {
                                         $show_date = date('d/m/Y', strtotime($trans_date[$i]['trans_date']));
                                     }
+
+                                    $line_onhand = getOnhand($model->id);
+                                    $line_rc_qty = !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : 0;
+                                    $line_is_qty = !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : 0;
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['issue_ref_no']) ? $rc_data[$x]['issue_ref_no'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['lot_no']) ? $rc_data[$x]['lot_no'] : '' ?></td>
-                                        <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['exp_date']) ? $rc_data[$x]['exp_date'] : '' ?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['exp_date']) ? date('d/m/Y',strtotime($rc_data[$x]['exp_date'] )) : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['lot_no']) ? $is_data[$x]['lot_no'] : '' ?></td>
-                                        <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? $is_data[$x]['exp_date'] : '' ?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] )) : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
-                                        <td style="border: 1px solid black;text-align: center"></td>
+                                        <td style="border: 1px solid black;text-align: center"><?=number_format(($line_onhand + $line_rc_qty)-$line_is_qty)?></td>
                                     </tr>
                                     <?php
                                     $prev_date = $trans_date[$i]['trans_date'];
@@ -218,19 +222,23 @@
                                     } else {
                                         $show_date = date('d/m/Y', strtotime($trans_date[$i]['trans_date']));
                                     }
+                                    $line_onhand = getOnhand($model->id);
+                                    $line_rc_qty = !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : 0;
+                                    $line_is_qty = !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : 0;
+
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['issue_ref_no']) ? $rc_data[$x]['issue_ref_no'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['lot_no']) ? $rc_data[$x]['lot_no'] : '' ?></td>
-                                        <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['exp_date']) ? $rc_data[$x]['exp_date'] : '' ?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['exp_date']) ? date('d/m/Y',strtotime($rc_data[$x]['exp_date'] )): '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['lot_no']) ? $is_data[$x]['lot_no'] : '' ?></td>
-                                        <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? $is_data[$x]['exp_date'] : '' ?></td>
+                                        <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['exp_date']) ? date('d/m/Y',strtotime($is_data[$x]['exp_date'] ))  : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center"><?= !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : '' ?></td>
                                         <td style="border: 1px solid black;text-align: center">Admin</td>
-                                        <td style="border: 1px solid black;text-align: center"></td>
+                                        <td style="border: 1px solid black;text-align: center"><?=number_format(($line_onhand + $line_rc_qty)-$line_is_qty)?></td>
                                     </tr>
                                 <?php endfor; ?>
                             <?php endif; ?>
@@ -238,7 +246,6 @@
 
                     <?php endfor; ?>
                 <?php endif; ?>
-
 
             </table>
         </div>
@@ -263,9 +270,9 @@ function getTransdate($model)
     $data = [];
 
     if ($model) {
-        $model = \backend\models\Stocktrans::find()->select('date(trans_date) as trans_date')->where(['item_id' => $model->id])->groupBy(['date(trans_date)'])->orderBy('trans_date')->all();
-        if ($model) {
-            foreach ($model as $value) {
+        $model_data = \backend\models\Stocktrans::find()->select('date(trans_date) as trans_date')->where(['item_id' => $model->id])->groupBy(['date(trans_date)'])->orderBy('trans_date')->all();
+        if ($model_data) {
+            foreach ($model_data as $value) {
                 array_push($data, ['trans_date' => $value->trans_date]);
             }
         }
@@ -312,6 +319,15 @@ function getISitem($trans_date, $item_id, $module_type)
     }
 
     return $data;
+}
+
+function getOnhand($item_id){
+    $qty = 0;
+    if($item_id != ''){
+        $qty = \backend\models\Stocksum::find()->where(['product_id'=>$item_id])->sum('qty');
+
+    }
+    return $qty;
 }
 
 ?>

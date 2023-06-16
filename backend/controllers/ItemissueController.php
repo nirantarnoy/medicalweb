@@ -85,8 +85,6 @@ class ItemissueController extends Controller
                 $line_expired = \Yii::$app->request->post('line_expired');
 
 
-
-
                 $tdate = date('Y-m-d');
                 $xdate = explode('-', $model->trans_date);
                 if (count($xdate) > 1) {
@@ -111,7 +109,7 @@ class ItemissueController extends Controller
                             if ($model_line->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
                                 $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
-                                $model_trans->trans_date = date('Y-m-d H:i:s');
+                                $model_trans->trans_date = date('Y-m-d', strtotime($tdate));
                                 $model_trans->activity_type_id = 2;
                                 $model_trans->trans_module_type_id = 2; // 1 receive
                                 $model_trans->item_id = $item_id[$i];
@@ -149,11 +147,12 @@ class ItemissueController extends Controller
         }
     }
 
-    public function findlotnofromid($lot_line_id){
+    public function findlotnofromid($lot_line_id)
+    {
         $name = '';
-        if($lot_line_id){
-            $model=\backend\models\Stocksum::find()->select('lot_no')->where(['id'=>$lot_line_id])->one();
-            if($model){
+        if ($lot_line_id) {
+            $model = \backend\models\Stocksum::find()->select('lot_no')->where(['id' => $lot_line_id])->one();
+            if ($model) {
                 $name = $model->lot_no;
             }
         }
@@ -194,17 +193,17 @@ class ItemissueController extends Controller
             if ($model->save(false)) {
                 if ($item_id != null) {
                     for ($i = 0; $i <= count($item_id) - 1; $i++) {
-                        $model_line_chk = \common\models\JournalIssueLine::find()->where(['issue_id'=>$model->id,'item_id'=>$item_id[$i]])->one();
+                        $model_line_chk = \common\models\JournalIssueLine::find()->where(['issue_id' => $model->id, 'item_id' => $item_id[$i]])->one();
                         if ($model_line_chk) {
                             $model_line_chk->item_id = $item_id[$i];
                             $model_line_chk->qty = $line_qty[$i];
                             $model_line_chk->lot_no = $line_lotno[$i];
                             $model_line_chk->exp_date = date('Y-m-d');
                             $model_line_chk->status = 1;
-                            if ($model_line_chk->save(false)){
+                            if ($model_line_chk->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
                                 $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
-                                $model_trans->trans_date = date('Y-m-d H:i:s');
+                                $model_trans->trans_date = date('Y-m-d', strtotime($tdate));
                                 $model_trans->activity_type_id = 1;
                                 $model_trans->trans_module_type_id = 2; // 1 receive
                                 $model_trans->item_id = $item_id[$i];
@@ -226,7 +225,7 @@ class ItemissueController extends Controller
                             if ($model_line->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
                                 $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
-                                $model_trans->trans_date = date('Y-m-d H:i:s');
+                                $model_trans->trans_date = date('Y-m-d', strtotime($tdate));
                                 $model_trans->activity_type_id = 1;
                                 $model_trans->trans_module_type_id = 2; // 1 receive
                                 $model_trans->item_id = $item_id[$i];
@@ -265,10 +264,10 @@ class ItemissueController extends Controller
 
 
         $message = '' . "\n";
-        $message .= 'แจ้งเตือนเวชภัณฑ์ต่ำกว่า minimum stock:'  . "\n";
-        $message .= "วันที่: " . date('d-m-Y'). "\n";
-        $message .= "เวลา: " . date('H:i:s'). "\n";
-        $message .= 'เวชภัณฑ์รหัส: ' . '00001'. "\n";
+        $message .= 'แจ้งเตือนเวชภัณฑ์ต่ำกว่า minimum stock:' . "\n";
+        $message .= "วันที่: " . date('d-m-Y') . "\n";
+        $message .= "เวลา: " . date('H:i:s') . "\n";
+        $message .= 'เวชภัณฑ์รหัส: ' . '00001' . "\n";
         $message .= "ชื่อ: " . 'ทดสอบ' . "\n";
         $message .= "จำนวนขั้นต่ำ: " . number_format(10, 0) . "\n";
         $message .= "จำนวนคงเหลือ: " . number_format(9, 0) . "\n";
@@ -327,4 +326,66 @@ class ItemissueController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionIssueqr()
+    {
+        return $this->render('_issueqr');
+    }
+
+    public function actionCreateissueqr()
+    {
+        $product_code = \Yii::$app->request->post('qrcode_txt');
+        //echo 'product code is '. \Yii::$app->request->post('qrcode_txt');
+        return $this->render('_createissueqr', ['product_code' => $product_code]);
+    }
+
+    public function actionCreatefromqr()
+    {
+        $item_id = \Yii::$app->request->post('product_id');
+        $line_qty = \Yii::$app->request->post('issue_qty');
+        $line_lot_id = \Yii::$app->request->post('select_lot_no');
+
+
+        $tdate = date('Y-m-d');
+        $model = new \backend\models\Itemissue();
+        $model->journal_no = $model::getLastNo();
+        $model->trans_date = date('Y-m-d', strtotime($tdate));
+        $model->status = 1;
+
+        if ($model->save(false)) {
+            if ($item_id != null) {
+
+                $line_lot_no = $this->findlotnofromid($line_lot_id);
+                $model_line = new \common\models\JournalIssueLine();
+                $model_line->issue_id = $model->id;
+                $model_line->item_id = $item_id;
+                $model_line->qty = $line_qty;
+//                            $model_line->unit_id = $line_unit_id[$i];
+                $model_line->lot_no = $line_lot_no;
+                $model_line->exp_date = date('Y-m-d');
+                if ($model_line->save(false)) {
+                    $model_trans = new \backend\models\Stocktrans();
+                    $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
+                    $model_trans->trans_date = date('Y-m-d H:i:s');
+                    $model_trans->activity_type_id = 2;
+                    $model_trans->trans_module_type_id = 2; // 1 receive
+                    $model_trans->item_id = $item_id;
+                    $model_trans->qty = $line_qty;
+                    $model_trans->lot_no = $line_lot_no;
+                    $model_trans->exp_date = date('Y-m-d');
+                    if ($model_trans->save(false)) {
+                        $this->updatestock($item_id, $line_qty, $line_lot_no, $model_trans->id);
+                    }
+                }
+
+            }
+
+            return $this->redirect(['itemissue/issuecomplete']);
+        }
+    }
+
+    public function actionIssuecomplete(){
+        return $this->render('_issuecomplete');
+    }
+
 }

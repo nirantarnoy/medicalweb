@@ -61,9 +61,9 @@ class StocktransSearch extends Stocktrans
         }
 
         // grid filtering conditions
-       // $query->andFilterWhere([
-            //   'id' => $this->id,
-            //   'trans_date' => $this->trans_date,
+        $query->andFilterWhere([
+               'stock_trans.id' => $this->id,
+      //         'trans_date' => $this->trans_date,
 //            'trans_module_type_id' => $this->trans_module_type_id,
 ////            'activity_type_id' => $this->activity_type_id,
 //            'item_id' => $this->item_id,
@@ -72,14 +72,13 @@ class StocktransSearch extends Stocktrans
 //            'status' => $this->status,
 //            'created_at' => $this->created_at,
 //            'created_by' => $this->created_by,
-       // ]);
+        ]);
 
-        if ($this->trans_module_type_id > 0) {
-            $query->andFilterWhere(['trans_module_type_id' => $this->trans_module_type_id]);
-        }
-        if ($this->activity_type_id > 0) {
-            $query->andFilterWhere(['activity_type_id' => $this->activity_type_id]);
-        }
+//        if ($this->trans_module_type_id > 0) {
+//            $query->andFilterWhere(['trans_module_type_id' => $this->trans_module_type_id]);
+//        }
+
+
 
         if ($this->globalSearch != '' || $this->globalSearch != null) {
 
@@ -88,6 +87,21 @@ class StocktransSearch extends Stocktrans
                 ->orFilterWhere(['like', 'item_id', $this->globalSearch])
                 ->orFilterWhere(['like', 'medical.name', $this->globalSearch]);
 
+        }
+
+        if ($this->activity_type_id > 0) {
+            $query->andFilterWhere(['activity_type_id' => $this->activity_type_id]);
+        }
+
+        if($this->trans_date != '' || $this->trans_date != null){
+            $tdate = '';
+            $xdate = explode('-', $this->trans_date);
+            if (count($xdate) > 1) {
+                $tdate = $xdate[2] . '/' . $xdate[1] . '/' . $xdate[0];
+            }
+            if($tdate !=''){
+                $query->andFilterWhere(['date(trans_date)' => date('Y-m-d',strtotime($tdate))]);
+            }
         }
 
         return $dataProvider;

@@ -59,7 +59,7 @@ class StockTrans extends \yii\db\ActiveRecord
             'exp_date' => 'หมดอายุ',
             'qty' => 'จำนวน',
             'status' => 'สถานะ',
-            'issue_ref_no' => 'Issue ref no',
+            'issue_ref_no' => 'เลขที่ใบเบิก',
             'created_at' => 'สร้างเมื่อ',
             'created_by' => 'สร้างโดย',
         ];

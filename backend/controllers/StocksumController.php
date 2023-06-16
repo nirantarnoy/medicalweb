@@ -57,6 +57,7 @@ class StocksumController extends Controller
     {
         $searchModel = new StocksumSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere(['>','qty',0]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

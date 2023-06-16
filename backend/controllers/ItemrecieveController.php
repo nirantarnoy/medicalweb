@@ -154,7 +154,7 @@ class ItemrecieveController extends Controller
                 $model_new = new \backend\models\Stocksum();
                 $model_new->product_id = $item_id;
                 $model_new->qty = $qty;
-                $model_new->warehouse_id = 2;
+                $model_new->warehouse_id = 1;
                 $model_new->lot_no = $lot_no;
                 $model_new->expired_date = date('Y-m-d',strtotime($expired));
                 $model_new->trans_ref_id = $trans_ref_id;
@@ -236,5 +236,70 @@ class ItemrecieveController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    public function actionRecieveqr()
+    {
+        return $this->render('_receiveqr');
+    }
+
+    public function actionCreaterecieveqr()
+    {
+        $product_code = \Yii::$app->request->post('qrcode_txt');
+        //echo 'product code is '. \Yii::$app->request->post('qrcode_txt');
+        return $this->render('_createreceiveqr', ['product_code' => $product_code]);
+    }
+
+    public function actionCreatefromqr()
+    {
+        $item_id = \Yii::$app->request->post('product_id');
+        $recieve_qty = \Yii::$app->request->post('recieve_qty');
+        $lot_no = \Yii::$app->request->post('lot_no');
+        $lot_expired_date = \Yii::$app->request->post('lot_expired_date');
+        $issue_ref_no = \Yii::$app->request->post('issue_ref_no');
+
+        $model = new \backend\models\Itemrecieve();
+        $model->journal_no = $model::getLastNo();
+        $model->trans_date = date('Y-m-d H:i:s');
+        $model->status = 1;
+        if ($model->save(false)) {
+            if ($item_id != null) {
+
+                    $line_exp_date = date('Y-m-d');
+                    $xprdate = explode('-',$lot_expired_date);
+                    if(count($xprdate)>1){
+                        $line_exp_date = $xprdate[2].'/'.$xprdate[1].'/'.$xprdate[0];
+                    }
+
+                    $model_line = new \common\models\PurchrecLine();
+                    $model_line->purchrec_id = $model->id;
+                    $model_line->item_id = $item_id;
+                    $model_line->qty = $recieve_qty;
+                    $model_line->unit_id = 1;
+                    $model_line->lot_no = $lot_no;
+                    $model_line->exp_date = date('Y-m-d',strtotime($line_exp_date));
+                    $model_line->issue_ref_no = $issue_ref_no;
+                    if ($model_line->save(false)) {
+                        $model_trans = new \backend\models\Stocktrans();
+                        $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
+                        $model_trans->trans_date = date('Y-m-d H:i:s');
+                        $model_trans->activity_type_id = 1;
+                        $model_trans->trans_module_type_id = 1; // 1 receive
+                        $model_trans->item_id = $item_id;
+                        $model_trans->qty = $recieve_qty;
+                        $model_trans->lot_no = $lot_no;
+                        $model_trans->exp_date = date('Y-m-d',strtotime($line_exp_date));
+                        $model_trans->issue_ref_no = $issue_ref_no;
+                        if ($model_trans->save(false)) {
+                            $this->updatestock($item_id, $recieve_qty, 1, $lot_no, $lot_expired_date, $model_trans->id);
+                        }
+                    }
+
+            }
+            return $this->redirect(['itemrecieve/receivecomplete']);
+        }
+    }
+
+    public function actionReceivecomplete(){
+        return $this->render('_receivecomplete');
     }
 }

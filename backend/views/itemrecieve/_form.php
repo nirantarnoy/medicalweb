@@ -65,7 +65,7 @@ use yii\widgets\ActiveForm;
                                 </td>
                                 <td>
                                     <input type="number" class="form-control line-qty" name="line_qty[]" min="1"
-                                           value="<?= $value->qty ?>" autocomplete="off">
+                                           value="<?= $value->qty ?>" autocomplete="off" required>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line-unit" name="line_unit[]"
@@ -73,7 +73,7 @@ use yii\widgets\ActiveForm;
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line-issue-ref-no" name="line_issue_ref_no[]" readonly
-                                           value="<?= $value->issue_ref_no ?>">
+                                           value="<?= $value->issue_ref_no ?>" required>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control line-lot" name="line_lot[]"
@@ -103,14 +103,14 @@ use yii\widgets\ActiveForm;
                                 <input type="text" class="form-control line-name" name="line_name[]" readonly>
                             </td>
                             <td>
-                                <input type="number" class="form-control line-qty" name="line_qty[]" min="1" autocomplete="off">
+                                <input type="number" class="form-control line-qty" name="line_qty[]" min="1" autocomplete="off" required>
                             </td>
                             <td>
                                 <input type="text" class="form-control line-unit" name="line_unit[]">
                             </td>
                             <td>
                                 <input type="text" class="form-control line-issue-ref-no" name="line_issue_ref_no[]"
-                                       value="">
+                                       value="" required>
                             </td>
                             <td>
                                 <input type="text" class="form-control line-lot" name="line_lot[]" autocomplete="off">
@@ -212,6 +212,9 @@ use yii\widgets\ActiveForm;
                             <th>
                                 จำนวนคงเหลือ
                             </th>
+                            <th>
+                                LotNo.
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -306,6 +309,9 @@ function showfindwithsearch(txt){
         var price = e.closest('tr').find('.line-find-price').val();
         var unit_id = e.closest('tr').find('.line-unit-id').val();
         var unit_name = e.closest('tr').find('.line-unit-name').val();
+        var lot_no = e.closest('tr').find('.line-lot-no').val();
+        
+       // alert(lot_no);
         
         if (id) {
           // alert(id);
@@ -318,6 +324,7 @@ function showfindwithsearch(txt){
                 obj['price'] = price;
                 obj['unit_id'] = unit_id;
                 obj['unit_name'] = unit_name;
+                obj['lot_no'] = lot_no;
                 selecteditem.push(obj);
                 
                 e.removeClass('btn-outline-success');
@@ -359,13 +366,14 @@ function showfindwithsearch(txt){
                 var line_prod_price = selecteditem[i]['price'];
                 var line_unit_id = selecteditem[i]['unit_id'];
                 var line_unit_name = selecteditem[i]['unit_name'];
+                var line_lot_no = selecteditem[i]['lot_no'];
                 
                  if(check_dup(line_prod_id) == 1){
                         alert("รายการสินค้า " +line_prod_code+ " มีในรายการแล้ว");
                         return false;
                  }
                 
-              //  alert(line_prod_id);
+               // alert(line_lot_no);
                 var tr = $("#table-list tbody tr:last");
                 
                 if (tr.closest("tr").find(".line-code").val() == "") {
@@ -374,6 +382,7 @@ function showfindwithsearch(txt){
                     tr.closest("tr").find(".line-name").val(line_prod_name);
                     tr.closest("tr").find(".line-unit").val(line_unit_name);
                     tr.closest("tr").find(".line-unit-id").val(line_unit_id);
+                    tr.closest("tr").find(".line-lot").val(line_lot_no);
                    
 
                     //cal_num();
@@ -389,6 +398,7 @@ function showfindwithsearch(txt){
                     clone.find(".line-item-id").val(line_prod_id);
                     clone.find(".line-code").val(line_prod_code);
                     clone.find(".line-name").val(line_prod_name);
+                    clone.find(".line-lot-no").val('');
                    
                     clone.attr("data-var", "");
                     clone.find('.rec-id').val("");
