@@ -161,7 +161,7 @@
                 </tr>
                 <?php
                 $trans_date = getTransdate($model);
-                $init_onhand = getOnhand($model->id);
+
                 ?>
                 <?php if ($trans_date != null): ?>
                     <?php for ($i = 0; $i <= count($trans_date) - 1; $i++): ?>
@@ -171,6 +171,7 @@
                         $rc_data = getRCitem($trans_date[$i]['trans_date'], $model->id, 1); //1 = RC module 2 = IS module
                         $is_data = getISitem($trans_date[$i]['trans_date'], $model->id, 2); //1 = RC module 2 = IS module
 //                    echo count($rc_data); return;
+                        $init_onhand = getOnhand($model->id);
                         ?>
 
                         <?php if (count($rc_data) >= count($is_data)): ?>
