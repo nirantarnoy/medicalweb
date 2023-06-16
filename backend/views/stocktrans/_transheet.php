@@ -201,6 +201,7 @@
 //                                        $line_onhand_cal_total = (($line_onhand + $line_rc_qty)-$line_is_qty);
 //                                    }
                                     $line_onhand_cal_total = (($init_onhand + $line_rc_qty) - $line_is_qty);
+                                    $init_onhand = $line_onhand_cal_total;
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
@@ -240,6 +241,7 @@
                                     $line_is_qty = !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : 0;
 
                                     $line_onhand_cal_total = (($init_onhand + $line_rc_qty) - $line_is_qty);
+                                    $init_onhand = $line_onhand_cal_total;
 //                                    if($x == 0){
 //                                        $line_onhand_cal_total = ($line_onhand-$line_is_qty);
 //                                    }else{
