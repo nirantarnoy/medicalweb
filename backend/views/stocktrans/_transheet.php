@@ -161,6 +161,7 @@
                 </tr>
                 <?php
                 $trans_date = getTransdate($model);
+                $init_onhand = getOnhand($model->id);
                 ?>
                 <?php if ($trans_date != null): ?>
                     <?php for ($i = 0; $i <= count($trans_date) - 1; $i++): ?>
@@ -189,16 +190,17 @@
                                     //test
 //                                    $line_onhand = getOnhand2($model->id,$rc_data);
 
-                                    $line_onhand = getOnhand($model->id);
+
                                     $line_rc_qty = !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : 0;
                                     $line_is_qty = !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : 0;
 
-                                    $line_onhand_cal_total = 0;
-                                    if($x == 0){
-                                        $line_onhand_cal_total = ($line_onhand-$line_is_qty);
-                                    }else{
-                                        $line_onhand_cal_total = (($line_onhand + $line_rc_qty)-$line_is_qty);
-                                    }
+//                                    $line_onhand_cal_total = 0;
+//                                    if($x == 0){
+//                                        $line_onhand_cal_total = ($line_onhand-$line_is_qty);
+//                                    }else{
+//                                        $line_onhand_cal_total = (($line_onhand + $line_rc_qty)-$line_is_qty);
+//                                    }
+                                    $line_onhand_cal_total = (($init_onhand + $line_rc_qty) - $line_is_qty);
                                     ?>
                                     <tr>
                                         <td style="border: 1px solid black;text-align: center;padding:10px;"><?= $show_date ?></td>
@@ -233,16 +235,16 @@
                                     } else {
                                         $show_date = date('d/m/Y', strtotime($trans_date[$i]['trans_date']));
                                     }
-                                    $line_onhand = getOnhand($model->id);
+                                  //  $line_onhand = getOnhand($model->id);
                                     $line_rc_qty = !empty($rc_data[$x]['qty']) ? $rc_data[$x]['qty'] : 0;
                                     $line_is_qty = !empty($is_data[$x]['qty']) ? $is_data[$x]['qty'] : 0;
 
-                                    $line_onhand_cal_total = 0;
-                                    if($x == 0){
-                                        $line_onhand_cal_total = ($line_onhand-$line_is_qty);
-                                    }else{
-                                        $line_onhand_cal_total = (($line_onhand + $line_rc_qty)-$line_is_qty);
-                                    }
+                                    $line_onhand_cal_total = (($init_onhand + $line_rc_qty) - $line_is_qty);
+//                                    if($x == 0){
+//                                        $line_onhand_cal_total = ($line_onhand-$line_is_qty);
+//                                    }else{
+//                                        $line_onhand_cal_total = (($line_onhand + $line_rc_qty)-$line_is_qty);
+//                                    }
 
                                     ?>
                                     <tr>
