@@ -1,5 +1,6 @@
 <?php
-$model_data = \backend\models\Stocksum::find()->groupBy('product_id')->all();
+$model_medical = \backend\models\Medical::find()->all();
+//$model_data = \backend\models\Stocksum::find()->groupBy('product_id')->all();
 ?>
 <html>
 <head>
@@ -99,28 +100,29 @@ $model_data = \backend\models\Stocksum::find()->groupBy('product_id')->all();
             <td style="text-align: center;padding: 0px;border: 1px solid grey">หมายเหตุ</td>
 
         </tr>
-        <?php if($model_data!=null):?>
+        <?php if($model_medical!=null):?>
         <?php $i=0;?>
-        <?php foreach ($model_data as $value):?>
+        <?php foreach ($model_medical as $value):?>
                 <?php $i+=1;?>
             <?php
-                $line_min_qty = \backend\models\Medical::getMinstock($value->product_id);
-                if($value->qty >= $line_min_qty)continue;
+                $line_min_qty = \backend\models\Medical::getMinstock($value->id);
+                $line_onhand = getOnhandQty($value->id);
+                if($line_onhand >= $line_min_qty)continue;
                 ?>
             <tr>
                 <td style="text-align: center;"><?=$i?></td>
                 <td>
-                    <?=\backend\models\Medical::findCode($value->product_id)?>
+                    <?=$value->code?>
                 </td>
                 <td>
-                    <?=\backend\models\Medical::findName($value->product_id)?>
+                    <?=$value->name?>
                 </td>
 
                 <td style="text-align: right;">
                     <?=$line_min_qty?>
                 </td>
                 <td style="text-align: right;">
-                    <?=number_format($value->qty)?>
+                    <?=number_format($line_onhand)?>
                 </td>
                 <td></td>
             </tr>
@@ -146,6 +148,16 @@ $model_data = \backend\models\Stocksum::find()->groupBy('product_id')->all();
 </html>
 
 <?php
+function getOnhandQty($product_id){
+    $onhand = 0;
+    if($product_id){
+        $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->one();
+        if($model){
+            $onhand = $model->qty;
+        }
+    }
+    return $onhand;
+}
 function getOrderQty($order_id)
 {
     $qty = 0;
