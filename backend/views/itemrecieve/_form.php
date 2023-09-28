@@ -16,9 +16,11 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'journal_no')->textInput(['maxlength' => true, 'readonly' => 'readonly']) ?>
             </div>
             <div class="col-lg-3">
+                <?php $model->trans_date = date('d-m-Y',strtotime($model->trans_date));?>
                 <?= $form->field($model, 'trans_date')->widget(\kartik\date\DatePicker::className(), [
+                      'value' => date('d-m-Y',strtotime($model->trans_date)),
                     'pluginOptions' => [
-                        'format' => 'dd/mm/yyyy',
+                        'format' => 'dd-mm-yyyy',
                         'todayHighlight' => true
                     ]
                 ]) ?>
@@ -384,7 +386,8 @@ function showfindwithsearch(txt){
                     tr.closest("tr").find(".line-unit-id").val(line_unit_id);
                     tr.closest("tr").find(".line-lot").val(line_lot_no);
                    
-
+                    tr.closest("tr").find('.line-expired').datepicker({'format': 'dd-mm-yyyy'});
+                    //cal_num();
                     //cal_num();
                     console.log(line_prod_code);
                 } else {

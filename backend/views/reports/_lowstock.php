@@ -151,9 +151,9 @@ $model_medical = \backend\models\Medical::find()->all();
 function getOnhandQty($product_id){
     $onhand = 0;
     if($product_id){
-        $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->one();
+        $model = \backend\models\Stocksum::find()->where(['product_id'=>$product_id])->sum('qty');
         if($model){
-            $onhand = $model->qty;
+            $onhand = $model;
         }
     }
     return $onhand;

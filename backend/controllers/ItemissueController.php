@@ -166,6 +166,18 @@ class ItemissueController extends Controller
         return $name;
     }
 
+    public function findlotnoExpirefromid($lot_line_id)
+    {
+        $name = '';
+        if ($lot_line_id) {
+            $model = \backend\models\Stocksum::find()->select('expired_date')->where(['id' => $lot_line_id])->one();
+            if ($model) {
+                $name = $model->expired_date;
+            }
+        }
+        return $name;
+    }
+
     /**
      * Updates an existing Itemissue model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -200,12 +212,17 @@ class ItemissueController extends Controller
             if ($model->save(false)) {
                 if ($item_id != null) {
                     for ($i = 0; $i <= count($item_id) - 1; $i++) {
+                        $line_exp_date = date('Y-m-d');
+                        $xprdate = explode('-',$line_expired[$i]);
+                        if(count($xprdate)>1){
+                            $line_exp_date = $xprdate[2].'/'.$xprdate[1].'/'.$xprdate[0];
+                        }
                         $model_line_chk = \common\models\JournalIssueLine::find()->where(['issue_id' => $model->id, 'item_id' => $item_id[$i]])->one();
                         if ($model_line_chk) {
                             $model_line_chk->item_id = $item_id[$i];
                             $model_line_chk->qty = $line_qty[$i];
                             $model_line_chk->lot_no = $line_lotno[$i];
-                            $model_line_chk->exp_date = date('Y-m-d');
+                            $model_line_chk->exp_date =date('Y-m-d',strtotime($line_exp_date));
                             $model_line_chk->status = 1;
                             if ($model_line_chk->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
@@ -216,7 +233,7 @@ class ItemissueController extends Controller
                                 $model_trans->item_id = $item_id[$i];
                                 $model_trans->qty = $line_qty[$i];
                                 $model_trans->lot_no = $line_lotno[$i];
-                                $model_trans->exp_date = date('Y-m-d');
+                                $model_trans->exp_date = date('Y-m-d',strtotime($line_exp_date));
                                 if ($model_trans->save(false)) {
 //                                    $this->updatestock($item_id[$i], $line_qty[$i], $line_unit_id[$i], $line_lotno[$i], $line_expired[$i], $model_trans->id);
                                 }
@@ -228,7 +245,7 @@ class ItemissueController extends Controller
                             $model_line->qty = $line_qty[$i];
 //                            $model_line->unit_id = $line_unit_id[$i];
                             $model_line->lot_no = $line_lotno[$i];
-                            $model_line->exp_date = date('Y-m-d');
+                            $model_line->exp_date = date('Y-m-d',strtotime($line_exp_date));
                             if ($model_line->save(false)) {
                                 $model_trans = new \backend\models\Stocktrans();
                                 $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
@@ -238,7 +255,7 @@ class ItemissueController extends Controller
                                 $model_trans->item_id = $item_id[$i];
                                 $model_trans->qty = $line_qty[$i];
                                 $model_trans->lot_no = $line_lotno[$i];
-                                $model_trans->exp_date = date('Y-m-d');
+                                $model_trans->exp_date = date('Y-m-d',strtotime($line_exp_date));
                                 if ($model_trans->save(false)) {
 //                                    $this->updatestock($item_id[$i], $line_qty[$i], $line_unit_id[$i], $line_lotno[$i], $line_expired[$i], $model_trans->id);
                                 }
@@ -363,13 +380,14 @@ class ItemissueController extends Controller
             if ($item_id != null) {
 
                 $line_lot_no = $this->findlotnofromid($line_lot_id);
+                $line_lot_exp_date = $this->findlotnoExpirefromid($line_lot_id);
                 $model_line = new \common\models\JournalIssueLine();
                 $model_line->issue_id = $model->id;
                 $model_line->item_id = $item_id;
                 $model_line->qty = $line_qty;
 //                            $model_line->unit_id = $line_unit_id[$i];
                 $model_line->lot_no = $line_lot_no;
-                $model_line->exp_date = date('Y-m-d');
+                $model_line->exp_date = date('Y-m-d',strtotime($line_lot_exp_date));
                 if ($model_line->save(false)) {
                     $model_trans = new \backend\models\Stocktrans();
                     $model_trans->journal_no = \backend\models\Stocktrans::getLastNo();
@@ -379,7 +397,7 @@ class ItemissueController extends Controller
                     $model_trans->item_id = $item_id;
                     $model_trans->qty = $line_qty;
                     $model_trans->lot_no = $line_lot_no;
-                    $model_trans->exp_date = date('Y-m-d');
+                    $model_trans->exp_date = date('Y-m-d',strtotime($line_lot_exp_date));
                     if ($model_trans->save(false)) {
                         $this->updatestock($item_id, $line_qty, $line_lot_no, $model_trans->id);
                     }

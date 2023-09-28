@@ -59,7 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 //            'id',
             'journal_no',
-            'trans_date',
+            [
+                'attribute' => 'trans_date',
+                'value' => function ($data) {
+                    return date('d-m-Y', strtotime($data->trans_date));
+                }
+            ],
             'emp_id',
             'description',
             //'status',
